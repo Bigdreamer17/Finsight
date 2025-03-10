@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+:root {
+  /* --background: #ffffff; */
+  --foreground: #171717;
+
+  --surface: #f9f8f6;
+  --surface-higher: #e8e6e3;
+  --surface-higher-hover: #c9c6c0;
+  --on-surface-dimmed: #777169;
+  --custom-gray: #30313b;
+  --custom-blue: #05a6f0;
+  --custom-red: #ea4335;
+  --mark-bg: #ffe7ba;
+  --paragraph-bg: #5e5e74;
+}
+
+/* Works on Chrome, Edge, and Safari */
+::-webkit-scrollbar {
+  width: 5px; /* Smaller width */
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
