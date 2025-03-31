@@ -5,7 +5,7 @@ import LinearGraph from "./LinearGraph";
 const Research = () => {
   return (
     <section className="relative overflow-x-clip">
-      <div className="flex gap-5 justify-between flex-wrap">
+      <div className="flex gap-5 justify-between lg:flex-row flex-col">
         <div className="pl-8 flex max-w-[355px] mr-auto text-white text-sm flex-col gap-3">
           <div className="flex gap-3">
             <p className="bg-[#30313b] basis-11/12 p-4 text-white rounded-lg rounded-br-none">
@@ -32,14 +32,6 @@ const Research = () => {
             <LinearGraph className="bg-[#05A6F0]" />
           </div>
         </div>
-
-        <Image
-          src="https://finchat.io/cdn-cgi/image/width=828/assets/marketing-pages/dark-mockups/notifications.png"
-          alt="notifications image"
-          width={455}
-          height={20}
-          className="ml-auto mt-10"
-        />
       </div>
 
       <div className="flex -mt-20 justify-between items-end -z-10">
@@ -48,9 +40,10 @@ const Research = () => {
           alt="company graph"
           width={555}
           height={120}
+          className="-translate-x-10/12 lg:translate-x-0"
         />
 
-        <div className="flex max-w-[355px] -mb-24 ml-auto mr-44 text-white text-sm flex-col gap-3">
+        <div className="max-w-[355px] lg:flex hidden -mb-24 ml-auto mr-44 text-white text-sm flex-col gap-3">
           <div className="flex gap-3">
             <p className="bg-[#30313b] basis-11/12 p-4 text-white rounded-lg rounded-br-none">
               ...see the progress from our membership growth in Q2...
@@ -81,11 +74,11 @@ const Research = () => {
         alt="stat decoration"
         width={555}
         height={120}
-        className="absolute top-1/2 -right-[310px] -translate-y-1/3"
+        className="absolute lg:block hidden top-1/3 -right-[310px] -translate-y-1/3"
       />
 
       <h2
-        className={`text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-[920px] z-20 md:text-[4rem] text-[2rem] leading-11 md:leading-[72px] ${spaceGrotesk.className} font-medium`}
+        className={`text-center absolute lg:top-1/2 bottom-0 left-1/2 -translate-x-1/2 lg:-translate-y-1/2 max-w-[920px] z-20 lg:text-[4rem] text-[2rem] leading-11 lg:leading-[72px] ${spaceGrotesk.className} font-medium`}
       >
         The new standard for fundamental research.
       </h2>

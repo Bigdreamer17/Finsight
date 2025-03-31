@@ -13,6 +13,8 @@
   --custom-red: #ea4335;
   --mark-bg: #ffe7ba;
   --paragraph-bg: #5e5e74;
+  --surface-base: #1c1c21;
+  --surface-base-lighter: #40404f;
 }
 
 /* Works on Chrome, Edge, and Safari */

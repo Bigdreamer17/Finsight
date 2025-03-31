@@ -5,6 +5,7 @@ import Link from "next/link";
 
 import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 const Navbar = () => {
   const { data: session } = useSession();
@@ -19,10 +20,8 @@ const Navbar = () => {
       setIsScrolled(currentScrollY > 0);
 
       if (currentScrollY > lastScrollY && currentScrollY > 50) {
-        // Scrolling down and not at the top
         setIsVisible(false);
       } else {
-        // Scrolling up
         setIsVisible(true);
       }
 
@@ -38,12 +37,11 @@ const Navbar = () => {
   };
 
   return (
-    <header
-      className={`px-2 sticky top-5 z-30 mt-5 ${
-        isVisible
-          ? "translate-y-0 ease-in-out duration-300"
-          : "-translate-y-[calc(100%+20px)] ease-in-out duration-300"
-      }`}
+    <motion.header
+      initial={{ y: 0 }}
+      animate={{ y: isVisible ? 0 : -100 }}
+      transition={{ ease: "easeInOut", duration: 0.3 }}
+      className="px-2 sticky top-5 z-30 mt-5"
     >
       <nav
         className={`bg-[#f9f8f6]/95 max-w-[1140px] mx-auto flex justify-between ease-in-out ${
@@ -94,7 +92,7 @@ const Navbar = () => {
           </li>
         </ul>
       </nav>
-    </header>
+    </motion.header>
   );
 };
 

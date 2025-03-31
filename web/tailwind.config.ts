@@ -18,6 +18,8 @@ const config = {
         customRed: "var(--custom-red)",
         markBg: "var(--mark-bg)",
         paragraphBg: "var(--paragraph-bg)",
+        surfaceBase: "var(--surface-base)",
+        surfaceBaseLighter: "var(--surface-base-lighter)",
       },
     },
   },
