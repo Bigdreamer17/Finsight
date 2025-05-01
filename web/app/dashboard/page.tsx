@@ -1,21 +1,18 @@
-"use client";
+import Dashboard from "../ui/dashboard";
+import {
+  ParsedSearchParams,
+  searchParamsCache,
+} from "../ui/dashboard/search-params";
 
-import { signOut } from "next-auth/react";
+const DashboardPage = async ({
+  searchParams,
+}: {
+  searchParams: ParsedSearchParams;
+}) => {
+  const { company, metric, companyFilter } =
+    await searchParamsCache.parse(searchParams);
 
-const DashboardPage = () => {
-  const handleSignOut = () => {
-    signOut({ redirectTo: "/" });
-  };
-
-  return (
-    <div>
-      <h1>DashboardPage</h1>
-
-      <button className="cursor-pointer" onClick={handleSignOut}>
-        Sign Out
-      </button>
-    </div>
-  );
+  return <Dashboard />;
 };
 
 export default DashboardPage;

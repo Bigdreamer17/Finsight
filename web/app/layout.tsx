@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { SessionProvider } from "next-auth/react";
 import { plusJakartaSans } from "./fonts";
 
@@ -17,7 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${plusJakartaSans.className} bg-[#f9f8f6] antialiased`}>
-        <SessionProvider>{children}</SessionProvider>
+        <NuqsAdapter>
+          <SessionProvider>{children}</SessionProvider>
+        </NuqsAdapter>
       </body>
     </html>
   );

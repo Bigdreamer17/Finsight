@@ -15,6 +15,13 @@
   --paragraph-bg: #5e5e74;
   --surface-base: #1c1c21;
   --surface-base-lighter: #40404f;
+  --surface-border: #afafb6;
+  --surface-border-focus: #f2c785;
+  --surface-primary: #2c2c35;
+  --surface-green: #27aa43;
+  --surface-green-hover: #229549;
+  --surface-secondary: #40404f;
+  --surface-green-secondary: #0bd28b;
 }
 
 /* Works on Chrome, Edge, and Safari */

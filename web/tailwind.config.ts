@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import lineClamp from "@tailwindcss/line-clamp";
 
 const config = {
   content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
@@ -20,10 +21,16 @@ const config = {
         paragraphBg: "var(--paragraph-bg)",
         surfaceBase: "var(--surface-base)",
         surfaceBaseLighter: "var(--surface-base-lighter)",
+        surfaceBorder: "var(--surface-border)",
+        surfaceBorderFocus: "var(--surface-border-focus)",
+        surfacePrimary: "var(--surface-primary)",
+        surfaceGreen: "var(--surface-green)",
+        surfaceGreenHover: "var(--surface-green-hover)",
+        surfaceGreenSecondary: "var(--surface-green-secondary)",
       },
     },
   },
-  plugins: [],
+  plugins: [lineClamp],
 } satisfies Config;
 
 export default config;

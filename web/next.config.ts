@@ -1,9 +1,17 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   images: {
-    domains: ["finchat.io"], // Add the external domain here
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "finchat.io",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.finchat.io",
+      },
+    ],
   },
 };
 
