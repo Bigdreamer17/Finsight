@@ -2,7 +2,7 @@
 
 import { cn } from "@/app/lib/utils";
 import type { searchInputProps } from "./types";
-import { ChangeEvent } from "react";
+import { type ChangeEvent } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { FiSearch } from "react-icons/fi";
 
@@ -11,6 +11,8 @@ const SearchInput = ({
   placeHolder,
   defaultValue,
   handleSearch,
+  onFocus,
+  onBlur,
 }: searchInputProps) => {
   const handleSearchDebounced = useDebouncedCallback(handleSearch, 250);
 
@@ -33,6 +35,8 @@ const SearchInput = ({
           handleSearchDebounced(e.target.value);
         }}
         defaultValue={defaultValue || ""}
+        onFocus={onFocus}
+        onBlur={onBlur}
       />
     </div>
   );

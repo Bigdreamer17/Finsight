@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 import {
   Table as TableContainer,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -16,44 +15,53 @@ import { searchParamOption } from "@/app/lib/search-params";
 import { useQueryStates } from "nuqs";
 import { RiArrowUpDownLine } from "react-icons/ri";
 import { HiArrowNarrowDown, HiArrowNarrowUp } from "react-icons/hi";
+import { metricMap } from "./data";
+import type { TableProps } from "./types";
+import { getDashbaordTableData } from "./utils";
+import { FaLock } from "react-icons/fa";
+import { useAtom } from "jotai";
+import { dashboardMetricAtom } from "@/app/store/dashboardMetrics";
 
-const Table = () => {
-  const [metrics, setMetrics] = useState<string[]>([
-    "Invoice",
-    "Status",
-    "Method",
-    "Amount",
-  ]);
+const Table = ({ comp }: TableProps) => {
+  const [metrics, setMetrics] = useAtom(dashboardMetricAtom);
+  const [companies, setCompanies] = useState(comp);
 
-  const tableData = ["INV002", "Paid", "Credit Card", "$250.00"];
-
-  const [{ sortMetric, sortParam }, setParams] = useQueryStates(
+  const [{ sortMetric, sortParam, companyFilter }, setParams] = useQueryStates(
     searchParams,
     searchParamOption,
   );
 
+  useEffect(() => {
+    const filteredCompanies = comp.filter((c) =>
+      c.companyName.toLowerCase().includes(companyFilter.toLowerCase()),
+    );
+
+    setCompanies(filteredCompanies);
+  }, [companyFilter, comp]);
+
   const handleMetricDelete = (metric: string) => {
-    setMetrics((prev) => prev.filter((m) => m != metric));
+    setMetrics((prev) => prev.filter((m) => m.name != metric));
   };
 
   const handleSortClick = (param: string) => {
-    const newMetric = sortMetric === "Desc" ? "Asc" : "Desc";
+    const newMetric =
+      sortMetric === "Desc" && param === sortParam ? "Asc" : "Desc";
     setParams((prev) => ({ ...prev, sortMetric: newMetric, sortParam: param }));
   };
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col flex-1 gap-3">
       <div className="flex items-center gap-3 flex-wrap">
-        {metrics.map((metric, index) => (
+        {metrics.slice(1).map((metric, index) => (
           <div
             key={index}
             className="bg-[#40404F] py-1 px-2 flex items-center gap-1 rounded-2xl text-xs"
           >
-            <span>{metric}</span>
+            <span>{metric.name}</span>
 
             <button
               className="rounded-full hover:bg-white/10 hover:cursor-pointer"
-              onClick={() => handleMetricDelete(metric)}
+              onClick={() => handleMetricDelete(metric.name)}
             >
               <IoCloseOutline size={16} />
             </button>
@@ -62,7 +70,6 @@ const Table = () => {
       </div>
 
       <TableContainer>
-        <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader className="bg-[#1C1C21] border-[#AFAFB6]/40 border-y text-xs">
           <TableRow>
             {metrics.map((metric, index) => (
@@ -76,15 +83,16 @@ const Table = () => {
               >
                 <button
                   className="flex items-center gap-3 hover:cursor-pointer w-full focus:outline-none"
-                  onClick={() => handleSortClick(metric.toLowerCase())}
+                  onClick={() => handleSortClick(metricMap[metric.name])}
                 >
-                  <span>{metric}</span>
+                  <span>{metric.name}</span>
 
                   <div className="flex justify-center items-center hover:cursor-pointer">
                     <RiArrowUpDownLine
                       size={17}
                       className={
-                        sortMetric !== "" && sortParam === metric.toLowerCase()
+                        sortMetric !== "" &&
+                        sortParam === metricMap[metric.name]
                           ? "hidden"
                           : "p-0"
                       }
@@ -94,7 +102,7 @@ const Table = () => {
                       size={17}
                       className={
                         sortMetric === "Desc" ||
-                        sortParam !== metric.toLowerCase()
+                        sortParam !== metricMap[metric.name]
                           ? "hidden"
                           : "p-0"
                       }
@@ -104,7 +112,7 @@ const Table = () => {
                       size={17}
                       className={
                         sortMetric === "Asc" ||
-                        sortParam !== metric.toLowerCase()
+                        sortParam !== metricMap[metric.name]
                           ? "hidden"
                           : ""
                       }
@@ -116,11 +124,34 @@ const Table = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            {tableData.map((data, index) => (
-              <TableCell key={index}>{data}</TableCell>
-            ))}
-          </TableRow>
+          {companies.map((company, index) => {
+            const rowData = getDashbaordTableData(company);
+
+            return (
+              <TableRow
+                key={index}
+                className={`${index % 2 === 0 ? "bg-[#2C2C35]" : "bg-[#40404F]"}`}
+              >
+                {metrics.map((metric, idx) => {
+                  const rowDataKey = metricMap[metric.name];
+                  const data = rowData[rowDataKey];
+
+                  return (
+                    <TableCell
+                      key={idx}
+                      className={`text-center ${idx !== metrics.length - 1 ? "border-r border-[#AFAFB6]/40" : ""}`}
+                    >
+                      {metric.isPaidFeature ? (
+                        <FaLock size={16} className="mx-auto" />
+                      ) : (
+                        (data ?? "-")
+                      )}
+                    </TableCell>
+                  );
+                })}
+              </TableRow>
+            );
+          })}
         </TableBody>
       </TableContainer>
     </div>

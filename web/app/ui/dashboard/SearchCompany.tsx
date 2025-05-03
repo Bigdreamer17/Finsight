@@ -4,7 +4,7 @@ import { searchParamOption } from "@/app/lib/search-params";
 import { useQueryStates } from "nuqs";
 import { searchParams } from "./search-params";
 import SearchInput from "./common/SearchInput";
-import { searchProps } from "./common/topbar/types";
+import type { searchProps } from "./types";
 
 const SearchCompany = ({ paginationQuery }: searchProps) => {
   const [{ companyFilter }, setParams] = useQueryStates(

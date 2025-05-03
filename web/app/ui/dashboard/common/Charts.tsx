@@ -8,8 +8,11 @@ import {
   Tooltip,
   Area,
   ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
 } from "recharts";
-import type { dataType } from "./types";
+import type { dataType, pieDataType } from "./types";
 
 const AreaGraph = ({
   toolTipTitle,
@@ -101,4 +104,44 @@ const AreaGraph = ({
   );
 };
 
-export { AreaGraph };
+const PieGraph = ({ data }: { data: pieDataType[] }) => {
+  const CustomTooltip = ({
+    active,
+    payload,
+  }: {
+    active?: any;
+    payload?: any;
+  }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-[#40404F] rounded-sm py-2 px-2.5">
+          <p className="text-xs font-light">
+            {payload[0].value} {payload[0].name}
+          </p>
+        </div>
+      );
+    }
+  };
+
+  const colors = ["#3FFF00", "#FF0000"];
+
+  return (
+    <ResponsiveContainer width="100%" height={300}>
+      <PieChart width={600} height={300}>
+        <Pie data={data} dataKey="value" nameKey="name">
+          {data.map((_, index) => (
+            <Cell
+              key={`cell-${index}`}
+              fill={colors[index]}
+              stroke="#2C2C35"
+              strokeWidth={10}
+            />
+          ))}
+        </Pie>
+        <Tooltip content={<CustomTooltip />} />
+      </PieChart>
+    </ResponsiveContainer>
+  );
+};
+
+export { AreaGraph, PieGraph };

@@ -1,6 +1,7 @@
 import type { companyIdType } from "../common/types";
 import CompanyBreakDown from "./CompanyBreakDown";
 import CompanyChart from "./CompanyChart";
+import { getBreakDownProps } from "./utils";
 
 const CompanyOverview = ({ companyId }: companyIdType) => {
   interface comp {
@@ -13,11 +14,11 @@ const CompanyOverview = ({ companyId }: companyIdType) => {
     sector?: string;
     foundationYear?: number;
     profile?: {
-      marketCap?: string;
-      ev?: string;
-      shares?: string;
-      revenue?: string;
-      employees?: string;
+      marketCap?: number;
+      ev?: number;
+      shares?: number;
+      revenue?: number;
+      employees?: number;
     };
     valuation?: {
       pe?: number;
@@ -28,35 +29,35 @@ const CompanyOverview = ({ companyId }: companyIdType) => {
       evGrossProfit?: number;
     };
     growth?: {
-      revThree?: string;
-      revFive?: string;
-      revTen?: string;
-      deThree?: string;
-      deFive?: string;
-      deTen?: string;
-      revFwdTwo?: string;
+      revThree?: number;
+      revFive?: number;
+      revTen?: number;
+      deThree?: number;
+      deFive?: number;
+      deTen?: number;
+      revFwdTwo?: number;
     };
     margins?: {
-      gross?: string;
-      ebitda?: string;
-      operating?: string;
-      preTax?: string;
-      net?: string;
-      fcf?: string;
+      gross?: number;
+      ebitda?: number;
+      operating?: number;
+      preTax?: number;
+      net?: number;
+      fcf?: number;
     };
     returns?: {
-      roa?: string;
-      rota?: string;
-      roe?: string;
-      roce?: string;
-      roic?: string;
+      roa?: number;
+      rota?: number;
+      roe?: number;
+      roce?: number;
+      roic?: number;
     };
     dividends?: {
-      divYield?: string;
-      payout?: string;
-      dps?: string;
-      dpsThree?: string;
-      dpsFive?: string;
+      divYield?: number;
+      payout?: number;
+      dps?: number;
+      dpsThree?: number;
+      dpsFive?: number;
     };
   }
   const companyDet: { [key: string]: comp } = {
@@ -99,11 +100,11 @@ const CompanyOverview = ({ companyId }: companyIdType) => {
       sector: "Software",
       foundationYear: 1975,
       profile: {
-        marketCap: "$2.94T",
-        ev: "$2.92T",
-        shares: "7.4B",
-        revenue: "$261.80B",
-        employees: "228,000",
+        marketCap: 2940000000,
+        ev: 2920000000,
+        shares: 740000000,
+        revenue: 26180000,
+        employees: 228000,
       },
       valuation: {
         pe: 31.8,
@@ -114,86 +115,45 @@ const CompanyOverview = ({ companyId }: companyIdType) => {
         evGrossProfit: 16.1,
       },
       growth: {
-        revThree: "12.3%",
-        revFive: "4.3%",
-        revTen: "10.9%",
-        deThree: "9.7%",
-        deFive: "16.7%",
-        // deTen: "17.5%",
-        revFwdTwo: "13.2%",
+        revThree: 12.3,
+        revFive: 4.3,
+        revTen: 10.9,
+        deThree: 9.7,
+        deFive: 16.7,
+        // deTen: 17.5,
+        revFwdTwo: 13.2,
       },
       margins: {
-        gross: "69.4%",
-        // ebitda: "54.3%",
-        operating: "45.0%",
-        preTax: "43.4%",
-        net: "35.4%",
-        fcf: "26.7%",
+        gross: 69.4,
+        // ebitda: 54.3,
+        operating: 45.0,
+        preTax: 43.4,
+        net: 35.4,
+        fcf: 26.7,
       },
       returns: {
-        roa: "19.8%",
-        // rota: "44.8%",
-        roe: "41.9%",
-        roce: "31.0%",
-        roic: "28.0%",
+        roa: 19.8,
+        // rota: 44.8,
+        roe: 41.9,
+        roce: 31.0,
+        roic: 28.0,
       },
       dividends: {
-        divYield: "0.8%",
-        payout: "25.3%",
-        // dps: "$3.00",
-        dpsThree: "10.2%",
-        dpsFive: "10.2%",
+        divYield: 0.8,
+        payout: 25.3,
+        dps: 3.0,
+        dpsThree: 10.2,
+        dpsFive: 10.2,
       },
     },
   };
 
   const company = companyDet[companyId];
 
-  const breakDownProps = {
-    name: company?.name ?? "-",
-    description: company?.description ?? "-",
-    ceo: company?.ceo ?? "-",
-    website: company?.website ?? "-",
-    sector: company?.sector ?? "-",
-    foundationYear: company?.foundationYear ?? "-",
-    marketCap: company?.profile?.marketCap ?? "-",
-    ev: company?.profile?.ev ?? "-",
-    sharesOut: company?.profile?.shares ?? "-",
-    revenue: company?.profile?.revenue ?? "-",
-    employeeCount: company?.profile?.employees ?? "-",
-    pe: company?.valuation?.pe ?? "-",
-    pb: company?.valuation?.pb ?? "-",
-    evSales: company?.valuation?.evSales ?? "-",
-    evEbitda: company?.valuation?.evEbitda ?? "-",
-    pfcf: company?.valuation?.pfcf ?? "-",
-    evGrossProfit: company?.valuation?.evGrossProfit ?? "-",
-    revThree: company?.growth?.revThree ?? "-",
-    revFive: company?.growth?.revFive ?? "-",
-    revTen: company?.growth?.revTen ?? "-",
-    deThree: company?.growth?.deThree ?? "-",
-    deFive: company?.growth?.deFive ?? "-",
-    deTen: company?.growth?.deTen ?? "-",
-    revFwdTwo: company?.growth?.revFwdTwo ?? "-",
-    gross: company?.margins?.gross ?? "-",
-    ebitda: company?.margins?.ebitda ?? "-",
-    operating: company?.margins?.operating ?? "-",
-    preTax: company?.margins?.preTax ?? "-",
-    net: company?.margins?.net ?? "-",
-    fcf: company?.margins?.fcf ?? "-",
-    roa: company?.returns?.roa ?? "-",
-    rota: company?.returns?.rota ?? "-",
-    roe: company?.returns?.roe ?? "-",
-    roce: company?.returns?.roce ?? "-",
-    roic: company?.returns?.roic ?? "-",
-    divYield: company?.dividends?.divYield ?? "-",
-    payout: company?.dividends?.payout ?? "-",
-    dps: company?.dividends?.dps ?? "-",
-    dpsThree: company?.dividends?.dpsThree ?? "-",
-    dpsFive: company?.dividends?.dpsFive ?? "-",
-  };
+  const breakDownProps = getBreakDownProps(company);
 
   return (
-    <div className="flex flex-col gap-3 xl:flex-row items-stretch mt-5">
+    <div className="flex px-4 flex-col gap-3 xl:flex-row items-stretch mt-5">
       <CompanyBreakDown {...breakDownProps} />
       <CompanyChart />
     </div>

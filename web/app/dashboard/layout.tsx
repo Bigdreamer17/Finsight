@@ -8,16 +8,16 @@ export const metadata: Metadata = {
   description: "Dashboard for FinSight",
 };
 
-export default function RootLayout({
+export default function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <main className="bg-[#1C1C21] flex h-screen shrink-0 text-white">
-      <Sidebar className="hidden md:flex" />
+      <Sidebar className="hidden lg:flex" />
 
-      <section className="relative grow overflow-y-auto">
+      <section className="relative grow overflow-y-auto flex flex-col">
         <Topbar />
 
         {children}

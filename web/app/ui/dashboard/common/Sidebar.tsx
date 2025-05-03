@@ -36,7 +36,7 @@ const Sidebar = ({ className }: { className?: string }) => {
       element: <RiMenuAddLine size={20} />,
       href: "/dashboard",
       name: "Dashboard",
-      isActive: pathName.includes("dashboard") && pathLength === 1,
+      isActive: pathName.includes("dashboard") && pathLength === 2,
     },
     {
       element: <TbBrandGoogleAnalytics size={20} />,
@@ -83,7 +83,7 @@ const Sidebar = ({ className }: { className?: string }) => {
           <MdLogout size={20} />
         </div>
 
-        <span className="text-[10px] z-30">Logout</span>
+        <span className="text-[10px] z-30">Log Out</span>
       </button>
     </section>
   );

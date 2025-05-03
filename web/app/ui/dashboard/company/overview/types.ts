@@ -45,3 +45,60 @@ export type breakDownProps = {
   dpsThree: number | string;
   dpsFive: number | string;
 };
+
+export type companyOverViewType = {
+  name: string;
+  stockName: string;
+  stockPrice: number;
+  description?: string;
+  ceo?: string;
+  website?: string;
+  sector?: string;
+  foundationYear?: number;
+  profile?: {
+    marketCap?: number;
+    ev?: number;
+    shares?: number;
+    revenue?: number;
+    employees?: number;
+  };
+  valuation?: {
+    pe?: number;
+    pb?: number;
+    evSales?: number;
+    evEbitda?: number;
+    pfcf?: number;
+    evGrossProfit?: number;
+  };
+  growth?: {
+    revThree?: number;
+    revFive?: number;
+    revTen?: number;
+    deThree?: number;
+    deFive?: number;
+    deTen?: number;
+    revFwdTwo?: number;
+  };
+  margins?: {
+    gross?: number;
+    ebitda?: number;
+    operating?: number;
+    preTax?: number;
+    net?: number;
+    fcf?: number;
+  };
+  returns?: {
+    roa?: number;
+    rota?: number;
+    roe?: number;
+    roce?: number;
+    roic?: number;
+  };
+  dividends?: {
+    divYield?: number;
+    payout?: number;
+    dps?: number;
+    dpsThree?: number;
+    dpsFive?: number;
+  };
+};

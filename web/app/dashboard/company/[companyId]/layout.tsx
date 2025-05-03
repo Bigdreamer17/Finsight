@@ -3,11 +3,11 @@ import CompanyNavigation from "@/app/ui/dashboard/company/common/CompanyNavigati
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "FinSight | Dashboard",
+  title: "FinSight | Overview",
   description: "Dashboard for FinSight",
 };
 
-export default function RootLayout({
+export default function AnalyticsLayout({
   children,
   params,
 }: Readonly<{
@@ -17,10 +17,10 @@ export default function RootLayout({
   const { companyId } = params;
 
   return (
-    <div className="bg-[#1C1C21] text-white">
+    <div className="bg-[#1C1C21] text-white flex flex-col grow">
       <CompanyDetail companyId={companyId} />
 
-      <CompanyNavigation />
+      <CompanyNavigation companyId={companyId} />
 
       {children}
     </div>

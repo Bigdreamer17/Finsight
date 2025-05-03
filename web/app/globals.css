@@ -22,6 +22,9 @@
   --surface-green-hover: #229549;
   --surface-secondary: #40404f;
   --surface-green-secondary: #0bd28b;
+  --badgeRed: #ef476f;
+  --badgeYellow: #ffd166;
+  --badgeGreen: #0bd28b;
 }
 
 /* Works on Chrome, Edge, and Safari */
@@ -41,4 +44,29 @@
 .no-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+}
+
+.custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #b0b0b0;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #fafafa;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-corner {
+    background: #f1f1f1;
+  }
 }

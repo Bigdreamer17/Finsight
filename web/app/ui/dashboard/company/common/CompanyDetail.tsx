@@ -1,10 +1,12 @@
 import Image from "next/image";
 import type { companyIdType } from "./types";
+import { CgTranscript } from "react-icons/cg";
+import Link from "next/link";
 
 const CompanyDetail = ({ companyId }: companyIdType) => {
   interface comp {
     name: string;
-    stockName: string;
+    stockName?: string;
     stockPrice: number;
   }
   const companyDet: { [key: string]: comp } = {
@@ -33,12 +35,26 @@ const CompanyDetail = ({ companyId }: companyIdType) => {
             <h1 className="font-semibold text-xl sm:text-2xl">
               {company.name}
             </h1>
-            <h2 className="text-sm font-light">{company.stockName}</h2>
+
+            {company?.stockName !== null &&
+              company?.stockName !== "" &&
+              typeof company?.stockName === "string" && (
+                <h2 className="text-sm font-light">{company.stockName}</h2>
+              )}
           </div>
         </div>
       </div>
-      <div className="p-2 rounded-lg flex items-center bg-[#2C2C35] shrink-0 basis-1/3">
-        <p className="font-semibold">${company.stockPrice}</p>
+      <div className="p-2 rounded-lg flex items-center bg-[#2C2C35] shrink-0 basis-1/3 justify-between">
+        <p className="font-semibold">{company.stockPrice} Birr</p>
+
+        <Link
+          href={"https://google.com"}
+          className="p-1 hover:bg-[#40404F] rounded-md"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <CgTranscript size={20} />
+        </Link>
       </div>
     </div>
   );

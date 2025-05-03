@@ -12,7 +12,13 @@ const DashboardPage = async ({
   const { company, metric, companyFilter } =
     await searchParamsCache.parse(searchParams);
 
-  return <Dashboard />;
+  return (
+    <Dashboard
+      company={company}
+      metric={metric}
+      companyFilter={companyFilter}
+    />
+  );
 };
 
 export default DashboardPage;

@@ -46,40 +46,9 @@ const CompanyBreakDown = ({
   dpsFive,
 }: breakDownProps) => {
   const paragraphRef = useRef<HTMLParagraphElement>(null);
-  const divRef = useRef<HTMLDivElement>(null);
   const [expanded, setExpanded] = useState(false);
   const [canExpand, setCanExpand] = useState(false);
   const [fullHeight, setFullHeight] = useState(0);
-
-  const [divExpanded, setDivExpanded] = useState(false);
-  const [contentHeight, setContentHeight] = useState(0);
-  const [canScroll, setCanScroll] = useState(false);
-
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
-    const handleResize = () => {
-      const el = divRef.current;
-      if (el) {
-        setCanScroll(el.scrollHeight > el.clientHeight);
-        setContentHeight(el.scrollHeight);
-      }
-    };
-
-    handleResize();
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   useEffect(() => {
     if (paragraphRef.current) {
@@ -155,57 +124,50 @@ const CompanyBreakDown = ({
   };
 
   return (
-    <div
-      className={`relative z-0 rounded-lg bg-[#2C2C35] flex flex-col gap-2 basis-1/2 transition-all duration-300 ease-in-out ${divExpanded || canScroll ? "pb-8" : ""}`}
-    >
-      <div
-        ref={divRef}
-        style={
-          windowWidth < 768
-            ? {
-                maxHeight: divExpanded ? `${contentHeight}px` : "544px",
-                transition: "max-height 0.5s ease-in-out",
-              }
-            : {}
-        }
-        className="overflow-hidden md:max-h-auto md:overflow-visible rounded-lg bg-[#2C2C35] flex flex-col gap-2 px-4 pt-4 md:pb-4 basis-1/2"
-      >
-        <h3 className="font-medium text-lg">Company Overview</h3>
+    <div className={`z-0 rounded-lg flex flex-col gap-2 basis-1/2 `}>
+      <div className="flex flex-col gap-2">
+        <div className="rounded-lg bg-[#2C2C35] flex flex-col gap-2 p-4 basis-1/2 max-h-fit">
+          <h3 className="font-semibold text-lg">Company Overview</h3>
 
-        {/* Description */}
-        <div className="mb-3">
-          <p
-            ref={paragraphRef}
-            style={{
-              maxHeight: expanded ? fullHeight : `${1.5 * 3}rem`,
-            }}
-            className={`overflow-hidden transition-[max-height] duration-500 ease-in-out leading-relaxed text-sm text-[#AFAFB6]`}
-          >
-            {description}
-          </p>
-
-          {canExpand && (
-            <button
-              onClick={() => setExpanded((prev) => !prev)}
-              className="font-light hover:underline transition focus:outline-none hover:cursor-pointer duration-200"
+          {/* Description */}
+          <div className="mb-3">
+            <p
+              ref={paragraphRef}
+              style={{
+                maxHeight: expanded ? fullHeight : `${1.5 * 3}rem`,
+              }}
+              className={`overflow-hidden transition-[max-height] duration-500 ease-in-out leading-relaxed text-sm text-[#AFAFB6]`}
             >
-              {expanded ? "Hide" : "Show more"}
-            </button>
-          )}
+              {description}
+            </p>
+
+            {canExpand && (
+              <button
+                onClick={() => setExpanded((prev) => !prev)}
+                className="font-light hover:underline transition focus:outline-none hover:cursor-pointer duration-200"
+              >
+                {expanded ? "Hide" : "Show more"}
+              </button>
+            )}
+          </div>
+
+          {/* Company Overview Section */}
+          {Object.entries(overviewSection).map(([name, value]) => (
+            <p
+              key={name}
+              className="w-full pb-1 text-xs flex items-center gap-2 justify-between border-b border-b-[#40404F]"
+            >
+              <span>{name}</span>
+              <span>{value}</span>
+            </p>
+          ))}
         </div>
 
-        {/* Company Overview Section */}
-        {Object.entries(overviewSection).map(([name, value]) => (
-          <p
-            key={name}
-            className="w-full pb-1 text-xs flex items-center gap-2 justify-between border-b border-b-[#40404F]"
-          >
-            <span>{name}</span>
-            <span>{value}</span>
-          </p>
-        ))}
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-3 bg-[#2C2C35] p-4 rounded-md transition-all duration-300 ease-in-out">
+          <h3 className="font-semibold mb-2 text-lg sm:col-span-2 md:col-span-3">
+            Company Statistics
+          </h3>
 
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-3 mt-3">
           <div className="flex flex-col gap-4">
             {/* Profile Section */}
             <div>
@@ -303,16 +265,6 @@ const CompanyBreakDown = ({
           </div>
         </div>
       </div>
-
-      {/* Show More Button */}
-      {(canScroll || divExpanded) && (
-        <button
-          className="absolute bottom-1 left-1/2 -translate-x-1/2 font-light hover:underline md:hidden transition focus:outline-none hover:cursor-pointer duration-200"
-          onClick={() => setDivExpanded((prev) => !prev)}
-        >
-          {divExpanded ? "Hide" : "Show more"}
-        </button>
-      )}
     </div>
   );
 };
