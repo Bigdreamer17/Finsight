@@ -6,8 +6,12 @@ import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
+import { spaceGrotesk } from "@/app/fonts";
+import path from "path";
 
 const Navbar = () => {
+  const pathName = usePathname();
   const { data: session } = useSession();
 
   const [isScrolled, setIsScrolled] = useState(false);
@@ -41,10 +45,10 @@ const Navbar = () => {
       initial={{ y: 0 }}
       animate={{ y: isVisible ? 0 : -100 }}
       transition={{ ease: "easeInOut", duration: 0.3 }}
-      className="px-2 sticky top-5 z-30 mt-5"
+      className="px-2 sticky top-5 z-30 "
     >
       <nav
-        className={`bg-[#f9f8f6]/95 max-w-[1140px] mx-auto flex justify-between ease-in-out ${
+        className={`${pathName.includes("pricing") ? `bg-[#28282b] border border-[#39393c] ${spaceGrotesk.className}` : "bg-[#f9f8f6]/95"} max-w-[1140px] mx-auto flex justify-between ease-in-out ${
           isScrolled
             ? "shadow-[1px_1px_4px_rgba(0,0,0,0.1),_-0.5px_-0.5px_1px_rgba(0,0,0,0.05)]"
             : "shadow-none"
@@ -52,7 +56,11 @@ const Navbar = () => {
       >
         <Link href="/" className="focus:outline-none">
           <Image
-            src="https://finchat.io/cdn-cgi/image/width=640/assets/finchat-logos/finchat-logo-wordmark-light.png"
+            src={
+              pathName.includes("pricing")
+                ? "https://marketing.finchat.io/assets/finchat-logos/finchat-logo-wordmark-dark-high-contrast.png"
+                : "https://finchat.io/cdn-cgi/image/width=640/assets/finchat-logos/finchat-logo-wordmark-light.png"
+            }
             alt="finsight logo"
             width={140}
             height={140}
@@ -68,7 +76,9 @@ const Navbar = () => {
           />
         </Link>
 
-        <ul className="flex items-center md:text-sm text-xs tracking-wider gap-3 sm:gap-6 xl:gap-8 text-[#777169] font-semibold">
+        <ul
+          className={`flex items-center md:text-sm text-xs tracking-wider gap-3 sm:gap-6 xl:gap-8 ${pathName.includes("pricing") ? "text-[#F9F8F6]" : "text-[#777169]"} font-semibold`}
+        >
           <li className="hover:opacity-50 uppercase">
             <Link href="/pricing">PRICING</Link>
           </li>
@@ -77,7 +87,7 @@ const Navbar = () => {
             {session?.user ? (
               <Link
                 href="/dashboard"
-                className="rounded-4xl text-xs uppercase focus:outline-none h-9 md:h-auot cursor-pointer bg-black text-white px-3.5 py-2 md:px-6 md:py-3 font-bold hover:opacity-50"
+                className={`rounded-4xl text-xs uppercase focus:outline-none h-9 ${pathName.includes("pricing") ? "bg-[#F9F8F6] text-black hover:opacity-80" : "bg-black text-white hover:opacity-50"} cursor-pointer px-3.5 py-2 md:px-6 md:py-3 font-bold `}
               >
                 DASHBOARD
               </Link>

@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${plusJakartaSans.className} bg-[#f9f8f6] antialiased`}>
+      <body className={`${plusJakartaSans.className} antialiased`}>
         <NuqsAdapter>
           <SessionProvider>{children}</SessionProvider>
         </NuqsAdapter>

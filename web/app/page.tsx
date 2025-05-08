@@ -7,18 +7,20 @@ import Research from "./ui/landing-page/Research";
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
-      <Navbar />
+    <>
+      <main className="min-h-screen bg-[#f9f8f6]">
+        <Navbar />
 
-      <Hero />
+        <Hero />
 
-      <Companies />
+        <Companies />
 
-      <Research />
+        <Research />
 
-      <Cards />
+        <Cards />
+      </main>
 
       <Footer />
-    </main>
+    </>
   );
 }
