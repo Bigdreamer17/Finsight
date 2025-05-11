@@ -13,6 +13,9 @@ env/
 *.db
 *.sqlite
 
+# environment variables
+.env
+
 # IDE configurations (IntelliJ, VS Code, etc.)
 .idea/
 .vscode/
