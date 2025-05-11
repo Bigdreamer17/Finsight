@@ -21,6 +21,9 @@ class UserCreate(BaseModel):
     password: str
     is_upgraded: Optional[bool] = False
 
+    class Config:
+        orm_mode = True
+
 
 class GoogleAuth(BaseModel):
     token: str
