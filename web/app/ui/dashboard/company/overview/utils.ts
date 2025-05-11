@@ -75,3 +75,16 @@ export const getBreakDownProps = (
       : "-",
   };
 };
+
+export const checkIsActiveChart = (
+  metricName: string,
+  metrics: string[],
+): boolean => {
+  for (const metric of metrics) {
+    if (metric === metricName) {
+      return true;
+    }
+  }
+
+  return false;
+};

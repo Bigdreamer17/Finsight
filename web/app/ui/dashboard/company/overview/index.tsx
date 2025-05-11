@@ -66,35 +66,8 @@ const CompanyOverview = ({ companyId }: companyIdType) => {
       stockName: "NasdaqGS-MSFT",
       stockPrice: 391.16,
       description: `
-        Microsoft Corporation develops, licenses, and supports software,
-        services, devices, and solutions worldwide. The company operates in
-        three segments: Productivity and Business Processes, Intelligent Cloud,
-        and More Personal Computing. The Productivity and Business Processes
-        segment offers Office, Exchange, SharePoint, Microsoft Teams, Office 365
-        Security and Compliance, Microsoft Viva, and Skype for Business; Skype,
-        Outlook.com, OneDrive, and LinkedIn; and Dynamics 365, a set of
-        cloud-based and on-premises business solutions for organizations and
-        enterprise divisions. The Intelligent Cloud segment licenses SQL,
-        Windows Servers, Visual Studio, System Center, and related Client Access
-        Licenses; GitHub that provides a collaboration platform and code hosting
-        service for developers; Nuance provides healthcare and enterprise AI
-        solutions; and Azure, a cloud platform. It also offers enterprise
-        support, Microsoft consulting, and nuance professional services to
-        assist customers in developing, deploying, and managing Microsoft server
-        and desktop solutions; and training and certification on Microsoft
-        products. The More Personal Computing segment provides Windows original
-        equipment manufacturer (OEM) licensing and other non-volume licensing of
-        the Windows operating system; Windows Commercial, such as volume
-        licensing of the Windows operating system, Windows cloud services, and
-        other Windows commercial offerings; patent licensing; and Windows
-        Internet of Things. It also offers Surface, PC accessories, PCs,
-        tablets, gaming and entertainment consoles, and other devices; Gaming,
-        including Xbox hardware, and Xbox content and services; video games and
-        third-party video game royalties; and Search, including Bing and
-        Microsoft advertising. The company sells its products through OEMs,
-        distributors, and resellers; and directly through digital marketplaces,
-        online stores, and retail stores. Microsoft Corporation was founded in
-        1975 and is headquartered in Redmond, Washington.`,
+Dashen Bank, established in 1995 and headquartered in Addis Ababa, is one of Ethiopia’s leading private commercial banks, offering a wide range of retail, commercial, and digital banking services across the country. Operating over 900 branches and thousands of ATMs and POS terminals, the bank provides products including loans, savings, trade finance, and Sharia-compliant services under its "Sharik" brand. Dashen is also a pioneer in digital innovation, having launched Ethiopia’s first banking Super App, Amole, which offers mobile payments, transfers, e-commerce, and utility services. Internationally, the bank maintains partnerships with major global financial networks such as VISA, MasterCard, AMEX, and UnionPay, and supports remittance through operators like Western Union and MoneyGram. With over ETB 183.7 billion in total assets and a profit of ETB 6.6 billion in the 2023/24 fiscal year, Dashen Bank continues to drive financial inclusion and technological advancement in Ethiopia’s banking sector.
+`,
       ceo: "Mr. Satya Nadella",
       website: "www.microsoft.com",
       sector: "Software",

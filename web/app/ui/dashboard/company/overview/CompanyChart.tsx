@@ -2,36 +2,31 @@
 
 import { AreaGraph } from "../../common/Charts";
 import SearchChart from "./SearchChart";
-import { dataType } from "../../common/types";
-import { atom } from "jotai";
 import { useAtom } from "jotai";
 import { IoCloseOutline } from "react-icons/io5";
-
-interface chartType {
-  chartName: string;
-  toolTipTitle: string;
-  data: dataType[];
-}
-export const chartAtom = atom<chartType[]>([
-  {
-    chartName: "Revenue Growth(5YR)",
-    toolTipTitle: "Growth",
-    data: [
-      { date: "2025-04-02", count: 1000 },
-      { date: "2025-04-02", count: 1200 },
-      { date: "2025-04-02", count: 1400 },
-      { date: "2025-04-02", count: 1600 },
-      { date: "2025-04-02", count: 1200 },
-      { date: "2025-04-02", count: 2000 },
-    ],
-  },
-]);
+import type { chartsType } from "./types";
+import { chartsAtom } from "@/app/store/charts";
+import { chartsMap } from "./data";
 
 const CompanyChart = () => {
-  const [charts, setCharts] = useAtom(chartAtom);
+  const [charts, setCharts] = useAtom(chartsAtom);
+
+  const chartData: chartsType = {
+    revenueGrowthFive: {
+      toolTipTitle: "Growth",
+      data: [
+        { date: "2025-04-02", count: 1000 },
+        { date: "2025-04-02", count: 1200 },
+        { date: "2025-04-02", count: 1400 },
+        { date: "2025-04-02", count: 1600 },
+        { date: "2025-04-02", count: 1200 },
+        { date: "2025-04-02", count: 2000 },
+      ],
+    },
+  };
 
   const handleChartDelete = (name: string) => {
-    setCharts((prev) => prev.filter((chart) => name != chart.chartName));
+    setCharts((prev) => prev.filter((chart) => name != chart));
   };
 
   return (
@@ -44,11 +39,11 @@ const CompanyChart = () => {
             key={index}
             className="bg-[#40404F] py-1 px-2 flex items-center gap-1 rounded-2xl text-xs"
           >
-            <span>{chart.chartName}</span>
+            <span>{chart}</span>
 
             <button
               className="rounded-full hover:bg-white/10 hover:cursor-pointer"
-              onClick={() => handleChartDelete(chart.chartName)}
+              onClick={() => handleChartDelete(chart)}
             >
               <IoCloseOutline size={16} />
             </button>
@@ -56,17 +51,22 @@ const CompanyChart = () => {
         ))}
       </div>
 
-      {charts.map((chart: chartType, index: number) => (
-        <div key={index} className="flex flex-col gap-5">
-          <h3 className="text-xl">{chart.chartName}</h3>
+      {charts.map((c, index) => {
+        const chartKey = chartsMap[c];
+        const chart = chartData[chartKey];
 
-          <div className="border-b border-r border-[#40404F] mr-5 relative z-0">
-            <AreaGraph toolTipTitle={chart.toolTipTitle} data={chart.data} />
+        return (
+          <div key={index} className="flex flex-col gap-5">
+            <h3 className="text-xl">{c}</h3>
 
-            <p className="text-center text-xs font-light">Year</p>
+            <div className="border-b border-r border-[#40404F] mr-5 relative z-0">
+              <AreaGraph toolTipTitle={chart.toolTipTitle} data={chart.data} />
+
+              <p className="text-center text-xs font-light">Year</p>
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 };

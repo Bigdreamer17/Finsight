@@ -62,7 +62,7 @@ const Search = ({ paginationQuery, companies }: searchProps) => {
         className="border border-[#AFAFB6] focus:border-[#F2C785] bg-[#2C2C35] peer placeholder:text-[#AFAFB6] text-white py-2 pr-4 pl-10 transform transition duration-200 ease-in-out"
       />
 
-      {isFocused && (
+      {isFocused && companiesFinal.length !== 0 && (
         <div className="absolute border-[#F2C785] p-1 z-20 top-full left-0 right-0 mt-2 flex flex-col gap-1 rounded-lg bg-[#2C2C35]">
           {companiesFinal.map((company, index) => (
             <Link
@@ -72,7 +72,7 @@ const Search = ({ paginationQuery, companies }: searchProps) => {
               className="flex items-center p-2 rounded-md gap-2.5 hover:bg-[#40404F]"
             >
               <Image
-                src="https://cdn.finchat.io/21835.png"
+                src={company.imageUrl}
                 alt="company image"
                 height={26}
                 width={26}

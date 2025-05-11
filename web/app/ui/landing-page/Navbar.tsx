@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { spaceGrotesk } from "@/app/fonts";
-import path from "path";
 
 const Navbar = () => {
   const pathName = usePathname();

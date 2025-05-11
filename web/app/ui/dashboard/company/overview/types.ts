@@ -1,3 +1,5 @@
+import type { dataType } from "../../common/types";
+
 export type breakDownProps = {
   name: string;
   description: string;
@@ -102,3 +104,12 @@ export type companyOverViewType = {
     dpsFive?: number;
   };
 };
+
+export type chartsType = { [key: string]: chartType };
+
+export type chartsMapType = { [key: string]: string };
+
+interface chartType {
+  toolTipTitle: string;
+  data: dataType[];
+}

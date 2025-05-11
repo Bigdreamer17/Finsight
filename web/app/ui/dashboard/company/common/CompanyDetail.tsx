@@ -11,8 +11,7 @@ const CompanyDetail = ({ companyId }: companyIdType) => {
   }
   const companyDet: { [key: string]: comp } = {
     "123": {
-      name: "Microsoft Corporation",
-      stockName: "NasdaqGS-MSFT",
+      name: "Dashen bank",
       stockPrice: 391.16,
     },
   };
@@ -24,7 +23,7 @@ const CompanyDetail = ({ companyId }: companyIdType) => {
       <div className="p-2 rounded-lg bg-[#2C2C35] grow">
         <div className="flex items-center gap-2.5">
           <Image
-            src="https://cdn.finchat.io/21835.png"
+            src="https://media.glassdoor.com/sql/525842/dashen-bank-squarelogo-1461672481507.png"
             alt="company image"
             height={46}
             width={46}

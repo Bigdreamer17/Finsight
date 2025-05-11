@@ -16,6 +16,7 @@ const nextConfig: NextConfig = {
         hostname: "picsum.photos",
       },
       { protocol: "https", hostname: "marketing.finchat.io" },
+      { protocol: "https", hostname: "media.glassdoor.com" },
     ],
   },
 };

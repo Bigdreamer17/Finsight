@@ -67,7 +67,7 @@ const KeyMetrics = ({ companyId }: companyIdType) => {
   const companyData = companies[companyId];
 
   return (
-    <div className="mt-5 px-4 flex flex-col gap-3">
+    <div className="mt-5 px-4 flex flex-col gap-3 pb-5">
       <h3 className="text-xl font-medium flex flex-wrap">
         Financial health of company:
         <span className="min-w-fit flex items-center gap-1">

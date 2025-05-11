@@ -24,7 +24,8 @@ const Topbar = () => {
       companyId: "123",
       name: "Dashen bank",
       stockName: "Dashen bank",
-      imageUrl: "https://cdn.finchat.io/21835.png",
+      imageUrl:
+        "https://media.glassdoor.com/sql/525842/dashen-bank-squarelogo-1461672481507.png",
     },
     {
       companyId: "123",

@@ -75,7 +75,7 @@ const SearchMetric = ({ paginationQuery }: searchProps) => {
         className="border border-transparent max-w-2xl focus:border-[#AFAFB6] bg-[#1C1C21] placeholder:text-[#AFAFB6] text-white text-sm py-2 pr-4 pl-10 transform transition duration-200 ease-in-out"
       />
 
-      {isFocused && (
+      {isFocused && finalMetrics.length !== 0 && (
         <div
           ref={ref}
           className="absolute no-scrollbar border border-[#AFAFB6] max-h-[70svh] overflow-y-auto p-1 z-30 top-full left-0 right-0 mt-2 flex flex-col gap-1 rounded-lg bg-[#2C2C35]"
