@@ -1,0 +1,31 @@
+import { companyIdType } from "../common/types";
+
+export type bodTableProps = {
+  tableData: bodTableData[] | [];
+};
+
+export type execTableProps = {
+  tableData: execTabelDataType[] | [];
+};
+
+export type bodTableData = {
+  name: string;
+  title: string;
+  appointmentDate: string;
+};
+
+export type execTabelDataType = {
+  name: string;
+  position: string;
+  appointmentDate: string;
+};
+
+export type investorRelationProps = {
+  sortMetric: string;
+  sortParam: string;
+  table: string;
+} & companyIdType;
+
+export type shareholderInfoProps = {
+  information: string[];
+};

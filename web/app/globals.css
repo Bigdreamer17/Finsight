@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+:root {
+  /* --background: #ffffff; */
+  --foreground: #171717;
+
+  --surface: #f9f8f6;
+  --surface-higher: #e8e6e3;
+  --surface-higher-hover: #c9c6c0;
+  --on-surface-dimmed: #777169;
+  --custom-gray: #30313b;
+  --custom-blue: #05a6f0;
+  --custom-red: #ea4335;
+  --mark-bg: #ffe7ba;
+  --paragraph-bg: #5e5e74;
+  --surface-base: #1c1c21;
+  --surface-base-lighter: #40404f;
+  --surface-border: #afafb6;
+  --surface-border-focus: #f2c785;
+  --surface-primary: #2c2c35;
+  --surface-green: #27aa43;
+  --surface-green-hover: #229549;
+  --surface-secondary: #40404f;
+  --surface-green-secondary: #0bd28b;
+  --badgeRed: #ef476f;
+  --badgeYellow: #ffd166;
+  --badgeGreen: #0bd28b;
+}
+
+/* Works on Chrome, Edge, and Safari */
+::-webkit-scrollbar {
+  width: 5px; /* Smaller width */
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #b0b0b0;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #fafafa;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-corner {
+    background: #f1f1f1;
+  }
+}
