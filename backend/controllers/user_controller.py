@@ -10,15 +10,25 @@ def get_user_by_email(db: Session, email: str):
     return db.query(User).filter(User.email == email).first()
 
 
-def create_user(db: Session, first_name: str, last_name: str, email: str, username: str, password: str, is_upgraded: bool):
-    existing_user = db.query(User).filter((User.email == email) | (User.username == username)).first()
+def create_user(
+    db: Session,
+    first_name: str,
+    last_name: str,
+    email: str,
+    username: str,
+    password: str,
+    is_upgraded: bool,
+):
+    existing_user = (
+        db.query(User)
+        .filter((User.email == email) | (User.username == username))
+        .first()
+    )
     if existing_user:
         raise ValueError("Email or username already in use")
-    
+
     # Hash the password
     hashed_password = hash_password(password)
-
-    print(f"Creating user: {username}, Email: {email}")
 
     # Create a new user
     new_user = User(
@@ -27,7 +37,7 @@ def create_user(db: Session, first_name: str, last_name: str, email: str, userna
         email=email,
         username=username,
         password=hashed_password,
-        is_upgraded=is_upgraded
+        is_upgraded=is_upgraded,
     )
 
     db.add(new_user)
@@ -41,7 +51,7 @@ def login_user(db: Session, email: str, password: str):
 
     if not user:
         raise HTTPException(status_code=400, detail="Invalid email or password")
-    
+
     if not user.password:
         raise HTTPException(status_code=400, detail="This user must log in with Google")
 
@@ -57,5 +67,5 @@ def login_user(db: Session, email: str, password: str):
         "username": user.username,
         "firstName": user.first_name,
         "lastName": user.last_name,
-        "isUpgraded": user.is_upgraded
+        "isUpgraded": user.is_upgraded,
     }
