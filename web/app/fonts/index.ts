@@ -7,5 +7,5 @@ export const plusJakartaSans = Plus_Jakarta_Sans({
 
 export const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-plus-jakarta",
+  variable: "--font-space-grotesk",
 });
