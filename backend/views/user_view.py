@@ -1,15 +1,24 @@
+import os
 from typing import Optional
 
+from dotenv import load_dotenv
 from fastapi import APIRouter, Depends, HTTPException
 from google.auth.transport import requests as google_requests
 from google.oauth2 import id_token
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
-from controllers.user_controller import create_user
+from controllers.user_controller import create_user, get_user_by_email
 from db.database import get_db
+from services.jwt import create_access_token
 
 router = APIRouter()
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Load config from environment
+GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 
 
 # Pydantic schema to validate the incoming request data
@@ -31,8 +40,6 @@ class GoogleAuth(BaseModel):
 
 @router.post("/signup")
 def sign_up(user: UserCreate, db: Session = Depends(get_db)):
-    print("Received request for signup:", user)
-
     try:
         created_user = create_user(
             db=db,
@@ -43,8 +50,6 @@ def sign_up(user: UserCreate, db: Session = Depends(get_db)):
             password=user.password,
             is_upgraded=user.is_upgraded,
         )
-
-        print("User created successfully:", created_user)
 
         return {
             "id": created_user.id,
@@ -61,7 +66,9 @@ def sign_up(user: UserCreate, db: Session = Depends(get_db)):
 def google_auth(payload: GoogleAuth, db: Session = Depends(get_db)):
     try:
         # Verify the token
-        id_info = id_token.verify_oauth2_token(payload.token, google_requests.Request())
+        id_info = id_token.verify_oauth2_token(
+            payload.token, google_requests.Request(), audience=GOOGLE_CLIENT_ID
+        )
 
         # Extract user info
         email = id_info.get("email")
@@ -83,7 +90,7 @@ def google_auth(payload: GoogleAuth, db: Session = Depends(get_db)):
                 last_name=last_name,
                 email=email,
                 username=username,
-                password=None,
+                password="",
                 is_upgraded=is_upgraded,
             )
 
