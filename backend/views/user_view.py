@@ -12,7 +12,7 @@ from controllers.user_controller import create_user, get_user_by_email
 from db.database import get_db
 from services.jwt import create_access_token
 
-router = APIRouter()
+router = APIRouter(tags=["User"])
 
 # Load environment variables from .env file
 load_dotenv()
