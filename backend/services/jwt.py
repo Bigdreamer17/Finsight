@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 
 from dotenv import load_dotenv
 from jose import JWTError, jwt
+from fastapi import Request, HTTPException, status
 
 # Load environment variables from .env file
 load_dotenv()
@@ -29,3 +30,25 @@ def verify_access_token(token: str):
         return payload
     except JWTError:
         return None
+
+
+
+
+def get_current_user(request: Request):
+    auth_header = request.headers.get("Authorization")
+    if not auth_header or not auth_header.startswith("Bearer "):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Missing or invalid token"
+        )
+
+    token = auth_header.split(" ")[1]
+    payload = verify_access_token(token)
+
+    if not payload:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid or expired token"
+        )
+
+    return payload  # includes 'sub'
