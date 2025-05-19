@@ -3,7 +3,7 @@ import CompanyBreakDown from "./CompanyBreakDown";
 import CompanyChart from "./CompanyChart";
 import { getBreakDownProps } from "./utils";
 
-const CompanyOverview = ({ companyId }: companyIdType) => {
+const CompanyOverview = async ({ companyId }: companyIdType) => {
   interface comp {
     name: string;
     stockName: string;

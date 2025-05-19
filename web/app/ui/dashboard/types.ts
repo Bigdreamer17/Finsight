@@ -1,7 +1,7 @@
 export type dashboardProps = {
-  company: string;
-  metric: string;
-  companyFilter: string;
+  company?: string;
+  metric?: string;
+  companyFilter?: string;
 };
 
 export type searchProps = {

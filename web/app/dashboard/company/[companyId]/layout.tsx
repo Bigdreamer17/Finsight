@@ -1,6 +1,8 @@
 import CompanyDetail from "@/app/ui/dashboard/company/common/CompanyDetail";
+import CompanyDetailSkeleton from "@/app/ui/dashboard/company/common/CompanyDetailSkeleton";
 import CompanyNavigation from "@/app/ui/dashboard/company/common/CompanyNavigation";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "FinSight | Overview",
@@ -18,7 +20,9 @@ export default async function AnalyticsLayout({
 
   return (
     <div className="bg-[#1C1C21] text-white flex flex-col grow">
-      <CompanyDetail companyId={companyId} />
+      <Suspense fallback={<CompanyDetailSkeleton />}>
+        <CompanyDetail companyId={companyId} />
+      </Suspense>
 
       <CompanyNavigation companyId={companyId} />
 

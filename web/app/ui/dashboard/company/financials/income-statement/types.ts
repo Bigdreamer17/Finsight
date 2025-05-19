@@ -1,7 +1,7 @@
 import { companyIdType } from "../../common/types";
 
 export type IncomeStatementProps = {
-  metric: string;
+  metric?: string;
 } & companyIdType;
 
 export type incomeStatementType = {

@@ -1,8 +1,10 @@
 import InvestorRelations from "@/app/ui/dashboard/company/investor-relations";
+import InvestorRelationsSkeleton from "@/app/ui/dashboard/company/investor-relations/InvestorRelationsSkeleton";
 import {
   ParsedSearchParams,
   searchParamsCache,
 } from "@/app/ui/dashboard/search-params";
+import { Suspense } from "react";
 
 const InvestorRelationsPage = async ({
   params,
@@ -16,12 +18,14 @@ const InvestorRelationsPage = async ({
     await searchParamsCache.parse(searchParams);
 
   return (
-    <InvestorRelations
-      companyId={companyId}
-      sortMetric={sortMetric}
-      sortParam={sortParam}
-      table={table}
-    />
+    <Suspense fallback={<InvestorRelationsSkeleton />}>
+      <InvestorRelations
+        companyId={companyId}
+        sortMetric={sortMetric}
+        sortParam={sortParam}
+        table={table}
+      />
+    </Suspense>
   );
 };
 
