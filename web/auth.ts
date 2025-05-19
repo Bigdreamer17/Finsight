@@ -31,6 +31,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       session.user.email = token.email as string;
       session.user.isUpgraded = token.isUpgraded as boolean;
       session.user.accessToken = token.accessToken as string;
+      session.user.subscriptionEndDate = token.subscriptionEndDate as Date;
 
       return session;
     },
@@ -63,6 +64,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           email: string;
           isUpgraded: boolean;
           accessToken: string;
+          subscriptionEndDate: Date;
         };
 
         const backendUser: BackendUser = await res.json();
@@ -74,6 +76,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.email = backendUser.email;
         token.isUpgraded = backendUser.isUpgraded;
         token.accessToken = backendUser.accessToken;
+        token.subscriptionEndDate = backendUser.subscriptionEndDate;
       }
 
       return token;

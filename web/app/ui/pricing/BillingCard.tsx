@@ -4,6 +4,7 @@ import { IoIosArrowDown, IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { signIn, useSession } from "next-auth/react";
 import { spaceGrotesk } from "@/app/fonts";
 import type { billingCardProps } from "./types";
+import { normalizeDateString } from "@/app/lib/utils/normalizeDateString";
 
 const BillingCard = ({
   type,
@@ -15,10 +16,16 @@ const BillingCard = ({
 }: billingCardProps) => {
   const { data: session } = useSession();
 
+  const subEndDateString = session?.user?.subscriptionEndDate
+    ? normalizeDateString(session?.user?.subscriptionEndDate)
+    : Date.now();
+  const subEndDate = new Date(subEndDateString);
+  const newDate = new Date(Date.now());
+
   const isSubscribed =
     type === "Free"
       ? session?.user?.isUpgraded === false
-      : session?.user?.isUpgraded === true;
+      : session?.user?.isUpgraded === true && subEndDate > newDate;
 
   const buttonTitle =
     type === "Free"
@@ -27,7 +34,7 @@ const BillingCard = ({
         : session?.user !== null && session?.user !== undefined
           ? "Subscribed"
           : "Upgrade"
-      : session?.user?.isUpgraded === true
+      : session?.user?.isUpgraded === true && subEndDate > newDate
         ? "Subscribed"
         : "Upgrade";
 
