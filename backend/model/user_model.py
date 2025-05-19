@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Boolean, Column, String
+from sqlalchemy import Boolean, Column, DateTime, String, func
 from sqlalchemy.dialects.postgresql import UUID
 
 from db.database import Base
@@ -21,4 +21,6 @@ class User(Base):
     password = Column(String)
     first_name = Column(String, index=True)
     last_name = Column(String, index=True)
-    is_upgraded = Column(Boolean)
+    is_upgraded = Column(Boolean, default=False)
+    subscription_end_date = Column(DateTime, default=func.now())
+

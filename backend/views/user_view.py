@@ -8,7 +8,9 @@ from google.oauth2 import id_token
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
-from controllers.user_controller import create_user, get_user_by_email
+from controllers.user_controller import (create_user, get_current_db_time,
+                                         get_user_by_email,
+                                         update_user_subscription_status)
 from db.database import get_db
 from services.jwt import create_access_token
 
@@ -75,7 +77,6 @@ def google_auth(payload: GoogleAuth, db: Session = Depends(get_db)):
         first_name = id_info.get("given_name", "")
         last_name = id_info.get("family_name", "")
         username = email.split("@")[0]
-        is_upgraded = False
 
         if not email:
             raise HTTPException(status_code=400, detail="Email not found in token")
@@ -91,8 +92,12 @@ def google_auth(payload: GoogleAuth, db: Session = Depends(get_db)):
                 email=email,
                 username=username,
                 password="",
-                is_upgraded=is_upgraded,
             )
+
+        current_time = get_current_db_time(db=db)
+
+        if user.subscription_end_date < current_time and user.is_upgraded:
+            user = update_user_subscription_status(user=user, db=db, status=False)
 
         access_token = create_access_token(data={"sub": user.email})
 
@@ -104,6 +109,7 @@ def google_auth(payload: GoogleAuth, db: Session = Depends(get_db)):
             "firstName": user.first_name,
             "lastName": user.last_name,
             "isUpgraded": user.is_upgraded,
+            "subscriptionEndDate": user.subscription_end_date,
         }
 
     except ValueError:
