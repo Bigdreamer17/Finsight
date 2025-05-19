@@ -76,7 +76,7 @@ const Sidebar = ({ className }: { className?: string }) => {
       ))}
 
       <button
-        className="mt-auto hover:cursor-pointer mb-16 flex z-30 flex-col items-center gap-1"
+        className="mt-auto focus:outline-none hover:cursor-pointer mb-16 flex z-30 flex-col items-center gap-1"
         onClick={handleLogout}
       >
         <div className={`p-3 z-30 hover:bg-[#40404F] rounded-sm`}>
