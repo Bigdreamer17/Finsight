@@ -19,7 +19,6 @@ const BillingCard = ({
     type === "Free"
       ? session?.user?.isUpgraded === false
       : session?.user?.isUpgraded === true;
-  console.log({ session, isSubscribed, type });
 
   const buttonTitle =
     type === "Free"

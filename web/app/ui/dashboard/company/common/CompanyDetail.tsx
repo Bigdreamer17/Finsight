@@ -3,7 +3,7 @@ import type { companyIdType } from "./types";
 import { CgTranscript } from "react-icons/cg";
 import Link from "next/link";
 
-const CompanyDetail = ({ companyId }: companyIdType) => {
+const CompanyDetail = async ({ companyId }: companyIdType) => {
   interface comp {
     name: string;
     stockName?: string;

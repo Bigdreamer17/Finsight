@@ -3,9 +3,9 @@ import IndustryNews from "@/app/ui/dashboard/company/industry-news";
 const IndustryNewsPage = async ({
   params,
 }: {
-  params: { companyId: string };
+  params: Promise<{ companyId: string }>;
 }) => {
-  const { companyId } = params;
+  const { companyId } = await params;
 
   return <IndustryNews companyId={companyId} />;
 };

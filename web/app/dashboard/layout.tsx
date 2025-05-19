@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 
 import Sidebar from "../ui/dashboard/common/Sidebar";
 import Topbar from "../ui/dashboard/common/topbar";
+import { Suspense } from "react";
+import TopbarSkeleton from "../ui/dashboard/common/topbar/TopbarSkeleton";
 
 export const metadata: Metadata = {
   title: "FinSight | Dashboard",
@@ -18,7 +20,9 @@ export default function DashboardLayout({
       <Sidebar className="hidden lg:flex" />
 
       <section className="relative grow overflow-y-auto flex flex-col">
-        <Topbar />
+        <Suspense fallback={<TopbarSkeleton />}>
+          <Topbar />
+        </Suspense>
 
         {children}
       </section>

@@ -1,161 +1,83 @@
-"use client";
+import TableContainer from "./TableContainer";
 
-import { useEffect, useState } from "react";
-import { IoCloseOutline } from "react-icons/io5";
-import {
-  Table as TableContainer,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "../table";
-import { searchParams } from "./search-params";
-import { searchParamOption } from "@/app/lib/search-params";
-import { useQueryStates } from "nuqs";
-import { RiArrowUpDownLine } from "react-icons/ri";
-import { HiArrowNarrowDown, HiArrowNarrowUp } from "react-icons/hi";
-import { metricMap } from "./data";
-import type { TableProps } from "./types";
-import { getDashbaordTableData } from "./utils";
-import { FaLock } from "react-icons/fa";
-import { useAtom } from "jotai";
-import { dashboardMetricAtom } from "@/app/store/dashboardMetrics";
+const Table = async () => {
+  interface comp {
+    companyName: string;
+    sector?: string;
+    companyWorth?: number;
+    dividendPerShare?: number;
+    financialHealth?: string;
+    growth?: string;
+    growthRanking?: number;
+    growthRating?: string;
+    investmentPotential?: string;
+    investementRanking?: number;
+    revenueLastYear?: number;
+    roa?: number;
+    roe?: number;
+    riskLevel?: string;
+    netProfitMargin?: number;
+    profitability?: string;
+    profitabilityRanking?: number;
+    revenueGrowthRate?: number;
+    stabilityRanking?: number;
+    stabilityRating?: string;
+    dividendYeild?: number;
+    totalNumberOfShares?: number;
+    dividendStrength?: string;
+    debtToEquity?: number;
+  }
+  const companies: comp[] = [
+    {
+      companyName: "Wegagen bank",
+      sector: "Financial",
+      companyWorth: 32000000,
+      financialHealth: "Very strong buy(A)",
+      dividendPerShare: 1000,
+      investementRanking: 35,
+      revenueLastYear: 30000000,
+      growth: "High growth",
+      growthRanking: 20,
+      growthRating: "Above industry average",
+      investmentPotential: "High investement potential",
+      profitability: "Strong profitablility",
+      profitabilityRanking: 15,
+      revenueGrowthRate: 35,
+      roa: 32,
+      roe: 15,
+      riskLevel: "Low risk investement",
+      stabilityRating: "Above industry average",
+      dividendStrength: "High dividends",
+      debtToEquity: 69,
+      dividendYeild: 8,
+      totalNumberOfShares: 54361,
+    },
+    {
+      companyName: "Birhan bank",
+      sector: "Financial",
+      companyWorth: 88020000,
+      financialHealth: "Very strong buy(A)",
+      dividendPerShare: 500,
+      investementRanking: 25,
+      revenueLastYear: 50000000,
+      growth: "High growth",
+      growthRanking: 22,
+      growthRating: "Above industry average",
+      investmentPotential: "Moderate investement potential",
+      profitability: "Strong profitablility",
+      profitabilityRanking: 19,
+      revenueGrowthRate: 25,
+      roa: 30,
+      roe: 29,
+      riskLevel: "Moderate risk investement",
+      stabilityRating: "Above industry average",
+      dividendStrength: "High dividends",
+      netProfitMargin: 23,
+      debtToEquity: 29,
+    },
+  ];
 
-const Table = ({ comp }: TableProps) => {
-  const [metrics, setMetrics] = useAtom(dashboardMetricAtom);
-  const [companies, setCompanies] = useState(comp);
-
-  const [{ sortMetric, sortParam, companyFilter }, setParams] = useQueryStates(
-    searchParams,
-    searchParamOption,
-  );
-
-  useEffect(() => {
-    const filteredCompanies = comp.filter((c) =>
-      c.companyName.toLowerCase().includes(companyFilter.toLowerCase()),
-    );
-
-    setCompanies(filteredCompanies);
-  }, [companyFilter, comp]);
-
-  const handleMetricDelete = (metric: string) => {
-    setMetrics((prev) => prev.filter((m) => m.name != metric));
-  };
-
-  const handleSortClick = (param: string) => {
-    const newMetric =
-      sortMetric === "Desc" && param === sortParam ? "Asc" : "Desc";
-    setParams((prev) => ({ ...prev, sortMetric: newMetric, sortParam: param }));
-  };
-
-  return (
-    <div className="flex flex-col flex-1 gap-3">
-      <div className="flex items-center gap-3 flex-wrap">
-        {metrics.slice(1).map((metric, index) => (
-          <div
-            key={index}
-            className="bg-[#40404F] py-1 px-2 flex items-center gap-1 rounded-2xl text-xs"
-          >
-            <span>{metric.name}</span>
-
-            <button
-              className="rounded-full hover:bg-white/10 hover:cursor-pointer"
-              onClick={() => handleMetricDelete(metric.name)}
-            >
-              <IoCloseOutline size={16} />
-            </button>
-          </div>
-        ))}
-      </div>
-
-      <TableContainer>
-        <TableHeader className="bg-[#1C1C21] border-[#AFAFB6]/40 border-y text-xs">
-          <TableRow>
-            {metrics.map((metric, index) => (
-              <TableHead
-                key={index}
-                className={
-                  index !== metrics.length - 1
-                    ? "border-r border-[#AFAFB6]/40"
-                    : ""
-                }
-              >
-                <button
-                  className="flex items-center gap-3 hover:cursor-pointer w-full focus:outline-none"
-                  onClick={() => handleSortClick(metricMap[metric.name])}
-                >
-                  <span>{metric.name}</span>
-
-                  <div className="flex justify-center items-center hover:cursor-pointer">
-                    <RiArrowUpDownLine
-                      size={17}
-                      className={
-                        sortMetric !== "" &&
-                        sortParam === metricMap[metric.name]
-                          ? "hidden"
-                          : "p-0"
-                      }
-                    />
-
-                    <HiArrowNarrowUp
-                      size={17}
-                      className={
-                        sortMetric === "Desc" ||
-                        sortParam !== metricMap[metric.name]
-                          ? "hidden"
-                          : "p-0"
-                      }
-                    />
-
-                    <HiArrowNarrowDown
-                      size={17}
-                      className={
-                        sortMetric === "Asc" ||
-                        sortParam !== metricMap[metric.name]
-                          ? "hidden"
-                          : ""
-                      }
-                    />
-                  </div>
-                </button>
-              </TableHead>
-            ))}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {companies.map((company, index) => {
-            const rowData = getDashbaordTableData(company);
-
-            return (
-              <TableRow
-                key={index}
-                className={`${index % 2 === 0 ? "bg-[#2C2C35]" : "bg-[#40404F]"}`}
-              >
-                {metrics.map((metric, idx) => {
-                  const rowDataKey = metricMap[metric.name];
-                  const data = rowData[rowDataKey];
-
-                  return (
-                    <TableCell
-                      key={idx}
-                      className={`text-center ${idx !== metrics.length - 1 ? "border-r border-[#AFAFB6]/40" : ""}`}
-                    >
-                      {metric.isPaidFeature ? (
-                        <FaLock size={16} className="mx-auto" />
-                      ) : (
-                        (data ?? "-")
-                      )}
-                    </TableCell>
-                  );
-                })}
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </TableContainer>
-    </div>
-  );
+  return <TableContainer comp={companies} />;
 };
 
 export default Table;

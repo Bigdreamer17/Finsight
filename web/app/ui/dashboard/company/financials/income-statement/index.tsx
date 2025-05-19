@@ -2,7 +2,7 @@ import IncomeStatementTable from "./IncomeStatementTable";
 import SearchMetric from "./SearchMetric";
 import type { IncomeStatementProps, incomeStatementType } from "./types";
 
-const IncomeStatement = ({ companyId, metric }: IncomeStatementProps) => {
+const IncomeStatement = ({ companyId }: IncomeStatementProps) => {
   interface comp {
     incomeStatement: incomeStatementType[];
   }

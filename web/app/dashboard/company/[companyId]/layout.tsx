@@ -1,24 +1,28 @@
 import CompanyDetail from "@/app/ui/dashboard/company/common/CompanyDetail";
+import CompanyDetailSkeleton from "@/app/ui/dashboard/company/common/CompanyDetailSkeleton";
 import CompanyNavigation from "@/app/ui/dashboard/company/common/CompanyNavigation";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "FinSight | Overview",
   description: "Dashboard for FinSight",
 };
 
-export default function AnalyticsLayout({
+export default async function AnalyticsLayout({
   children,
   params,
 }: Readonly<{
   children: React.ReactNode;
-  params: { companyId: string };
+  params: Promise<{ companyId: string }>;
 }>) {
-  const { companyId } = params;
+  const { companyId } = await params;
 
   return (
     <div className="bg-[#1C1C21] text-white flex flex-col grow">
-      <CompanyDetail companyId={companyId} />
+      <Suspense fallback={<CompanyDetailSkeleton />}>
+        <CompanyDetail companyId={companyId} />
+      </Suspense>
 
       <CompanyNavigation companyId={companyId} />
 

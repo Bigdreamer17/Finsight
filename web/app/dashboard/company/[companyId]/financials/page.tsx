@@ -1,20 +1,13 @@
 import IncomeStatement from "@/app/ui/dashboard/company/financials/income-statement";
-import {
-  ParsedSearchParams,
-  searchParamsCache,
-} from "@/app/ui/dashboard/search-params";
 
 const FinancialsPage = async ({
   params,
-  searchParams,
 }: {
-  params: { companyId: string };
-  searchParams: ParsedSearchParams;
+  params: Promise<{ companyId: string }>;
 }) => {
-  const { companyId } = params;
-  const { metric } = await searchParamsCache.parse(searchParams);
+  const { companyId } = await params;
 
-  return <IncomeStatement companyId={companyId} metric={metric} />;
+  return <IncomeStatement companyId={companyId} />;
 };
 
 export default FinancialsPage;

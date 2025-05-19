@@ -8,7 +8,7 @@ import type {
   investorRelationProps,
 } from "./types";
 
-const InvestorRelations = ({
+const InvestorRelations = async ({
   companyId,
   sortMetric,
   sortParam,

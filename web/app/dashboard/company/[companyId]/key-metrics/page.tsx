@@ -1,7 +1,11 @@
 import KeyMetrics from "@/app/ui/dashboard/company/key-metrics";
 
-const KeyMetricsPage = ({ params }: { params: { companyId: string } }) => {
-  const { companyId } = params;
+const KeyMetricsPage = async ({
+  params,
+}: {
+  params: Promise<{ companyId: string }>;
+}) => {
+  const { companyId } = await params;
 
   return <KeyMetrics companyId={companyId} />;
 };
