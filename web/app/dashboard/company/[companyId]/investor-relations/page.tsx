@@ -8,10 +8,10 @@ const InvestorRelationsPage = async ({
   params,
   searchParams,
 }: {
-  params: { companyId: string };
+  params: Promise<{ companyId: string }>;
   searchParams: ParsedSearchParams;
 }) => {
-  const { companyId } = params;
+  const { companyId } = await params;
   const { sortMetric, sortParam, table } =
     await searchParamsCache.parse(searchParams);
 

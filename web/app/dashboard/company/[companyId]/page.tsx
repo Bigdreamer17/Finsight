@@ -1,7 +1,11 @@
 import CompanyOverview from "@/app/ui/dashboard/company/overview";
 
-const OverviewPage = ({ params }: { params: { companyId: string } }) => {
-  const { companyId } = params;
+const OverviewPage = async ({
+  params,
+}: {
+  params: Promise<{ companyId: string }>;
+}) => {
+  const { companyId } = await params;
 
   return <CompanyOverview companyId={companyId} />;
 };

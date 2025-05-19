@@ -7,14 +7,14 @@ export const metadata: Metadata = {
   description: "Dashboard for FinSight",
 };
 
-export default function AnalyticsLayout({
+export default async function AnalyticsLayout({
   children,
   params,
 }: Readonly<{
   children: React.ReactNode;
-  params: { companyId: string };
+  params: Promise<{ companyId: string }>;
 }>) {
-  const { companyId } = params;
+  const { companyId } = await params;
 
   return (
     <div className="bg-[#1C1C21] text-white flex flex-col grow">

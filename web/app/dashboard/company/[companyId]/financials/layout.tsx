@@ -6,14 +6,14 @@ export const metadata: Metadata = {
   description: "Dashboard for FinSight",
 };
 
-export default function FinancialLayout({
+export default async function FinancialLayout({
   children,
   params,
 }: Readonly<{
   children: React.ReactNode;
-  params: { companyId: string };
+  params: Promise<{ companyId: string }>;
 }>) {
-  const { companyId } = params;
+  const { companyId } = await params;
 
   return (
     <div className="rounded-lg grow bg-[#2C2C35] p-4 flex flex-col gap-2.5 mt-5">

@@ -11,6 +11,7 @@ import { spaceGrotesk } from "@/app/fonts";
 
 const Navbar = () => {
   const pathName = usePathname();
+
   const { data: session } = useSession();
 
   const [isScrolled, setIsScrolled] = useState(false);

@@ -8,10 +8,10 @@ const FinancialsPage = async ({
   params,
   searchParams,
 }: {
-  params: { companyId: string };
+  params: Promise<{ companyId: string }>;
   searchParams: ParsedSearchParams;
 }) => {
-  const { companyId } = params;
+  const { companyId } = await params;
   const { metric } = await searchParamsCache.parse(searchParams);
 
   return <IncomeStatement companyId={companyId} metric={metric} />;
