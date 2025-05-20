@@ -2,7 +2,7 @@ FROM node:22-bullseye
 
 WORKDIR /app
 
-COPY ./package.json .
+COPY package*.json .
 
 RUN npm i
 

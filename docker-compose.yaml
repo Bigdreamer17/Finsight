@@ -4,9 +4,19 @@ services:
     ports:
       - "3000:3000"
     volumes:
+      - ./web:/app
       - /app/node_modules
+    depends_on:
+      - backend
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - /app/__pycache__
     develop:
       watch:
         - action: sync
-          path: ./web
+          path: ./backend
           target: /app

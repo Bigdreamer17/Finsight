@@ -22,5 +22,4 @@ class User(Base):
     first_name = Column(String, index=True)
     last_name = Column(String, index=True)
     is_upgraded = Column(Boolean, default=False)
-    subscription_end_date = Column(DateTime, default=func.now())
-
+    subscription_end_date = Column(DateTime(timezone=True), default=func.now())

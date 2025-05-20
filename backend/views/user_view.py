@@ -1,18 +1,17 @@
 import os
+from datetime import datetime, timezone
 from typing import Optional
 
+from controllers.user_controller import (create_user, get_user_by_email,
+                                         update_user_subscription_status)
+from db.database import get_db
 from dotenv import load_dotenv
 from fastapi import APIRouter, Depends, HTTPException
 from google.auth.transport import requests as google_requests
 from google.oauth2 import id_token
 from pydantic import BaseModel
-from sqlalchemy.orm import Session
-
-from controllers.user_controller import (create_user, get_current_db_time,
-                                         get_user_by_email,
-                                         update_user_subscription_status)
-from db.database import get_db
 from services.jwt import create_access_token
+from sqlalchemy.orm import Session
 
 router = APIRouter(tags=["User"])
 
@@ -94,7 +93,7 @@ def google_auth(payload: GoogleAuth, db: Session = Depends(get_db)):
                 password="",
             )
 
-        current_time = get_current_db_time(db=db)
+        current_time = datetime.now(timezone.utc)
 
         if user.subscription_end_date < current_time and user.is_upgraded:
             user = update_user_subscription_status(user=user, db=db, status=False)

@@ -1,7 +1,4 @@
-from datetime import datetime
-
 from fastapi import HTTPException
-from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from model.user_model import User
@@ -70,10 +67,6 @@ def login_user(db: Session, email: str, password: str):
         "lastName": user.last_name,
         "isUpgraded": user.is_upgraded,
     }
-
-
-def get_current_db_time(db: Session) -> datetime:
-    return db.execute(select(func.now())).scalar_one()
 
 
 def update_user_subscription_status(user: User, db: Session, status: bool) -> User:
