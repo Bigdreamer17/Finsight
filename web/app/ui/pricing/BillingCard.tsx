@@ -3,8 +3,9 @@
 import { IoIosArrowDown, IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { signIn, useSession } from "next-auth/react";
 import { spaceGrotesk } from "@/app/fonts";
-import type { billingCardProps } from "./types";
+import type { billingCardProps, responseType } from "./types";
 import { normalizeDateString } from "@/app/lib/utils/normalizeDateString";
+import { useRouter } from "next/navigation";
 
 const BillingCard = ({
   type,
@@ -14,6 +15,7 @@ const BillingCard = ({
   services,
   ref,
 }: billingCardProps) => {
+  const router = useRouter();
   const { data: session } = useSession();
 
   const subEndDateString = session?.user?.subscriptionEndDate
@@ -46,11 +48,48 @@ const BillingCard = ({
     }
   };
 
-  const handleClickUpgrade = () => {
+  const handleClickUpgrade = async () => {
     if (type === "Free") {
-      signIn("google");
+      await signIn("google");
     } else if (type === "Pro") {
-      signIn("google");
+      if (!session?.user) {
+        alert("You need to sign in first");
+      } else {
+        const payload = {
+          amount: price === 1000 ? price * 12 : price,
+          user_id: session.user.id,
+          email: session.user.email,
+          first_name: session.user.firstName,
+          last_name: session.user.lastName,
+          currency: "ETB",
+          title: "Upgrade",
+          description: "Upgrade to get full access to finsight",
+        };
+
+        try {
+          const res = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_API_URL ?? ""}/pay/upgrade`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(payload),
+            },
+          );
+
+          if (!res.ok) {
+            throw new Error("Failed to initialize payment");
+          }
+
+          const { checkout_url }: responseType = await res.json();
+
+          router.push(checkout_url);
+        } catch (err) {
+          console.error(err);
+          alert("failed to upgrade");
+        }
+      }
     }
   };
 

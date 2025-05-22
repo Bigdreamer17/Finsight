@@ -15,3 +15,8 @@ export type billingCardProps = {
 } & billingOption;
 
 export type servicesType = { [key: string]: string | number | ReactNode };
+
+export type responseType = {
+  checkout_url: string;
+  tx_ref: string;
+};
