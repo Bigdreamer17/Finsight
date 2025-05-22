@@ -42,7 +42,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
 
         const res = await fetch(
-          `${process.env.BACKEND_API_URL ?? ""}/signin/google`,
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URL ?? ""}/signin/google`,
           {
             method: "POST",
             headers: {
