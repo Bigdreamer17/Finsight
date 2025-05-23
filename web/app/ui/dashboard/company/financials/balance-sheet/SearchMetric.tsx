@@ -4,22 +4,22 @@ import { searchParamOption } from "@/app/lib/search-params";
 import { useQueryStates } from "nuqs";
 import { searchParams } from "../../../search-params";
 import SearchInput from "../../../common/SearchInput";
+import type { searchProps } from "./types";
 import { useEffect, useRef, useState } from "react";
 import { useAtom } from "jotai";
-import { incomeStatementMetricsAtom } from "@/app/store/financialsMetrics";
-import { fieldsMap, incomeStatementMetrics } from "./data";
+import { balanceSheetMetricsAtom } from "@/app/store/financialsMetrics";
+import { fieldsMap, balanceSheetMetrics } from "./data";
 import { handleClickOutside } from "@/app/lib/utils/handleClickOutside";
 import { metricType } from "../../../types";
 import { checkIsActiveMetric } from "../../../utils";
 import { FaLock } from "react-icons/fa";
-import { searchProps } from "../types";
 
 const SearchMetric = ({ paginationQuery }: searchProps) => {
   const [isFocused, setIsFocused] = useState(false);
   const [finalMetrics, setFinalMetrics] = useState(
-    incomeStatementMetrics.filter((m) => !m.isLast),
+    balanceSheetMetrics.filter((m) => !m.isLast),
   );
-  const [metrics, setMetrics] = useAtom(incomeStatementMetricsAtom);
+  const [metrics, setMetrics] = useAtom(balanceSheetMetricsAtom);
   const ref = useRef<HTMLDivElement>(null);
 
   const [{ metric }, setParams] = useQueryStates(
@@ -28,7 +28,7 @@ const SearchMetric = ({ paginationQuery }: searchProps) => {
   );
 
   useEffect(() => {
-    const preFilteredMetrics = incomeStatementMetrics.filter((m) => !m.isLast);
+    const preFilteredMetrics = balanceSheetMetrics.filter((m) => !m.isLast);
     const filteredMetrics = preFilteredMetrics.filter((m) =>
       m.name.toLowerCase().includes(metric.toLowerCase()),
     );
@@ -81,7 +81,7 @@ const SearchMetric = ({ paginationQuery }: searchProps) => {
   };
 
   return (
-    <div className="relative focus-within::z-30 max-w-fit min-w-1/2">
+    <div className="relative focus-within:z-30 max-w-full md:max-w-fit min-w-1/2">
       <SearchInput
         onFocus={() => setIsFocused(true)}
         defaultValue={metric}

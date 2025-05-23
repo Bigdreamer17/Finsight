@@ -7,7 +7,7 @@ import { IoCloseOutline } from "react-icons/io5";
 import Sidebar from "../Sidebar";
 import { handleClickOutside } from "@/app/lib/utils/handleClickOutside";
 import Link from "next/link";
-import type { companyType } from "./types";
+import type { companyType } from "../../company/common/types";
 
 const Topbar = ({ companies }: { companies: companyType[] }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,7 +35,7 @@ const Topbar = ({ companies }: { companies: companyType[] }) => {
 
   return (
     <>
-      <section className="sticky bg-[#1C1C21] z-20 top-0 left-0 right-0 w-full py-5 px-3 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <section className="sticky bg-[#1C1C21] z-40 top-0 left-0 right-0 w-full py-5 px-3 flex flex-col sm:flex-row items-center justify-between gap-3">
         <Search companies={companies} />
 
         <div className="flex items-center justify-between w-full sm:w-auto gap-3">
@@ -58,7 +58,7 @@ const Topbar = ({ companies }: { companies: companyType[] }) => {
       {isOpen && (
         <div ref={ref}>
           <Sidebar
-            className={`lg:hidden bg-[#1C1C21] fixed z-30 top-0 ${isOpen ? "left-0" : "-left-20"} transition duration-400 ease-in-out`}
+            className={`lg:hidden bg-[#1C1C21] fixed z-50 top-0 ${isOpen ? "left-0" : "-left-20"} transition duration-400 ease-in-out`}
           />
         </div>
       )}

@@ -11,15 +11,11 @@ import {
 import { fieldsMap } from "./data";
 import { IoCloseOutline } from "react-icons/io5";
 import { useAtom } from "jotai";
-import { incomeStatementMetricsAtom } from "@/app/store/financialsMetrics";
-import { FaLock } from "react-icons/fa";
-import { useSession } from "next-auth/react";
-import { tabelDataProps } from "../types";
+import { kpisMetricsAtom } from "@/app/store/financialsMetrics";
+import { tabelDataProps } from "../balance-sheet/types";
 
-const IncomeStatementTable = ({ tableData }: tabelDataProps) => {
-  const { data: session } = useSession();
-
-  const [metrics, setMetrics] = useAtom(incomeStatementMetricsAtom);
+const CashFlowTable = ({ tableData }: tabelDataProps) => {
+  const [metrics, setMetrics] = useAtom(kpisMetricsAtom);
 
   const handleMetricDelete = (metric: string) => {
     setMetrics((prev) => prev.filter((m) => m.name != metric));
@@ -51,7 +47,7 @@ const IncomeStatementTable = ({ tableData }: tabelDataProps) => {
         <TableHeader className="bg-[#1C1C21] border-[#AFAFB6]/40 border-t border-l">
           <TableRow>
             <TableHead className="border-r border-[#AFAFB6]/40">
-              Income Statement
+              Balance Sheet
             </TableHead>
 
             {tableData.map((data, index) => (
@@ -59,7 +55,7 @@ const IncomeStatementTable = ({ tableData }: tabelDataProps) => {
                 key={index}
                 className="border-r border-[#AFAFB6]/40 text-center"
               >
-                {data.fiscal_year} (ETB&apos;000)
+                {data.fiscal_year}
               </TableHead>
             ))}
           </TableRow>
@@ -80,13 +76,7 @@ const IncomeStatementTable = ({ tableData }: tabelDataProps) => {
                   key={idx}
                   className="border-r border-[#AFAFB6]/40 min-w-fit text-center"
                 >
-                  {metric.isPaidFeature && !session?.user.isUpgraded ? (
-                    <FaLock size={16} className="mx-auto" />
-                  ) : typeof data[metric.name] === "number" ? (
-                    `${((data[metric.name] as number) / 1000).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })} Birr`
-                  ) : (
-                    "-"
-                  )}
+                  {data[metric.name] ? `${data[metric.name]}` : "-"}
                 </TableCell>
               ))}
             </TableRow>
@@ -97,4 +87,4 @@ const IncomeStatementTable = ({ tableData }: tabelDataProps) => {
   );
 };
 
-export default IncomeStatementTable;
+export default CashFlowTable;

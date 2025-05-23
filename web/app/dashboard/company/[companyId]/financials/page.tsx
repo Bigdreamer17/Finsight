@@ -1,4 +1,6 @@
 import IncomeStatement from "@/app/ui/dashboard/company/financials/income-statement";
+import IncomeStatementSkeleton from "@/app/ui/dashboard/company/financials/income-statement/IncomeStatementSkeleton";
+import { Suspense } from "react";
 
 const FinancialsPage = async ({
   params,
@@ -7,7 +9,11 @@ const FinancialsPage = async ({
 }) => {
   const { companyId } = await params;
 
-  return <IncomeStatement companyId={companyId} />;
+  return (
+    <Suspense fallback={<IncomeStatementSkeleton />}>
+      <IncomeStatement companyId={companyId} />
+    </Suspense>
+  );
 };
 
 export default FinancialsPage;

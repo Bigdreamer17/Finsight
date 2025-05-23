@@ -28,7 +28,7 @@ const SearchInput = ({
         type="text"
         placeholder={placeHolder ?? "Search"}
         className={cn(
-          "bg-inherit rounded-full min-w-80 w-full pl-4 focus:outline-none focus-visible:outline-none focus:ring-0",
+          "bg-inherit rounded-full min-w-full sm:min-w-80 w-full pl-4 focus:outline-none focus-visible:outline-none focus:ring-0",
           className,
         )}
         onChange={(e: ChangeEvent<HTMLInputElement>) => {

@@ -20,7 +20,7 @@ const InvestorRelations = async ({
     information: string[];
   }
   const companyRelations: { [key: string]: comp } = {
-    "123": {
+    "2d12ea5a-dce7-4722-8014-bf596514cbe7": {
       bodTabelData: [
         {
           name: "Abebe Chala",

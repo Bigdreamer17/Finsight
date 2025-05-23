@@ -7,7 +7,7 @@ const IndustryNews = ({ companyId }: companyIdType) => {
     finance: newsType[];
   }
   const companyData: { [key: string]: comp } = {
-    "123": {
+    "2d12ea5a-dce7-4722-8014-bf596514cbe7": {
       finance: [
         {
           title: "AI Startup Raises $50M to Revolutionize Healthcare",

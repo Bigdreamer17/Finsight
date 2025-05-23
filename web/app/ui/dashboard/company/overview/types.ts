@@ -49,14 +49,14 @@ export type breakDownProps = {
 };
 
 export type companyOverViewType = {
-  name: string;
-  stockName: string;
-  stockPrice: number;
+  name?: string;
+  stockName?: string;
+  stockPrice?: string;
   description?: string;
   ceo?: string;
   website?: string;
   sector?: string;
-  foundationYear?: number;
+  foundationYear?: string;
   profile?: {
     marketCap?: number;
     ev?: number;
