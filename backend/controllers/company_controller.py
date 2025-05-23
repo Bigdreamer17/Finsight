@@ -57,8 +57,8 @@ def create_company(
     return new_company
 
 
-def get_company_by_id(db: Session, id: str):
-    existing_company = db.query(Company).filter(Company.id == id).first()
+def get_company_by_id(db: Session, company_id: str):
+    existing_company = db.query(Company).filter(Company.id == company_id).first()
     if not existing_company:
         HTTPException(status_code=404, detail="company not found")
 

@@ -1,5 +1,4 @@
 import { spaceGrotesk } from "@/app/fonts";
-import Link from "next/link";
 
 const Hero = () => {
   const prompts = [
@@ -23,13 +22,9 @@ const Hero = () => {
           params.set("prompt", prompt);
 
           return (
-            <Link
-              key={index}
-              href={`/dashboard?${params.toString()}`}
-              className="w-full p-2.5 bg-white rounded-lg"
-            >
+            <div key={index} className="w-full p-2.5 bg-white rounded-lg">
               {prompt}
-            </Link>
+            </div>
           );
         })}
       </div>

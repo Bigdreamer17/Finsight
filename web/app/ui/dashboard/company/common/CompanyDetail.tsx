@@ -1,22 +1,11 @@
 import Image from "next/image";
-import type { companyIdType } from "./types";
+import type { companyIdType, companyType } from "./types";
 import { CgTranscript } from "react-icons/cg";
 import Link from "next/link";
+import { fetchCompanyById } from "@/app/lib/fetchs/get-company";
 
 const CompanyDetail = async ({ companyId }: companyIdType) => {
-  interface comp {
-    name: string;
-    stockName?: string;
-    stockPrice: number;
-  }
-  const companyDet: { [key: string]: comp } = {
-    "123": {
-      name: "Dashen bank",
-      stockPrice: 391.16,
-    },
-  };
-
-  const company = companyDet[companyId];
+  const company: companyType = await fetchCompanyById({ companyId });
 
   return (
     <div className="px-4 flex flex-col sm:flex-row items-stretch gap-3 mb-2.5">
@@ -35,20 +24,31 @@ const CompanyDetail = async ({ companyId }: companyIdType) => {
               {company.name}
             </h1>
 
-            {company?.stockName !== null &&
-              company?.stockName !== "" &&
-              typeof company?.stockName === "string" && (
-                <h2 className="text-sm font-light">{company.stockName}</h2>
+            {company?.stock_name !== null &&
+              company?.stock_name !== undefined &&
+              company?.stock_name !== "" && (
+                <h2 className="text-sm font-light">{company.stock_name}</h2>
               )}
           </div>
         </div>
       </div>
       <div className="p-2 rounded-lg flex items-center bg-[#2C2C35] shrink-0 basis-1/3 justify-between">
-        <p className="font-semibold">{company.stockPrice} Birr</p>
+        <div className="flex flex-col gap-2 justify-center self-stretch">
+          {company.stock_price !== null &&
+            company.stock_price !== undefined && (
+              <p className="font-semibold">{company.stock_price} Birr</p>
+            )}
+
+          {company?.swift_code !== null &&
+            company?.swift_code !== undefined &&
+            company?.swift_code !== "" && (
+              <h2 className="font-medium">{company.swift_code}</h2>
+            )}
+        </div>
 
         <Link
-          href={"https://google.com"}
-          className="p-1 hover:bg-[#40404F] rounded-md"
+          href={company.website ?? ""}
+          className="p-1 hover:bg-[#40404F] rounded-md ml-auto"
           rel="noopener noreferrer"
           target="_blank"
         >

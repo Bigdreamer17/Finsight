@@ -8,7 +8,7 @@ from controllers.company_controller import (create_company, get_companies,
                                             get_company_by_id)
 from db.database import get_db
 
-router = APIRouter(prefix="/company", tags=["Company"])
+router = APIRouter(prefix="/companies", tags=["Company"])
 
 
 class CompanyCreate(BaseModel):
@@ -70,7 +70,7 @@ def get_all_companies_route(db: Session = Depends(get_db)):
             db=db,
         )
 
-        return {"companies": companies}
+        return companies
 
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
@@ -81,6 +81,6 @@ def get_company_by_id_route(company_id: str, db: Session = Depends(get_db)):
     try:
         company = get_company_by_id(company_id=company_id, db=db)
 
-        return {"company": company}
+        return company
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))

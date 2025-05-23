@@ -28,6 +28,7 @@ const Sidebar = ({ className }: { className?: string }) => {
           alt="finsight logo"
           width={50}
           height={50}
+          className="z-50"
         />
       ),
       href: "/",
@@ -40,7 +41,7 @@ const Sidebar = ({ className }: { className?: string }) => {
     },
     {
       element: <TbBrandGoogleAnalytics size={20} />,
-      href: "/dashboard/company/123",
+      href: "/dashboard/company/2d12ea5a-dce7-4722-8014-bf596514cbe7",
       name: "Analysis",
       isActive: pathName.includes("dashboard/company"),
     },
@@ -55,7 +56,7 @@ const Sidebar = ({ className }: { className?: string }) => {
   return (
     <section
       className={cn(
-        "flex flex-col z-30 gap-3 border-r border-r-[#40404F] h-screen w-20 shrink-0",
+        "flex flex-col z-50 gap-3 border-r border-r-[#40404F] h-screen w-20 shrink-0",
         className,
       )}
     >
@@ -63,27 +64,27 @@ const Sidebar = ({ className }: { className?: string }) => {
         <Link
           href={nav.href}
           key={index}
-          className="flex z-30 flex-col items-center gap-1"
+          className="flex z-50 flex-col items-center gap-1"
         >
           <div
-            className={`p-3 z-30 ${nav.isActive ? "bg-[#40404F]" : ""} ${index !== 0 ? "hover:bg-[#40404F]" : ""} rounded-sm`}
+            className={`p-3 z-50 ${nav.isActive ? "bg-[#40404F]" : ""} ${index !== 0 ? "hover:bg-[#40404F]" : ""} rounded-sm`}
           >
             {nav.element}
           </div>
 
-          {nav.name && <span className="text-[10px] z-30">{nav.name}</span>}
+          {nav.name && <span className="text-[10px] z-50">{nav.name}</span>}
         </Link>
       ))}
 
       <button
-        className="mt-auto focus:outline-none hover:cursor-pointer mb-16 flex z-30 flex-col items-center gap-1"
+        className="mt-auto focus:outline-none hover:cursor-pointer mb-16 flex z-50 flex-col items-center gap-1"
         onClick={handleLogout}
       >
-        <div className={`p-3 z-30 hover:bg-[#40404F] rounded-sm`}>
+        <div className={`p-3 z-50 hover:bg-[#40404F] rounded-sm`}>
           <MdLogout size={20} />
         </div>
 
-        <span className="text-[10px] z-30">Log Out</span>
+        <span className="text-[10px] z-50">Log Out</span>
       </button>
     </section>
   );

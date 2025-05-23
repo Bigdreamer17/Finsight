@@ -10,7 +10,9 @@ export type searchProps = {
 
 export type metricType = {
   name: string;
-  isPaidFeature: boolean;
+  isPaidFeature?: boolean;
+  isLast?: boolean;
+  grouping?: string;
 };
 
 export type companyDashboard = {

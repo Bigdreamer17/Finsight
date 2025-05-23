@@ -1,9 +1,4 @@
-export type companyType = {
-  name: string;
-  stockName: string;
-  companyId: string;
-  imageUrl: string;
-};
+import type { companyType } from "../../company/common/types";
 
 export type searchProps = {
   paginationQuery?: string;

@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
-  title: "FinSight | Overview",
+  title: "FinSight | Analysis",
   description: "Dashboard for FinSight",
 };
 

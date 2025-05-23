@@ -6,20 +6,20 @@ import { searchParams } from "../../../search-params";
 import SearchInput from "../../../common/SearchInput";
 import { useEffect, useRef, useState } from "react";
 import { useAtom } from "jotai";
-import { incomeStatementMetricsAtom } from "@/app/store/financialsMetrics";
-import { fieldsMap, incomeStatementMetrics } from "./data";
+import { kpisMetricsAtom } from "@/app/store/financialsMetrics";
+import { fieldsMap, kpisMetrics } from "./data";
 import { handleClickOutside } from "@/app/lib/utils/handleClickOutside";
-import { metricType } from "../../../types";
+import type { metricType } from "../../../types";
 import { checkIsActiveMetric } from "../../../utils";
 import { FaLock } from "react-icons/fa";
-import { searchProps } from "../types";
+import type { searchProps } from "../types";
 
 const SearchMetric = ({ paginationQuery }: searchProps) => {
   const [isFocused, setIsFocused] = useState(false);
   const [finalMetrics, setFinalMetrics] = useState(
-    incomeStatementMetrics.filter((m) => !m.isLast),
+    kpisMetrics.filter((m) => !m.isLast),
   );
-  const [metrics, setMetrics] = useAtom(incomeStatementMetricsAtom);
+  const [metrics, setMetrics] = useAtom(kpisMetricsAtom);
   const ref = useRef<HTMLDivElement>(null);
 
   const [{ metric }, setParams] = useQueryStates(
@@ -28,7 +28,7 @@ const SearchMetric = ({ paginationQuery }: searchProps) => {
   );
 
   useEffect(() => {
-    const preFilteredMetrics = incomeStatementMetrics.filter((m) => !m.isLast);
+    const preFilteredMetrics = kpisMetrics.filter((m) => !m.isLast);
     const filteredMetrics = preFilteredMetrics.filter((m) =>
       m.name.toLowerCase().includes(metric.toLowerCase()),
     );
@@ -65,23 +65,11 @@ const SearchMetric = ({ paginationQuery }: searchProps) => {
       return;
     }
 
-    setMetrics((prev) => {
-      const grouping = newMetric.grouping ?? "";
-      const group = prev.find((m) => m.name === grouping);
-      const groupIndex = group ? prev.indexOf(group) : prev.length;
-
-      const newMetrics = [
-        ...prev.slice(0, groupIndex),
-        newMetric,
-        ...prev.slice(groupIndex),
-      ];
-
-      return newMetrics;
-    });
+    setMetrics((prev) => [...prev, newMetric]);
   };
 
   return (
-    <div className="relative focus-within::z-30 max-w-fit min-w-1/2">
+    <div className="relative focus-within:z-30 max-w-full md:max-w-fit min-w-1/2">
       <SearchInput
         onFocus={() => setIsFocused(true)}
         defaultValue={metric}

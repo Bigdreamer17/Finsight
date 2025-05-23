@@ -21,7 +21,7 @@ const KeyMetrics = ({ companyId }: companyIdType) => {
     debtToEquityChart: pieDataType[];
   }
   const companies: { [key: string]: comp } = {
-    "123": {
+    "2d12ea5a-dce7-4722-8014-bf596514cbe7": {
       financialHealth: "Very strong buy(A)",
       growthComparision: "Top 20 in growth",
       industryAvg: 60002,

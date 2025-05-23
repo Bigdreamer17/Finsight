@@ -1,18 +1,23 @@
-import type { companyIdType } from "../common/types";
+import { fetchCompanyById } from "@/app/lib/fetchs/get-company";
+import type { companyIdType, companyType } from "../common/types";
 import CompanyBreakDown from "./CompanyBreakDown";
 import CompanyChart from "./CompanyChart";
 import { getBreakDownProps } from "./utils";
 
 const CompanyOverview = async ({ companyId }: companyIdType) => {
+  const [companyFetch]: [companyType] = await Promise.all([
+    fetchCompanyById({ companyId }),
+    // add other fetches here later
+  ]);
   interface comp {
-    name: string;
-    stockName: string;
-    stockPrice: number;
+    name?: string;
+    stockName?: string;
+    stockPrice?: string;
     description?: string;
     ceo?: string;
     website?: string;
     sector?: string;
-    foundationYear?: number;
+    foundationYear?: string;
     profile?: {
       marketCap?: number;
       ev?: number;
@@ -61,17 +66,15 @@ const CompanyOverview = async ({ companyId }: companyIdType) => {
     };
   }
   const companyDet: { [key: string]: comp } = {
-    "123": {
-      name: "Microsoft Corporation",
-      stockName: "NasdaqGS-MSFT",
-      stockPrice: 391.16,
-      description: `
-Dashen Bank, established in 1995 and headquartered in Addis Ababa, is one of Ethiopia’s leading private commercial banks, offering a wide range of retail, commercial, and digital banking services across the country. Operating over 900 branches and thousands of ATMs and POS terminals, the bank provides products including loans, savings, trade finance, and Sharia-compliant services under its "Sharik" brand. Dashen is also a pioneer in digital innovation, having launched Ethiopia’s first banking Super App, Amole, which offers mobile payments, transfers, e-commerce, and utility services. Internationally, the bank maintains partnerships with major global financial networks such as VISA, MasterCard, AMEX, and UnionPay, and supports remittance through operators like Western Union and MoneyGram. With over ETB 183.7 billion in total assets and a profit of ETB 6.6 billion in the 2023/24 fiscal year, Dashen Bank continues to drive financial inclusion and technological advancement in Ethiopia’s banking sector.
-`,
-      ceo: "Mr. Satya Nadella",
-      website: "www.microsoft.com",
-      sector: "Software",
-      foundationYear: 1975,
+    "2d12ea5a-dce7-4722-8014-bf596514cbe7": {
+      name: companyFetch.name,
+      stockName: companyFetch.stock_name,
+      stockPrice: companyFetch.stock_price,
+      description: companyFetch.description,
+      ceo: companyFetch.ceo,
+      website: companyFetch.website,
+      sector: companyFetch.sector,
+      foundationYear: companyFetch.year_founded,
       profile: {
         marketCap: 2940000000,
         ev: 2920000000,

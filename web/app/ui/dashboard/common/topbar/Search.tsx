@@ -5,10 +5,11 @@ import { searchParamOption } from "@/app/lib/search-params";
 import SearchInput from "../SearchInput";
 import { searchParams } from "../../search-params";
 import { useQueryStates } from "nuqs";
-import type { companyType, searchProps } from "./types";
+import type { searchProps } from "./types";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { handleClickOutside } from "@/app/lib/utils/handleClickOutside";
+import { companyType } from "../../company/common/types";
 
 const Search = ({ paginationQuery, companies }: searchProps) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -23,7 +24,7 @@ const Search = ({ paginationQuery, companies }: searchProps) => {
 
   useEffect(() => {
     const filteredCompanies = companies.filter((comp) =>
-      comp.name.toLowerCase().includes(company),
+      comp?.name?.toLowerCase().includes(company),
     );
     setCompaniesFinal(filteredCompanies);
   }, [company, companies]);
@@ -67,12 +68,14 @@ const Search = ({ paginationQuery, companies }: searchProps) => {
           {companiesFinal.map((company, index) => (
             <Link
               key={index}
-              href={`/dashboard/company/${company.companyId}`}
+              href={`/dashboard/company/${company.id}`}
               onClick={() => setIsFocused(false)}
               className="flex items-center p-2 rounded-md gap-2.5 hover:bg-[#40404F]"
             >
               <Image
-                src={company.imageUrl}
+                src={
+                  "https://media.glassdoor.com/sql/525842/dashen-bank-squarelogo-1461672481507.png"
+                }
                 alt="company image"
                 height={26}
                 width={26}
@@ -82,10 +85,10 @@ const Search = ({ paginationQuery, companies }: searchProps) => {
               <div className="flex flex-col self-start">
                 <h1 className="font-medium">{company.name}</h1>
 
-                {company?.stockName !== null &&
-                  company?.stockName !== "" &&
-                  typeof company?.stockName === "string" && (
-                    <h2 className="text-xs font-light">{company.stockName}</h2>
+                {company?.stock_name !== null &&
+                  company?.stock_name !== "" &&
+                  typeof company?.stock_name === "string" && (
+                    <h2 className="text-xs font-light">{company.stock_name}</h2>
                   )}
               </div>
             </Link>
