@@ -1,12 +1,11 @@
 import os
 from pathlib import Path
-
 import uvicorn
 from controllers import financials_controller, payment_controller
 from dotenv import load_dotenv
 from fastapi import FastAPI  # type: ignore
 from fastapi.middleware.cors import CORSMiddleware
-from views import company_view, investor_relations_view, user_view
+from views import company_view, investor_relations_view, user_view, graph_view
 
 env_path = Path(__file__).resolve().parent / ".env"
 load_dotenv(dotenv_path=env_path)
@@ -31,6 +30,7 @@ app.include_router(payment_controller.router)
 
 # Financial Data
 app.include_router(financials_controller.router)
+app.include_router(graph_view.router)
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
