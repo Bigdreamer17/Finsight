@@ -6,31 +6,31 @@ SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
-VALID_METRICS = {
-    "revenue": "total_operating_income",
-    "net_profit": "profit_for_year",
-    "eps": "basic_eps"
-}
-
-async def get_graph_data(company_id: str, metric: str):
-    if metric not in VALID_METRICS:
-        raise HTTPException(status_code=400, detail="Unsupported metric")
-
-    column = VALID_METRICS[metric]
-
+async def get_three_graph_metrics(company_id: str):
     response = supabase.table("income_statement") \
-        .select(f"fiscal_year,{column}") \
+        .select("fiscal_year, total_operating_income, profit_for_year, basic_eps") \
         .eq("company_id", company_id) \
-        .order("fiscal_year", desc=False) \
+        .order("fiscal_year", desc=True) \
         .execute()
 
     if not response.data:
-        raise HTTPException(status_code=404, detail="No data found for this company")
+        raise HTTPException(status_code=404, detail="No financial data found")
 
-    return [
-        {"year": row["fiscal_year"], "count": row.get(column, 0) or 0}
-        for row in response.data
-    ]
+    return {
+        "revenue": [
+            {"year": row["fiscal_year"], "count": row.get("total_operating_income", 0) or 0}
+            for row in response.data
+        ],
+        "net_profit": [
+            {"year": row["fiscal_year"], "count": row.get("profit_for_year", 0) or 0}
+            for row in response.data
+        ],
+        "eps": [
+            {"year": row["fiscal_year"], "count": row.get("basic_eps", 0) or 0}
+            for row in response.data
+        ]
+    }
+
 
 async def get_all_graph_data(company_id: str):
     # Fetch income statement
