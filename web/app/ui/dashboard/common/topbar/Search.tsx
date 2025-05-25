@@ -10,8 +10,13 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { handleClickOutside } from "@/app/lib/utils/handleClickOutside";
 import { companyType } from "../../company/common/types";
+import { usePathname } from "next/navigation";
 
 const Search = ({ paginationQuery, companies }: searchProps) => {
+  const pathName = usePathname();
+
+  const isChartingPage = pathName.includes("charting");
+
   const [isFocused, setIsFocused] = useState(false);
   const [companiesFinal, setCompaniesFinal] =
     useState<companyType[]>(companies);
@@ -54,7 +59,7 @@ const Search = ({ paginationQuery, companies }: searchProps) => {
   };
 
   return (
-    <div ref={ref} className="relative w-full grow flex-1">
+    <div ref={ref} className="relative w-full grow flex-1 z-50">
       <SearchInput
         onFocus={() => setIsFocused(true)}
         defaultValue={company}
@@ -64,11 +69,11 @@ const Search = ({ paginationQuery, companies }: searchProps) => {
       />
 
       {isFocused && companiesFinal.length !== 0 && (
-        <div className="absolute border-[#F2C785] p-1 z-20 top-full left-0 right-0 mt-2 flex flex-col gap-1 rounded-lg bg-[#2C2C35]">
+        <div className="absolute border-[#F2C785] p-1 z-50 top-full left-0 right-0 mt-2 flex flex-col gap-1 rounded-lg bg-[#2C2C35]">
           {companiesFinal.map((company, index) => (
             <Link
               key={index}
-              href={`/dashboard/company/${company.id}`}
+              href={`/dashboard/${isChartingPage ? "charting" : "company"}/${company.id}`}
               onClick={() => setIsFocused(false)}
               className="flex items-center p-2 rounded-md gap-2.5 hover:bg-[#40404F]"
             >

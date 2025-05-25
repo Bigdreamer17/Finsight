@@ -66,7 +66,7 @@ const KeyMetrics = async ({ companyId }: companyIdType) => {
   };
 
   return (
-    <div className="mt-5 px-4 flex flex-col gap-3 pb-5">
+    <div className="mt-5 px-4 flex flex-col gap-3 pb-4">
       <div className="rounded-lg bg-[#2C2C35] p-4 flex flex-col gap-4">
         <h3 className="text-xl font-medium flex flex-wrap">
           Financial health of company:

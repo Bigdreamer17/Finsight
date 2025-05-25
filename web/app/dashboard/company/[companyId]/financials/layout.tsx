@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "FinSight | Financials",
-  description: "Dashboard for FinSight",
+  description: "Financials for FinSight",
 };
 
 export default async function FinancialLayout({

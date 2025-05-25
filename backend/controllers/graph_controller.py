@@ -1,24 +1,31 @@
+import os
+
 from fastapi import HTTPException
 from supabase import create_client
-import os
 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
+
 async def get_three_graph_metrics(company_id: str):
-    response = supabase.table("income_statement") \
-        .select("fiscal_year, total_operating_income, profit_for_year, basic_eps") \
-        .eq("company_id", company_id) \
-        .order("fiscal_year", desc=True) \
+    response = (
+        supabase.table("income_statement")
+        .select("fiscal_year, total_operating_income, profit_for_year, basic_eps")
+        .eq("company_id", company_id)
+        .order("fiscal_year", desc=False)
         .execute()
+    )
 
     if not response.data:
         raise HTTPException(status_code=404, detail="No financial data found")
 
     return {
         "revenue": [
-            {"year": row["fiscal_year"], "count": row.get("total_operating_income", 0) or 0}
+            {
+                "year": row["fiscal_year"],
+                "count": row.get("total_operating_income", 0) or 0,
+            }
             for row in response.data
         ],
         "net_profit": [
@@ -28,24 +35,28 @@ async def get_three_graph_metrics(company_id: str):
         "eps": [
             {"year": row["fiscal_year"], "count": row.get("basic_eps", 0) or 0}
             for row in response.data
-        ]
+        ],
     }
 
 
 async def get_all_graph_data(company_id: str):
     # Fetch income statement
-    income_resp = supabase.table("income_statement") \
-        .select("fiscal_year, total_operating_income, profit_for_year, basic_eps") \
-        .eq("company_id", company_id) \
-        .order("fiscal_year", desc=False) \
+    income_resp = (
+        supabase.table("income_statement")
+        .select("fiscal_year, total_operating_income, profit_for_year, basic_eps")
+        .eq("company_id", company_id)
+        .order("fiscal_year", desc=False)
         .execute()
+    )
 
     # Fetch balance sheet
-    balance_resp = supabase.table("balance_sheet") \
-        .select("fiscal_year, total_assets, total_equity") \
-        .eq("company_id", company_id) \
-        .order("fiscal_year", desc=False) \
+    balance_resp = (
+        supabase.table("balance_sheet")
+        .select("fiscal_year, total_assets, total_equity")
+        .eq("company_id", company_id)
+        .order("fiscal_year", desc=False)
         .execute()
+    )
 
     if not income_resp.data and not balance_resp.data:
         raise HTTPException(status_code=404, detail="No data found for this company")

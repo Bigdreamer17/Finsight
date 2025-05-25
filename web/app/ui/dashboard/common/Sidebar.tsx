@@ -47,7 +47,7 @@ const Sidebar = ({ className }: { className?: string }) => {
     },
     {
       element: <FaChartLine size={20} />,
-      href: "/charting",
+      href: "/dashboard/charting/2d12ea5a-dce7-4722-8014-bf596514cbe7",
       name: "Charting",
       isActive: pathName.includes("charting"),
     },

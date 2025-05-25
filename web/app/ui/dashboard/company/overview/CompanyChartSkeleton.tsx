@@ -5,6 +5,7 @@ import { chartsAtom } from "@/app/store/charts";
 import { IoCloseOutline } from "react-icons/io5";
 import SearchChart from "./SearchChart";
 import { AreaGraphSkeleton } from "../../common/ChartsSkeletons";
+import { chartsMap } from "./data";
 
 const CompanyChartSkeleton = () => {
   const [charts] = useAtom(chartsAtom);
@@ -19,7 +20,7 @@ const CompanyChartSkeleton = () => {
             key={index}
             className="bg-[#40404F] py-1 px-2 flex items-center gap-1 rounded-2xl text-xs"
           >
-            <span>{chart}</span>
+            <span>{chartsMap[chart.name]}</span>
 
             <button
               className="rounded-full hover:bg-white/10 hover:cursor-pointer"
@@ -34,7 +35,7 @@ const CompanyChartSkeleton = () => {
       {charts.map((c, index) => {
         return (
           <div key={index} className="flex flex-col gap-5">
-            <h3 className="text-xl">{c}</h3>
+            <h3 className="text-xl">{chartsMap[c.name]}</h3>
 
             <div className="border-b border-r border-[#40404F] mr-5 pr-4 relative z-0">
               <AreaGraphSkeleton />

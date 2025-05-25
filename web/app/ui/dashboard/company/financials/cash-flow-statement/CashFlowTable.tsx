@@ -62,7 +62,7 @@ const CashFlowTable = ({ tableData, minYear }: tabelDataProps) => {
         <TableHeader className="bg-[#1C1C21] border-[#AFAFB6]/40 border-t border-l">
           <TableRow>
             <TableHead className="border-r border-[#AFAFB6]/40">
-              Balance Sheet
+              Cash Flow Statement
             </TableHead>
 
             {tableData.map((data, index) => (
