@@ -3,6 +3,8 @@ import SearchCompany from "./SearchCompany";
 import SearchMetric from "./SearchMetric";
 import Table from "./Table";
 import TableSkeleton from "./TableSkeleton";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorFallback from "./DashboardErrorFallback";
 
 const Dashboard = () => {
   return (
@@ -14,7 +16,9 @@ const Dashboard = () => {
       </div>
 
       <Suspense fallback={<TableSkeleton />}>
-        <Table />
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          <Table />
+        </ErrorBoundary>
       </Suspense>
     </div>
   );

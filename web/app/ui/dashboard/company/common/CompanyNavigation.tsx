@@ -33,7 +33,7 @@ const CompanyNavigation = ({ companyId }: companyIdType) => {
   ];
 
   return (
-    <div className="overflow-hidden max-w-full px-4">
+    <div className="overflow-hidden max-w-full px-4 min-h-fit mb-2.5">
       <div className="flex gap-2 items-center overflow-x-auto no-scrollbar">
         {navigation.map((nav, index: number) => (
           <Link

@@ -11,6 +11,7 @@ import Link from "next/link";
 import { handleClickOutside } from "@/app/lib/utils/handleClickOutside";
 import { companyType } from "../../company/common/types";
 import { usePathname } from "next/navigation";
+import { p } from "framer-motion/client";
 
 const Search = ({ paginationQuery, companies }: searchProps) => {
   const pathName = usePathname();
@@ -68,36 +69,44 @@ const Search = ({ paginationQuery, companies }: searchProps) => {
         className="border border-[#AFAFB6] focus:border-[#F2C785] bg-[#2C2C35] peer placeholder:text-[#AFAFB6] text-white py-2 pr-4 pl-10 transform transition duration-200 ease-in-out"
       />
 
-      {isFocused && companiesFinal.length !== 0 && (
+      {isFocused && (
         <div className="absolute border-[#F2C785] p-1 z-50 top-full left-0 right-0 mt-2 flex flex-col gap-1 rounded-lg bg-[#2C2C35]">
-          {companiesFinal.map((company, index) => (
-            <Link
-              key={index}
-              href={`/dashboard/${isChartingPage ? "charting" : "company"}/${company.id}`}
-              onClick={() => setIsFocused(false)}
-              className="flex items-center p-2 rounded-md gap-2.5 hover:bg-[#40404F]"
-            >
-              <Image
-                src={
-                  "https://media.glassdoor.com/sql/525842/dashen-bank-squarelogo-1461672481507.png"
-                }
-                alt="company image"
-                height={26}
-                width={26}
-                className="object-cover rounded-md"
-              />
+          {companiesFinal.length > 0 ? (
+            companiesFinal.map((company, index) => (
+              <Link
+                key={index}
+                href={`/dashboard/${isChartingPage ? "charting" : "company"}/${company.id}`}
+                onClick={() => setIsFocused(false)}
+                className="flex items-center p-2 rounded-md gap-2.5 hover:bg-[#40404F]"
+              >
+                <Image
+                  src={
+                    "https://media.glassdoor.com/sql/525842/dashen-bank-squarelogo-1461672481507.png"
+                  }
+                  alt="company image"
+                  height={26}
+                  width={26}
+                  className="object-cover rounded-md"
+                />
 
-              <div className="flex flex-col self-start">
-                <h1 className="font-medium">{company.name}</h1>
+                <div className="flex flex-col self-start">
+                  <h1 className="font-medium">{company.name}</h1>
 
-                {company?.stock_name !== null &&
-                  company?.stock_name !== "" &&
-                  typeof company?.stock_name === "string" && (
-                    <h2 className="text-xs font-light">{company.stock_name}</h2>
-                  )}
-              </div>
-            </Link>
-          ))}
+                  {company?.stock_name !== null &&
+                    company?.stock_name !== "" &&
+                    typeof company?.stock_name === "string" && (
+                      <h2 className="text-xs font-light">
+                        {company.stock_name}
+                      </h2>
+                    )}
+                </div>
+              </Link>
+            ))
+          ) : (
+            <p className="p-2 text-sm">
+              No company mathces found. Try adjusting your search
+            </p>
+          )}
         </div>
       )}
     </div>

@@ -112,7 +112,9 @@ const InvestorRelations = async ({
           <ExecutiveTable tableData={companyData?.execTableData ?? []} />
         </div>
 
-        <h5 className="font-light">Shareholder information</h5>
+        {companyData?.information && companyData.information.length > 0 && (
+          <h5 className="font-light">Shareholder information</h5>
+        )}
 
         <ShareholderInfo information={companyData?.information ?? []} />
       </div>

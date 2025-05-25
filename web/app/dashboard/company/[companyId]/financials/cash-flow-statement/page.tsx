@@ -1,6 +1,8 @@
 import CashFlow from "@/app/ui/dashboard/company/financials/cash-flow-statement";
+import ErrorFallback from "@/app/ui/dashboard/company/financials/cash-flow-statement/CashFlowErrorFallback";
 import CashFlowSkeleton from "@/app/ui/dashboard/company/financials/cash-flow-statement/CashFlowSkeleton";
 import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 const CashFlowStatementPage = async ({
   params,
@@ -11,7 +13,9 @@ const CashFlowStatementPage = async ({
 
   return (
     <Suspense fallback={<CashFlowSkeleton />}>
-      <CashFlow companyId={companyId} />
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <CashFlow companyId={companyId} />
+      </ErrorBoundary>
     </Suspense>
   );
 };

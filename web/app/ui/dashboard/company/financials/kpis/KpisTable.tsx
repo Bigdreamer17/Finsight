@@ -13,6 +13,7 @@ import { IoCloseOutline } from "react-icons/io5";
 import { useAtom } from "jotai";
 import { kpisMetricsAtom } from "@/app/store/financialsMetrics";
 import { tabelDataProps } from "../balance-sheet/types";
+import EmptyTable from "../../../common/EmptyTable";
 
 const CashFlowTable = ({ tableData }: tabelDataProps) => {
   const [metrics, setMetrics] = useAtom(kpisMetricsAtom);
@@ -43,46 +44,50 @@ const CashFlowTable = ({ tableData }: tabelDataProps) => {
           ))}
       </div>
 
-      <Table className="w-full">
-        <TableHeader className="bg-[#1C1C21] border-[#AFAFB6]/40 border-t border-l">
-          <TableRow>
-            <TableHead className="border-r border-[#AFAFB6]/40">
-              Kpi&apos;s
-            </TableHead>
-
-            {tableData.map((data, index) => (
-              <TableHead
-                key={index}
-                className="border-r border-[#AFAFB6]/40 text-center"
-              >
-                {data.fiscal_year}
+      {tableData.length > 0 ? (
+        <Table className="w-full">
+          <TableHeader className="bg-[#1C1C21] border-[#AFAFB6]/40 border-t border-l">
+            <TableRow>
+              <TableHead className="border-r border-[#AFAFB6]/40">
+                Kpi&apos;s
               </TableHead>
-            ))}
-          </TableRow>
-        </TableHeader>
 
-        <TableBody className="[&_tr:last-child]:border-b-1 [&_tr:last-child]:border-l-1 text-sm">
-          {metrics.map((metric, index) => (
-            <TableRow
-              key={index}
-              className={`border-l border-[#AFAFB6]/40 ${index % 2 === 0 ? "bg-[#2C2C35]" : "bg-[#40404F]"} ${metric.isLast ? "border-b border-b-white" : ""}`}
-            >
-              <TableCell className="border-r border-[#AFAFB6]/40">
-                {fieldsMap[metric.name]}
-              </TableCell>
-
-              {tableData.map((data, idx) => (
-                <TableCell
-                  key={idx}
-                  className="border-r border-[#AFAFB6]/40 min-w-fit text-center"
+              {tableData.map((data, index) => (
+                <TableHead
+                  key={index}
+                  className="border-r border-[#AFAFB6]/40 text-center"
                 >
-                  {data[metric.name] ? `${data[metric.name]}` : "-"}
-                </TableCell>
+                  {data.fiscal_year}
+                </TableHead>
               ))}
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+
+          <TableBody className="[&_tr:last-child]:border-b-1 [&_tr:last-child]:border-l-1 text-sm">
+            {metrics.map((metric, index) => (
+              <TableRow
+                key={index}
+                className={`border-l border-[#AFAFB6]/40 ${index % 2 === 0 ? "bg-[#2C2C35]" : "bg-[#40404F]"} ${metric.isLast ? "border-b border-b-white" : ""}`}
+              >
+                <TableCell className="border-r border-[#AFAFB6]/40">
+                  {fieldsMap[metric.name]}
+                </TableCell>
+
+                {tableData.map((data, idx) => (
+                  <TableCell
+                    key={idx}
+                    className="border-r border-[#AFAFB6]/40 min-w-fit text-center"
+                  >
+                    {data[metric.name] ? `${data[metric.name]}` : "-"}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      ) : (
+        <EmptyTable />
+      )}
     </div>
   );
 };

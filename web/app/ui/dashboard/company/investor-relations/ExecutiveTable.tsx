@@ -15,6 +15,7 @@ import {
 } from "@/app/ui/table";
 import { execColumns as columns, execColumMap } from "./data";
 import type { execTableProps } from "./types";
+import EmptyTable from "../../common/EmptyTable";
 
 const ExecutiveTable = ({ tableData }: execTableProps) => {
   const [{ sortMetric, sortParam, table }, setParams] = useQueryStates(
@@ -32,7 +33,7 @@ const ExecutiveTable = ({ tableData }: execTableProps) => {
     }));
   };
 
-  return (
+  return tableData.length > 0 ? (
     <Table className="table-fixed w-full">
       <TableHeader className="bg-[#1C1C21] border-[#AFAFB6]/40 border-t border-l text-xs">
         <TableRow>
@@ -99,6 +100,8 @@ const ExecutiveTable = ({ tableData }: execTableProps) => {
         ))}
       </TableBody>
     </Table>
+  ) : (
+    <EmptyTable />
   );
 };
 

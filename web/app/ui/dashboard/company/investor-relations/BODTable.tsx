@@ -15,6 +15,7 @@ import {
 } from "@/app/ui/table";
 import { bodColumMap, bodColumn as columns } from "./data";
 import type { bodTableProps } from "./types";
+import EmptyTable from "../../common/EmptyTable";
 
 const BODTable = ({ tableData }: bodTableProps) => {
   const [{ sortMetric, sortParam, table }, setParams] = useQueryStates(
@@ -34,7 +35,7 @@ const BODTable = ({ tableData }: bodTableProps) => {
     }));
   };
 
-  return (
+  return tableData.length > 0 ? (
     <Table className="table-fixed w-full">
       <TableHeader className="bg-[#1C1C21] border-[#AFAFB6]/40 border-t border-l text-xs">
         <TableRow>
@@ -101,6 +102,8 @@ const BODTable = ({ tableData }: bodTableProps) => {
         ))}
       </TableBody>
     </Table>
+  ) : (
+    <EmptyTable />
   );
 };
 

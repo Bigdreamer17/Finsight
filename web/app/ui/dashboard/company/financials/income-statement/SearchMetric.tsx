@@ -11,8 +11,8 @@ import { fieldsMap, incomeStatementMetrics } from "./data";
 import { handleClickOutside } from "@/app/lib/utils/handleClickOutside";
 import { metricType } from "../../../types";
 import { checkIsActiveMetric } from "../../../utils";
-import { FaLock } from "react-icons/fa";
 import { searchProps } from "../types";
+import { GoLock } from "react-icons/go";
 
 const SearchMetric = ({ paginationQuery }: searchProps) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -90,27 +90,33 @@ const SearchMetric = ({ paginationQuery }: searchProps) => {
         className="border border-transparent max-w-2xl focus:border-[#AFAFB6] bg-[#1C1C21] placeholder:text-[#AFAFB6] text-white text-sm py-2 pr-4 pl-10 transform transition duration-200 ease-in-out"
       />
 
-      {isFocused && finalMetrics.length !== 0 && (
+      {isFocused && (
         <div
           ref={ref}
-          className="absolute no-scrollbar border border-[#AFAFB6] max-h-[70svh] overflow-y-auto p-1 z-20 top-full left-0 right-0 mt-2 flex flex-col gap-1 rounded-lg bg-[#2C2C35]"
+          className="absolute no-scrollbar border border-[#AFAFB6] max-h-[40svh] overflow-y-auto p-1 z-20 top-full left-0 right-0 mt-2 flex flex-col gap-1 rounded-lg bg-[#2C2C35]"
         >
-          {finalMetrics.map((m, index) => {
-            const isActive = checkIsActiveMetric(m.name, metrics);
+          {finalMetrics.length > 0 ? (
+            finalMetrics.map((m, index) => {
+              const isActive = checkIsActiveMetric(m.name, metrics);
 
-            return (
-              <button
-                key={index}
-                disabled={isActive}
-                onClick={() => handleClick(m, isActive)}
-                className="flex items-center justify-between p-2 rounded-md gap-2.5 hover:bg-[#40404F] disabled:text-[#AFAFB6] disabled:hover:bg-inherit"
-              >
-                <span className="font-medium">{fieldsMap[m.name]}</span>
+              return (
+                <button
+                  key={index}
+                  disabled={isActive}
+                  onClick={() => handleClick(m, isActive)}
+                  className="flex items-center justify-between p-2 rounded-md gap-2.5 hover:bg-[#40404F] disabled:text-[#AFAFB6] disabled:hover:bg-inherit"
+                >
+                  <span className="font-medium">{fieldsMap[m.name]}</span>
 
-                {m.isPaidFeature && <FaLock size={16} />}
-              </button>
-            );
-          })}
+                  {m.isPaidFeature && <GoLock size={16} />}
+                </button>
+              );
+            })
+          ) : (
+            <p className="p-2 text-sm">
+              No metric mathces found. Try adjusting your search
+            </p>
+          )}
         </div>
       )}
     </div>

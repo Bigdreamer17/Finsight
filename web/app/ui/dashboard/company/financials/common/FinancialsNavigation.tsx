@@ -33,8 +33,8 @@ const FinancialsNavigation = ({ companyId }: companyIdType) => {
   ];
 
   return (
-    <div className="overflow-hidden max-w-full">
-      <div className="flex gap-2 items-center overflow-x-auto no-scrollbar">
+    <div className="overflow-hidden max-w-full min-h-fit">
+      <div className="flex gap-2 items-center overflow-x-auto no-scrollbar min-h-fit">
         {navigation.map((nav, index: number) => (
           <Link
             href={`/dashboard/company/${companyId}/financials${nav.href}`}
