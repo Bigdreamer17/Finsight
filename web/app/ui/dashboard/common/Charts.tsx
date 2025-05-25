@@ -12,6 +12,7 @@ import {
   Cell,
 } from "recharts";
 import type { chartType, pieDataType } from "./types";
+import { getTruncatedMoney } from "../utils";
 
 const AreaGraph = ({
   toolTipTitle,
@@ -31,7 +32,7 @@ const AreaGraph = ({
       return (
         <div className="bg-[#40404F] rounded-sm py-2 px-2.5">
           <p className="text-xs font-medium mb-1">{`${payload[0].payload.year}`}</p>
-          <p className="text-xs font-light">{`${payload[0].value} ${toolTipTitle}`}</p>
+          <p className="text-xs font-light">{`${payload[0].value.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })} ${toolTipTitle}`}</p>
         </div>
       );
     }
@@ -95,6 +96,7 @@ const AreaGraph = ({
           tickLine={false}
           className="text-[10px] font-extralight"
           tick={{ fill: "#cac4d0" }}
+          tickFormatter={getTruncatedMoney}
         />
       </AreaChart>
     </ResponsiveContainer>
@@ -113,7 +115,7 @@ const PieGraph = ({ data }: { data: pieDataType[] }) => {
       return (
         <div className="bg-[#40404F] rounded-sm py-2 px-2.5">
           <p className="text-xs font-light">
-            {payload[0].value} {payload[0].name}
+            {`${payload[0].value.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })} of ${payload[0].name}`}
           </p>
         </div>
       );

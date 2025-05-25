@@ -60,7 +60,7 @@ const SearchChart = () => {
   };
 
   return (
-    <div ref={ref} className="relative z-0 grow flex-1">
+    <div ref={ref} className="relative z-20 grow flex-1">
       <SearchInput
         onFocus={() => setIsFocused(true)}
         defaultValue={chart}
@@ -70,7 +70,7 @@ const SearchChart = () => {
       />
 
       {isFocused && finalCharts.length !== 0 && (
-        <div className="absolute no-scrollbar border border-[#AFAFB6] max-h-[70svh] overflow-y-auto p-1 z-30 top-full left-0 right-0 mt-2 flex flex-col gap-1 rounded-lg bg-[#2C2C35]">
+        <div className="absolute no-scrollbar border border-[#AFAFB6] max-h-[70svh] overflow-y-auto p-1 z-50 top-full left-0 right-0 mt-2 flex flex-col gap-1 rounded-lg bg-[#2C2C35]">
           {finalCharts.map((c, index) => {
             const isActive = checkIsActiveChart(c.name, charts);
 

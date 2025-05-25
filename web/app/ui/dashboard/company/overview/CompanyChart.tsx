@@ -44,7 +44,7 @@ const CompanyChart = ({ chartData }: { chartData: overviewChartType }) => {
           <div key={index} className="flex flex-col gap-5">
             <h3 className="text-xl">{chartsMap[c.name]}</h3>
 
-            <div className="border-b border-r border-[#40404F] mr-5 relative z-0">
+            <div className="border-b border-r border-[#40404F] relative z-10">
               <AreaGraph toolTipTitle={c.toolTipTitle} data={chart} />
 
               <p className="text-center text-xs font-light">Year</p>

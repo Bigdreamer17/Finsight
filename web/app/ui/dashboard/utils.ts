@@ -63,7 +63,9 @@ export const checkIsActiveMetric = (
 };
 
 export const getTruncatedMoney = (money: number): string => {
-  if (money >= 1_000_000_000) {
+  if (money >= 1_000_000_000_000) {
+    return `${(money / 1_000_000_000_000).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })}T`;
+  } else if (money >= 1_000_000_000) {
     return `${(money / 1_000_000_000).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })}B`;
   } else if (money >= 1_000_000) {
     return `${(money / 1_000_000).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })}M`;

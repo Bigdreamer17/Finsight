@@ -13,16 +13,13 @@ export const fetchCompanyOverviewCharts = async ({
 
   if (session?.user?.accessToken) {
     try {
-      const res = await fetch(
-        `${baseUrl}/companies/${companyId}/graph-data?metric=revenue`,
-        {
-          next: { revalidate: 3600 },
-          headers: {
-            Authorization: `Bearer ${session.user.accessToken}`,
-            "Content-Type": "application/json",
-          },
+      const res = await fetch(`${baseUrl}/companies/${companyId}/graph-data`, {
+        next: { revalidate: 3600 },
+        headers: {
+          Authorization: `Bearer ${session.user.accessToken}`,
+          "Content-Type": "application/json",
         },
-      );
+      });
       const data = await res.json();
 
       return data;

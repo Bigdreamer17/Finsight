@@ -9,12 +9,12 @@ const DebtToEquityRationChart = ({ data }: debtToEquityRationProps) => {
     <div className="flex md:flex-col items-center w-full">
       <div className="flex flex-col md:flex-row items-center gap-5">
         <div className="flex items-center gap-2">
-          <GoDotFill size={20} color={"#0BD28B"} />
+          <GoDotFill size={20} color={"#3FFF00"} />
 
           <span>Equity</span>
         </div>
         <div className="flex items-center gap-2">
-          <GoDotFill size={20} color={"#EF476F"} />
+          <GoDotFill size={20} color={"#FF0000"} />
 
           <span>Debt</span>
         </div>

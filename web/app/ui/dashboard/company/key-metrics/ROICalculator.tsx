@@ -1,10 +1,14 @@
 "use client";
 
 import { type ChangeEvent, useState } from "react";
-import type { companyIdType } from "../common/types";
 import { useDebouncedCallback } from "use-debounce";
+import type { ROICalculatorProps } from "./types";
 
-const ROICalculator = ({ companyId }: companyIdType) => {
+const ROICalculator = ({
+  averageRevenueGrowth,
+  averageProfitGrowth,
+  averageEPSGrowth,
+}: ROICalculatorProps) => {
   const [returnOneYear, setReturnOneYear] = useState("-");
   const [returnFiveYear, setReturnFiveYear] = useState("-");
 
