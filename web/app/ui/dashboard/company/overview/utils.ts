@@ -1,5 +1,9 @@
 import { getTruncatedMoney } from "../../utils";
-import type { breakDownProps, companyOverViewType } from "./types";
+import type {
+  breakDownProps,
+  chartMetricsType,
+  companyOverViewType,
+} from "./types";
 
 export const getBreakDownProps = (
   company: companyOverViewType,
@@ -78,10 +82,10 @@ export const getBreakDownProps = (
 
 export const checkIsActiveChart = (
   metricName: string,
-  metrics: string[],
+  metrics: chartMetricsType[],
 ): boolean => {
   for (const metric of metrics) {
-    if (metric === metricName) {
+    if (metric.name === metricName) {
       return true;
     }
   }

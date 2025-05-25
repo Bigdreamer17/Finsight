@@ -4,29 +4,15 @@ import { AreaGraph } from "../../common/Charts";
 import SearchChart from "./SearchChart";
 import { useAtom } from "jotai";
 import { IoCloseOutline } from "react-icons/io5";
-import type { chartsType } from "./types";
+import type { overviewChartType } from "./types";
 import { chartsAtom } from "@/app/store/charts";
 import { chartsMap } from "./data";
 
-const CompanyChart = () => {
+const CompanyChart = ({ chartData }: { chartData: overviewChartType }) => {
   const [charts, setCharts] = useAtom(chartsAtom);
 
-  const chartData: chartsType = {
-    revenueGrowthFive: {
-      toolTipTitle: "Growth",
-      data: [
-        { date: "2025-04-02", count: 1000 },
-        { date: "2025-04-02", count: 1200 },
-        { date: "2025-04-02", count: 1400 },
-        { date: "2025-04-02", count: 1600 },
-        { date: "2025-04-02", count: 1200 },
-        { date: "2025-04-02", count: 2000 },
-      ],
-    },
-  };
-
   const handleChartDelete = (name: string) => {
-    setCharts((prev) => prev.filter((chart) => name != chart));
+    setCharts((prev) => prev.filter((chart) => name != chart.name));
   };
 
   return (
@@ -39,11 +25,11 @@ const CompanyChart = () => {
             key={index}
             className="bg-[#40404F] py-1 px-2 flex items-center gap-1 rounded-2xl text-xs"
           >
-            <span>{chart}</span>
+            <span>{chartsMap[chart.name]}</span>
 
             <button
               className="rounded-full hover:bg-white/10 hover:cursor-pointer"
-              onClick={() => handleChartDelete(chart)}
+              onClick={() => handleChartDelete(chart.name)}
             >
               <IoCloseOutline size={16} />
             </button>
@@ -52,15 +38,14 @@ const CompanyChart = () => {
       </div>
 
       {charts.map((c, index) => {
-        const chartKey = chartsMap[c];
-        const chart = chartData[chartKey];
+        const chart = chartData[c.name];
 
         return (
           <div key={index} className="flex flex-col gap-5">
-            <h3 className="text-xl">{c}</h3>
+            <h3 className="text-xl">{chartsMap[c.name]}</h3>
 
-            <div className="border-b border-r border-[#40404F] mr-5 relative z-0">
-              <AreaGraph toolTipTitle={chart.toolTipTitle} data={chart.data} />
+            <div className="border-b border-r border-[#40404F] relative z-10">
+              <AreaGraph toolTipTitle={c.toolTipTitle} data={chart} />
 
               <p className="text-center text-xs font-light">Year</p>
             </div>

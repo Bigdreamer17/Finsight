@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { format } from "date-fns";
 import {
   AreaChart,
   CartesianGrid,
@@ -12,14 +11,15 @@ import {
   Pie,
   Cell,
 } from "recharts";
-import type { dataType, pieDataType } from "./types";
+import type { chartType, pieDataType } from "./types";
+import { getTruncatedMoney } from "../utils";
 
 const AreaGraph = ({
   toolTipTitle,
   data,
 }: {
   toolTipTitle: string;
-  data: dataType[];
+  data: chartType[];
 }) => {
   const CustomTooltip = ({
     active,
@@ -31,17 +31,15 @@ const AreaGraph = ({
     if (active && payload && payload.length) {
       return (
         <div className="bg-[#40404F] rounded-sm py-2 px-2.5">
-          <p className="text-xs font-medium mb-1">{`${payload[0].payload.date}, ${payload[0].payload.year}`}</p>
-          <p className="text-xs font-light">{`${payload[0].value} ${toolTipTitle}`}</p>
+          <p className="text-xs font-medium mb-1">{`${payload[0].payload.year}`}</p>
+          <p className="text-xs font-light">{`${payload[0].value.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })} ${toolTipTitle}`}</p>
         </div>
       );
     }
   };
 
   const graphData = data.map((d) => {
-    const newDate = format(d.date, "MMM d");
-    const newYear = format(d.date, "yyyy");
-    return { ...d, date: newDate, year: newYear };
+    return { ...d, year: d.year };
   });
 
   return (
@@ -98,6 +96,7 @@ const AreaGraph = ({
           tickLine={false}
           className="text-[10px] font-extralight"
           tick={{ fill: "#cac4d0" }}
+          tickFormatter={getTruncatedMoney}
         />
       </AreaChart>
     </ResponsiveContainer>
@@ -116,7 +115,7 @@ const PieGraph = ({ data }: { data: pieDataType[] }) => {
       return (
         <div className="bg-[#40404F] rounded-sm py-2 px-2.5">
           <p className="text-xs font-light">
-            {payload[0].value} {payload[0].name}
+            {`${payload[0].value.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })} of ${payload[0].name}`}
           </p>
         </div>
       );

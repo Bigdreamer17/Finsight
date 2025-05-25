@@ -3,12 +3,15 @@ import type { companyIdType, companyType } from "../common/types";
 import CompanyBreakDown from "./CompanyBreakDown";
 import CompanyChart from "./CompanyChart";
 import { getBreakDownProps } from "./utils";
+import { fetchCompanyOverviewCharts } from "@/app/lib/fetchs/get-charts";
+import { overviewChartType } from "./types";
 
 const CompanyOverview = async ({ companyId }: companyIdType) => {
-  const [companyFetch]: [companyType] = await Promise.all([
-    fetchCompanyById({ companyId }),
-    // add other fetches here later
-  ]);
+  const [companyFetch, chartsData]: [companyType, overviewChartType] =
+    await Promise.all([
+      fetchCompanyById({ companyId }),
+      fetchCompanyOverviewCharts({ companyId }),
+    ]);
   interface comp {
     name?: string;
     stockName?: string;
@@ -131,7 +134,7 @@ const CompanyOverview = async ({ companyId }: companyIdType) => {
   return (
     <div className="flex px-4 flex-col gap-3 xl:flex-row items-stretch mt-5">
       <CompanyBreakDown {...breakDownProps} />
-      <CompanyChart />
+      <CompanyChart chartData={chartsData} />
     </div>
   );
 };

@@ -1,10 +1,14 @@
 "use client";
 
 import { type ChangeEvent, useState } from "react";
-import type { companyIdType } from "../common/types";
 import { useDebouncedCallback } from "use-debounce";
+import type { ROICalculatorProps } from "./types";
 
-const ROICalculator = ({ companyId }: companyIdType) => {
+const ROICalculator = ({
+  averageRevenueGrowth,
+  averageProfitGrowth,
+  averageEPSGrowth,
+}: ROICalculatorProps) => {
   const [returnOneYear, setReturnOneYear] = useState("-");
   const [returnFiveYear, setReturnFiveYear] = useState("-");
 
@@ -20,31 +24,35 @@ const ROICalculator = ({ companyId }: companyIdType) => {
   );
 
   return (
-    <div className="rounded-lg bg-[#2C2C35] p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-      <div className="flex flex-col gap-2 sm:col-span-2 md:col-auto">
-        <label className="ml-5">Enter amount:</label>
+    <div className="rounded-lg bg-[#2C2C35] p-4 flex flex-col gap-4">
+      <h3 className="text-xl font-medium flex">ROI calculator:</h3>
 
-        <input
-          type="text"
-          placeholder="Investment amount"
-          className="rounded-full w-full pl-4 focus:outline-none focus-visible:outline-none focus:ring-0 bg-[#40404F] placeholder:text-[#AFAFB6] text-white py-2 px-4"
-          onChange={handleChange}
-        />
-      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="flex flex-col gap-2 sm:col-span-2 md:col-auto">
+          <label className="ml-5">Enter amount:</label>
 
-      <div className="flex flex-col gap-2">
-        <span className="ml-5">Return after 1 YR || ROI %</span>
-
-        <div className="rounded-full w-full pl-4 focus:outline-none focus-visible:outline-none focus:ring-0 bg-[#40404F] placeholder:text-[#AFAFB6] text-white py-2 px-4">
-          <p className="border-b-[0.5px]">{returnOneYear}</p>
+          <input
+            type="text"
+            placeholder="Investment amount"
+            className="rounded-full w-full pl-4 focus:outline-none focus-visible:outline-none focus:ring-0 bg-[#40404F] placeholder:text-[#AFAFB6] text-white py-2 px-4"
+            onChange={handleChange}
+          />
         </div>
-      </div>
 
-      <div className="flex flex-col gap-2">
-        <span className="ml-5">Return after 5 YR || ROI %</span>
+        <div className="flex flex-col gap-2">
+          <span className="ml-5">Return after 1 YR || ROI %</span>
 
-        <div className="rounded-full w-full pl-4 focus:outline-none focus-visible:outline-none focus:ring-0 bg-[#40404F] placeholder:text-[#AFAFB6] text-white py-2 px-4">
-          <p className="border-b-[0.5px]">{returnFiveYear}</p>
+          <div className="rounded-full w-full pl-4 focus:outline-none focus-visible:outline-none focus:ring-0 bg-[#40404F] placeholder:text-[#AFAFB6] text-white py-2 px-4">
+            <p className="border-b-[0.5px]">{returnOneYear}</p>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <span className="ml-5">Return after 5 YR || ROI %</span>
+
+          <div className="rounded-full w-full pl-4 focus:outline-none focus-visible:outline-none focus:ring-0 bg-[#40404F] placeholder:text-[#AFAFB6] text-white py-2 px-4">
+            <p className="border-b-[0.5px]">{returnFiveYear}</p>
+          </div>
         </div>
       </div>
     </div>

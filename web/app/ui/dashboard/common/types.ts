@@ -16,8 +16,8 @@ export type searchInputProps = {
   onBlur?: () => void;
 };
 
-export type dataType = {
-  date: string;
+export type chartType = {
+  year: number;
   count: number;
 };
 

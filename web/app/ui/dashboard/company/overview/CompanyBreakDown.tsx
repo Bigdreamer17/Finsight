@@ -125,7 +125,7 @@ const CompanyBreakDown = ({
 
   return (
     <div className={`z-0 rounded-lg flex flex-col gap-2 basis-1/2 `}>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col h-full gap-2">
         <div className="rounded-lg bg-[#2C2C35] flex flex-col gap-2 p-4 basis-1/2 max-h-fit">
           <h3 className="font-semibold text-lg">Company Overview</h3>
 
@@ -163,104 +163,110 @@ const CompanyBreakDown = ({
           ))}
         </div>
 
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-3 bg-[#2C2C35] p-4 rounded-md transition-all duration-300 ease-in-out">
-          <h3 className="font-semibold mb-2 text-lg sm:col-span-2 md:col-span-3">
-            Company Statistics
-          </h3>
+        <div className="bg-[#2C2C35] p-4 rounded-md transition-all duration-300 grow ease-in-out">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-3">
+            <h3 className="font-semibold mb-2 text-lg sm:col-span-2 md:col-span-3">
+              Company Statistics
+            </h3>
 
-          <div className="flex flex-col gap-4">
-            {/* Profile Section */}
-            <div>
-              <h4 className="font-medium text-sm mb-3">Profile</h4>
+            <div className="flex flex-col gap-4">
+              {/* Profile Section */}
+              <div>
+                <h4 className="font-medium text-sm mb-3">Profile</h4>
 
-              {Object.entries(profileSection).map(([name, value], index) => (
-                <p
-                  key={name}
-                  className={`w-full pb-1 text-xs font-light flex items-center gap-2 justify-between ${index === Object.keys(profileSection).length - 1 ? "" : "border-b border-b-[#40404F] mb-2"}`}
-                >
-                  <span>{name}</span>
-                  <span>{value}</span>
-                </p>
-              ))}
+                {Object.entries(profileSection).map(([name, value], index) => (
+                  <p
+                    key={name}
+                    className={`w-full pb-1 text-xs font-light flex items-center gap-2 justify-between ${index === Object.keys(profileSection).length - 1 ? "" : "border-b border-b-[#40404F] mb-2"}`}
+                  >
+                    <span>{name}</span>
+                    <span>{value}</span>
+                  </p>
+                ))}
+              </div>
+
+              {/* Margin Section */}
+              <div>
+                <h4 className="font-medium text-sm mb-3">Margin</h4>
+
+                {Object.entries(marginSection).map(([name, value], index) => (
+                  <p
+                    key={name}
+                    className={`w-full pb-1 text-xs font-light flex items-center gap-2 justify-between ${index === Object.keys(profileSection).length - 1 ? "" : "border-b border-b-[#40404F] mb-2"}`}
+                  >
+                    <span>{name}</span>
+                    <span>{value}</span>
+                  </p>
+                ))}
+              </div>
             </div>
 
-            {/* Margin Section */}
-            <div>
-              <h4 className="font-medium text-sm mb-3">Margin</h4>
+            <div className="flex flex-col gap-4">
+              {/* Valuation Section */}
+              <div>
+                <h4 className="font-medium text-sm mb-3">Valuation</h4>
 
-              {Object.entries(marginSection).map(([name, value], index) => (
-                <p
-                  key={name}
-                  className={`w-full pb-1 text-xs font-light flex items-center gap-2 justify-between ${index === Object.keys(profileSection).length - 1 ? "" : "border-b border-b-[#40404F] mb-2"}`}
-                >
-                  <span>{name}</span>
-                  <span>{value}</span>
-                </p>
-              ))}
-            </div>
-          </div>
+                {Object.entries(valuationSection).map(
+                  ([name, value], index) => (
+                    <p
+                      key={name}
+                      className={`w-full pb-1 text-xs font-light flex items-center gap-2 justify-between ${index === Object.keys(valuationSection).length - 1 ? "" : "border-b border-b-[#40404F] mb-2"}`}
+                    >
+                      <span>{name}</span>
+                      <span>{value}</span>
+                    </p>
+                  ),
+                )}
+              </div>
 
-          <div className="flex flex-col gap-4">
-            {/* Valuation Section */}
-            <div>
-              <h4 className="font-medium text-sm mb-3">Valuation</h4>
+              {/* Returns Section */}
+              <div>
+                <h4 className="font-medium text-sm mb-3">Returns</h4>
 
-              {Object.entries(valuationSection).map(([name, value], index) => (
-                <p
-                  key={name}
-                  className={`w-full pb-1 text-xs font-light flex items-center gap-2 justify-between ${index === Object.keys(valuationSection).length - 1 ? "" : "border-b border-b-[#40404F] mb-2"}`}
-                >
-                  <span>{name}</span>
-                  <span>{value}</span>
-                </p>
-              ))}
-            </div>
-
-            {/* Returns Section */}
-            <div>
-              <h4 className="font-medium text-sm mb-3">Returns</h4>
-
-              {Object.entries(returnsSection).map(([name, value], index) => (
-                <p
-                  key={name}
-                  className={`w-full pb-1 text-xs font-light flex items-center gap-2 justify-between ${index === Object.keys(profileSection).length - 1 ? "" : "border-b border-b-[#40404F] mb-2"}`}
-                >
-                  <span>{name}</span>
-                  <span>{value}</span>
-                </p>
-              ))}
-            </div>
-          </div>
-
-          <div className="md:flex md:flex-col sm:grid sm:grid-cols-2 flex flex-col gap-4 sm:col-span-2 md:col-span-1">
-            {/* Growth Section */}
-            <div>
-              <h4 className="font-medium text-sm mb-3">Growth</h4>
-
-              {Object.entries(growthSection).map(([name, value], index) => (
-                <p
-                  key={name}
-                  className={`w-full pb-1 text-xs font-light flex items-center gap-2 justify-between ${index === Object.keys(growthSection).length - 1 ? "" : "border-b border-b-[#40404F] mb-2"}`}
-                >
-                  <span>{name}</span>
-                  <span>{value}</span>
-                </p>
-              ))}
+                {Object.entries(returnsSection).map(([name, value], index) => (
+                  <p
+                    key={name}
+                    className={`w-full pb-1 text-xs font-light flex items-center gap-2 justify-between ${index === Object.keys(profileSection).length - 1 ? "" : "border-b border-b-[#40404F] mb-2"}`}
+                  >
+                    <span>{name}</span>
+                    <span>{value}</span>
+                  </p>
+                ))}
+              </div>
             </div>
 
-            {/* Dividends Section */}
-            <div>
-              <h4 className="font-medium text-sm mb-3">Dividends</h4>
+            <div className="md:flex md:flex-col sm:grid sm:grid-cols-2 flex flex-col gap-4 sm:col-span-2 md:col-span-1">
+              {/* Growth Section */}
+              <div>
+                <h4 className="font-medium text-sm mb-3">Growth</h4>
 
-              {Object.entries(dividendsSection).map(([name, value], index) => (
-                <p
-                  key={name}
-                  className={`w-full pb-1 text-xs font-light flex items-center gap-2 justify-between ${index === Object.keys(growthSection).length - 1 ? "" : "border-b border-b-[#40404F] mb-2"}`}
-                >
-                  <span>{name}</span>
-                  <span>{value}</span>
-                </p>
-              ))}
+                {Object.entries(growthSection).map(([name, value], index) => (
+                  <p
+                    key={name}
+                    className={`w-full pb-1 text-xs font-light flex items-center gap-2 justify-between ${index === Object.keys(growthSection).length - 1 ? "" : "border-b border-b-[#40404F] mb-2"}`}
+                  >
+                    <span>{name}</span>
+                    <span>{value}</span>
+                  </p>
+                ))}
+              </div>
+
+              {/* Dividends Section */}
+              <div>
+                <h4 className="font-medium text-sm mb-3">Dividends</h4>
+
+                {Object.entries(dividendsSection).map(
+                  ([name, value], index) => (
+                    <p
+                      key={name}
+                      className={`w-full pb-1 text-xs font-light flex items-center gap-2 justify-between ${index === Object.keys(growthSection).length - 1 ? "" : "border-b border-b-[#40404F] mb-2"}`}
+                    >
+                      <span>{name}</span>
+                      <span>{value}</span>
+                    </p>
+                  ),
+                )}
+              </div>
             </div>
           </div>
         </div>

@@ -6,10 +6,11 @@ import { searchParams } from "../../search-params";
 import SearchInput from "../../common/SearchInput";
 import { useEffect, useRef, useState } from "react";
 import { useAtom } from "jotai";
-import { chartsData } from "./data";
+import { chartsData, chartsMap } from "./data";
 import { chartsAtom } from "@/app/store/charts";
 import { handleClickOutside } from "@/app/lib/utils/handleClickOutside";
 import { checkIsActiveChart } from "./utils";
+import type { chartMetricsType } from "./types";
 
 const SearchChart = () => {
   const [isFocused, setIsFocused] = useState(false);
@@ -24,7 +25,7 @@ const SearchChart = () => {
 
   useEffect(() => {
     const filteredMetrics = chartsData.filter((c) =>
-      c.toLowerCase().includes(chart.toLowerCase()),
+      c.name.toLowerCase().includes(chart.toLowerCase()),
     );
 
     setFinalCharts(filteredMetrics);
@@ -50,7 +51,7 @@ const SearchChart = () => {
     setParams((prev) => ({ ...prev, chart: term }));
   };
 
-  const handleClick = (newMetric: string, isActive: boolean) => {
+  const handleClick = (newMetric: chartMetricsType, isActive: boolean) => {
     if (isActive) {
       return;
     }
@@ -59,7 +60,7 @@ const SearchChart = () => {
   };
 
   return (
-    <div ref={ref} className="relative z-0 grow flex-1">
+    <div ref={ref} className="relative z-20 grow flex-1">
       <SearchInput
         onFocus={() => setIsFocused(true)}
         defaultValue={chart}
@@ -69,9 +70,9 @@ const SearchChart = () => {
       />
 
       {isFocused && finalCharts.length !== 0 && (
-        <div className="absolute no-scrollbar border border-[#AFAFB6] max-h-[70svh] overflow-y-auto p-1 z-30 top-full left-0 right-0 mt-2 flex flex-col gap-1 rounded-lg bg-[#2C2C35]">
+        <div className="absolute no-scrollbar border border-[#AFAFB6] max-h-[70svh] overflow-y-auto p-1 z-50 top-full left-0 right-0 mt-2 flex flex-col gap-1 rounded-lg bg-[#2C2C35]">
           {finalCharts.map((c, index) => {
-            const isActive = checkIsActiveChart(c, charts);
+            const isActive = checkIsActiveChart(c.name, charts);
 
             return (
               <button
@@ -80,7 +81,7 @@ const SearchChart = () => {
                 onClick={() => handleClick(c, isActive)}
                 className="flex items-center justify-between p-2 rounded-md gap-2.5 hover:bg-[#40404F] disabled:text-[#AFAFB6] disabled:hover:bg-inherit"
               >
-                <span className="font-medium">{c}</span>
+                <span className="font-medium">{chartsMap[c.name]}</span>
               </button>
             );
           })}

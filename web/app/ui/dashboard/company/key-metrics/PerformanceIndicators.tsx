@@ -13,7 +13,9 @@ const PerformanceIndicators = ({
           <span>ROA:</span>
 
           <span>
-            {performanceIndicators?.roa ? `${performanceIndicators.roa}%` : "-"}
+            {performanceIndicators?.roa
+              ? `${performanceIndicators.roa.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })}%`
+              : "-"}
           </span>
         </p>
 
@@ -21,7 +23,9 @@ const PerformanceIndicators = ({
           <span>ROE:</span>
 
           <span>
-            {performanceIndicators?.roe ? `${performanceIndicators.roe}%` : "-"}
+            {performanceIndicators?.roe
+              ? `${performanceIndicators.roe.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })}%`
+              : "-"}
           </span>
         </p>
       </div>
@@ -32,10 +36,10 @@ const PerformanceIndicators = ({
         <p className="w-full pb-1 text-xs font-light flex items-center gap-2 border-b border-b-[#40404F]">
           <BuyerProfitabilityBadge
             size={20}
-            health={performanceIndicators?.buyersProfitablity ?? ""}
+            health={performanceIndicators?.profitability ?? ""}
           />
 
-          <span>{performanceIndicators?.buyersProfitablity ?? "-"}</span>
+          <span>{performanceIndicators?.profitability ?? "-"}</span>
         </p>
       </div>
 
@@ -46,8 +50,8 @@ const PerformanceIndicators = ({
           <span className="min-w-fit">Debt to equity ratio:</span>
 
           <span>
-            {performanceIndicators?.debtToEquity
-              ? `${performanceIndicators.debtToEquity}%`
+            {performanceIndicators?.debt_to_equity
+              ? `${performanceIndicators.debt_to_equity.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })}`
               : "-"}
           </span>
         </p>
@@ -57,12 +61,9 @@ const PerformanceIndicators = ({
         <h4 className="text-sm">Risk level:</h4>
 
         <p className="w-full pb-1 text-xs font-light flex items-center gap-2 border-b border-b-[#40404F] mb-2">
-          <RiskBadge
-            size={20}
-            health={performanceIndicators?.riskLevel ?? ""}
-          />
+          <RiskBadge size={20} health={performanceIndicators?.risk ?? ""} />
 
-          <span>{performanceIndicators?.riskLevel ?? "-"}</span>
+          <span>{performanceIndicators?.risk ?? "-"}</span>
         </p>
       </div>
     </div>

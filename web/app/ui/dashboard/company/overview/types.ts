@@ -1,4 +1,5 @@
 import type { dataType } from "../../common/types";
+import type { chartType as commonChartType } from "../../common/types";
 
 export type breakDownProps = {
   name: string;
@@ -105,11 +106,10 @@ export type companyOverViewType = {
   };
 };
 
-export type chartsType = { [key: string]: chartType };
-
 export type chartsMapType = { [key: string]: string };
 
-interface chartType {
-  toolTipTitle: string;
-  data: dataType[];
-}
+export type chartMetricsType = { name: string; toolTipTitle: string };
+
+export type overviewChartType = {
+  [key: string]: commonChartType[];
+};
