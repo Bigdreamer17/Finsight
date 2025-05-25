@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { format } from "date-fns";
 import {
   AreaChart,
   CartesianGrid,
@@ -12,14 +11,14 @@ import {
   Pie,
   Cell,
 } from "recharts";
-import type { dataType, pieDataType } from "./types";
+import type { chartType, pieDataType } from "./types";
 
 const AreaGraph = ({
   toolTipTitle,
   data,
 }: {
   toolTipTitle: string;
-  data: dataType[];
+  data: chartType[];
 }) => {
   const CustomTooltip = ({
     active,
@@ -31,7 +30,7 @@ const AreaGraph = ({
     if (active && payload && payload.length) {
       return (
         <div className="bg-[#40404F] rounded-sm py-2 px-2.5">
-          <p className="text-xs font-medium mb-1">{`${payload[0].payload.date}, ${payload[0].payload.year}`}</p>
+          <p className="text-xs font-medium mb-1">{`${payload[0].payload.year}`}</p>
           <p className="text-xs font-light">{`${payload[0].value} ${toolTipTitle}`}</p>
         </div>
       );
@@ -39,9 +38,7 @@ const AreaGraph = ({
   };
 
   const graphData = data.map((d) => {
-    const newDate = format(d.date, "MMM d");
-    const newYear = format(d.date, "yyyy");
-    return { ...d, date: newDate, year: newYear };
+    return { ...d, year: d.year };
   });
 
   return (

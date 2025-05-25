@@ -11,4 +11,15 @@ const AreaGraphSkeleton = ({ className }: { className?: string }) => {
   );
 };
 
-export { AreaGraphSkeleton };
+const PieGraphSkeleton = ({ className }: { className?: string }) => {
+  return (
+    <div
+      className={cn(
+        "w-[600px] rounded-full mr-5 mb-4 h-[300px] bg-[#40404F] animate-pulse",
+        className,
+      )}
+    />
+  );
+};
+
+export { AreaGraphSkeleton, PieGraphSkeleton };

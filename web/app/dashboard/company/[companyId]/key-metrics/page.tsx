@@ -1,4 +1,6 @@
 import KeyMetrics from "@/app/ui/dashboard/company/key-metrics";
+import KeyMetricsSkeleton from "@/app/ui/dashboard/company/key-metrics/KeyMetricsSkeleton";
+import { Suspense } from "react";
 
 const KeyMetricsPage = async ({
   params,
@@ -7,7 +9,11 @@ const KeyMetricsPage = async ({
 }) => {
   const { companyId } = await params;
 
-  return <KeyMetrics companyId={companyId} />;
+  return (
+    <Suspense fallback={<KeyMetricsSkeleton />}>
+      <KeyMetrics companyId={companyId} />
+    </Suspense>
+  );
 };
 
 export default KeyMetricsPage;

@@ -1,3 +1,4 @@
+import KpisTableSkeleton from "./KpisTableSkeleton";
 import SearchMetric from "./SearchMetric";
 
 const CashFlowSkeleton = () => {

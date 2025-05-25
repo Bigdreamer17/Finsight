@@ -1,14 +1,20 @@
+import { fetchCompanyOverviewCharts } from "@/app/lib/fetchs/get-charts";
 import { FinancialBadge, InvestmentBadge } from "../../common/Badges";
 import type { pieDataType } from "../../common/types";
 import type { companyIdType } from "../common/types";
+import type { overviewChartType } from "../overview/types";
 import DebtToEquityRationChart from "./DebtToEquityRationChart";
 import NetProfitChart from "./NetProfitChart";
 import PerformanceIndicators from "./PerformanceIndicators";
 import RevenueChart from "./RevenueChart";
 import ROICalculator from "./ROICalculator";
 import type { chartProps, performanceIndicatorsType } from "./types";
+import { chartsMap } from "../overview/data";
 
-const KeyMetrics = ({ companyId }: companyIdType) => {
+const KeyMetrics = async ({ companyId }: companyIdType) => {
+  const chartsData: overviewChartType = await fetchCompanyOverviewCharts({
+    companyId,
+  });
   interface comp {
     financialHealth: string;
     growthComparision?: string;
@@ -68,19 +74,29 @@ const KeyMetrics = ({ companyId }: companyIdType) => {
 
   return (
     <div className="mt-5 px-4 flex flex-col gap-3 pb-5">
-      <h3 className="text-xl font-medium flex flex-wrap">
-        Financial health of company:
-        <span className="min-w-fit flex items-center gap-1">
-          <span>{<FinancialBadge health={companyData.financialHealth} />}</span>{" "}
-          {companyData.financialHealth}
-        </span>
-      </h3>
-
       <div className="rounded-lg bg-[#2C2C35] p-4 flex flex-col gap-4">
-        <div className="rounded-lg bg-[#2C2C35] p-4 flex flex-col md:flex-row gap-4">
-          <RevenueChart {...companyData.revenueChart} />
+        <h3 className="text-xl font-medium flex flex-wrap">
+          Financial health of company:
+          <span className="min-w-fit flex items-center gap-1">
+            <span>
+              {<FinancialBadge health={companyData.financialHealth} />}
+            </span>{" "}
+            {companyData.financialHealth}
+          </span>
+        </h3>
 
-          <NetProfitChart {...companyData.netProfitChart} />
+        <div className="rounded-lg bg-[#2C2C35] p-4 flex flex-col md:flex-row gap-4">
+          <RevenueChart
+            data={chartsData["revenue"]}
+            chartName={chartsMap["revenue"]}
+            toolTipTitle="Birr in revenue"
+          />
+
+          <NetProfitChart
+            data={chartsData["net_profit"]}
+            chartName={chartsMap["net_profit"]}
+            toolTipTitle="Birr of net profit"
+          />
         </div>
 
         <div className="flex flex-col gap-2">
@@ -117,17 +133,17 @@ const KeyMetrics = ({ companyId }: companyIdType) => {
         </div>
       </div>
 
-      <h3 className="text-xl font-medium flex">Performance indicators:</h3>
+      <div className="rounded-lg bg-[#2C2C35] p-4 flex flex-col gap-4">
+        <h3 className="text-xl font-medium flex">Performance indicators:</h3>
 
-      <div className="rounded-lg bg-[#2C2C35] p-4 flex flex-col md:items-center md:flex-row pb-6 gap-4">
-        <PerformanceIndicators
-          performanceIndicators={companyData?.performanceIndicators}
-        />
+        <div className="flex flex-col md:items-center md:flex-row pb-6 gap-4">
+          <PerformanceIndicators
+            performanceIndicators={companyData?.performanceIndicators}
+          />
 
-        <DebtToEquityRationChart data={companyData?.debtToEquityChart} />
+          <DebtToEquityRationChart data={companyData?.debtToEquityChart} />
+        </div>
       </div>
-
-      <h3 className="text-xl font-medium flex">ROI calculator:</h3>
 
       <ROICalculator companyId={companyId} />
     </div>
