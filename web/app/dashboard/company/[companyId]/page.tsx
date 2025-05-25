@@ -1,6 +1,8 @@
 import CompanyOverview from "@/app/ui/dashboard/company/overview";
+import ErrorFallback from "@/app/ui/dashboard/company/overview/CompanyOverviewErrorFallback";
 import CompanyOverviewSkeleton from "@/app/ui/dashboard/company/overview/CompanyOverviewSkeleton";
 import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 const OverviewPage = async ({
   params,
@@ -11,7 +13,9 @@ const OverviewPage = async ({
 
   return (
     <Suspense fallback={<CompanyOverviewSkeleton />}>
-      <CompanyOverview companyId={companyId} />
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <CompanyOverview companyId={companyId} />
+      </ErrorBoundary>
     </Suspense>
   );
 };

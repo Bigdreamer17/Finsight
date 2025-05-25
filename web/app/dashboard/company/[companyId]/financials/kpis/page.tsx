@@ -1,6 +1,8 @@
 import Kpis from "@/app/ui/dashboard/company/financials/kpis";
+import ErrorFallback from "@/app/ui/dashboard/company/financials/kpis/KpisErrorFallback";
 import KpisSkeleton from "@/app/ui/dashboard/company/financials/kpis/KpisSkeleton";
 import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 const KpisPage = async ({
   params,
@@ -11,7 +13,9 @@ const KpisPage = async ({
 
   return (
     <Suspense fallback={<KpisSkeleton />}>
-      <Kpis companyId={companyId} />
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <Kpis companyId={companyId} />
+      </ErrorBoundary>
     </Suspense>
   );
 };

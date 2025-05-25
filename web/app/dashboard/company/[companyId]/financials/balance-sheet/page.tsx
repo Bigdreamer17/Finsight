@@ -1,6 +1,8 @@
 import BalanceSheet from "@/app/ui/dashboard/company/financials/balance-sheet";
+import ErrorFallback from "@/app/ui/dashboard/company/financials/balance-sheet/BalanceSheetErrorFallback";
 import BalanceSheetSkeleton from "@/app/ui/dashboard/company/financials/balance-sheet/BalanceSheetSkeleton";
 import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 const BalanceSheetsPage = async ({
   params,
@@ -11,7 +13,9 @@ const BalanceSheetsPage = async ({
 
   return (
     <Suspense fallback={<BalanceSheetSkeleton />}>
-      <BalanceSheet companyId={companyId} />
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <BalanceSheet companyId={companyId} />
+      </ErrorBoundary>
     </Suspense>
   );
 };

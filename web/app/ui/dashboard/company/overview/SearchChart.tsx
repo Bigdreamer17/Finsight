@@ -69,22 +69,28 @@ const SearchChart = () => {
         className="border border-transparent focus:border-[#AFAFB6] bg-[#1C1C21] placeholder:text-[#AFAFB6] text-white text-sm py-2 pr-4 pl-10 transform transition duration-200 ease-in-out"
       />
 
-      {isFocused && finalCharts.length !== 0 && (
+      {isFocused && (
         <div className="absolute no-scrollbar border border-[#AFAFB6] max-h-[70svh] overflow-y-auto p-1 z-50 top-full left-0 right-0 mt-2 flex flex-col gap-1 rounded-lg bg-[#2C2C35]">
-          {finalCharts.map((c, index) => {
-            const isActive = checkIsActiveChart(c.name, charts);
+          {finalCharts.length > 0 ? (
+            finalCharts.map((c, index) => {
+              const isActive = checkIsActiveChart(c.name, charts);
 
-            return (
-              <button
-                key={index}
-                disabled={isActive}
-                onClick={() => handleClick(c, isActive)}
-                className="flex items-center justify-between p-2 rounded-md gap-2.5 hover:bg-[#40404F] disabled:text-[#AFAFB6] disabled:hover:bg-inherit"
-              >
-                <span className="font-medium">{chartsMap[c.name]}</span>
-              </button>
-            );
-          })}
+              return (
+                <button
+                  key={index}
+                  disabled={isActive}
+                  onClick={() => handleClick(c, isActive)}
+                  className="flex items-center justify-between p-2 rounded-md gap-2.5 hover:bg-[#40404F] disabled:text-[#AFAFB6] disabled:hover:bg-inherit"
+                >
+                  <span className="font-medium">{chartsMap[c.name]}</span>
+                </button>
+              );
+            })
+          ) : (
+            <p className="p-2 text-sm">
+              No metric mathces found. Try adjusting your search
+            </p>
+          )}
         </div>
       )}
     </div>

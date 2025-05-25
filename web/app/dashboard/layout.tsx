@@ -4,6 +4,8 @@ import Sidebar from "../ui/dashboard/common/Sidebar";
 import Topbar from "../ui/dashboard/common/topbar";
 import { Suspense } from "react";
 import TopbarSkeleton from "../ui/dashboard/common/topbar/TopbarSkeleton";
+import { ErrorBoundary } from "react-error-boundary";
+import TopbarErrorFallback from "../ui/dashboard/common/topbar/TopbarErrorFallback";
 
 export const metadata: Metadata = {
   title: "FinSight | Dashboard",
@@ -21,7 +23,9 @@ export default function DashboardLayout({
 
       <section className="relative grow overflow-y-auto flex flex-col">
         <Suspense fallback={<TopbarSkeleton />}>
-          <Topbar />
+          <ErrorBoundary FallbackComponent={TopbarErrorFallback}>
+            <Topbar />
+          </ErrorBoundary>
         </Suspense>
 
         {children}

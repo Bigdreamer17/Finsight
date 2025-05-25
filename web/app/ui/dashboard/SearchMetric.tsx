@@ -11,7 +11,7 @@ import { useAtom } from "jotai";
 import { dashboardMetricAtom } from "@/app/store/dashboardMetrics";
 import { checkIsActiveMetric } from "./utils";
 import { handleClickOutside } from "@/app/lib/utils/handleClickOutside";
-import { FaLock } from "react-icons/fa";
+import { GoLock } from "react-icons/go";
 
 const SearchMetric = ({ paginationQuery }: searchProps) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -80,22 +80,28 @@ const SearchMetric = ({ paginationQuery }: searchProps) => {
 
       {isFocused && (
         <div className="absolute no-scrollbar border border-[#AFAFB6] max-h-[70svh] overflow-y-auto p-1 z-30 top-full left-0 right-0 mt-2 flex flex-col gap-1 rounded-lg bg-[#2C2C35]">
-          {finalMetrics.map((m, index) => {
-            const isActive = checkIsActiveMetric(m.name, metrics);
+          {finalMetrics.length > 0 ? (
+            finalMetrics.map((m, index) => {
+              const isActive = checkIsActiveMetric(m.name, metrics);
 
-            return (
-              <button
-                key={index}
-                disabled={isActive}
-                onClick={() => handleClick(m, isActive)}
-                className="flex items-center justify-between p-2 rounded-md gap-2.5 hover:bg-[#40404F] disabled:text-[#AFAFB6] disabled:hover:bg-inherit"
-              >
-                <span className="font-medium">{m.name}</span>
+              return (
+                <button
+                  key={index}
+                  disabled={isActive}
+                  onClick={() => handleClick(m, isActive)}
+                  className="flex items-center justify-between p-2 rounded-md gap-2.5 hover:bg-[#40404F] disabled:text-[#AFAFB6] disabled:hover:bg-inherit"
+                >
+                  <span className="font-medium">{m.name}</span>
 
-                {m.isPaidFeature && <FaLock size={16} />}
-              </button>
-            );
-          })}
+                  {m.isPaidFeature && <GoLock size={16} />}
+                </button>
+              );
+            })
+          ) : (
+            <p className="p-2 text-sm">
+              No metric mathces found. Try adjusting your search
+            </p>
+          )}
         </div>
       )}
     </div>

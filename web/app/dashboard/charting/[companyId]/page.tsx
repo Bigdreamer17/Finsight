@@ -1,6 +1,8 @@
 import Charting from "@/app/ui/dashboard/charting";
 import ChartingSkeleton from "@/app/ui/dashboard/charting/ChartingSkeleton";
+import ErrorFallback from "@/app/ui/dashboard/company/overview/CompanyOverviewErrorFallback";
 import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 const ChartingPage = async ({
   params,
@@ -11,7 +13,9 @@ const ChartingPage = async ({
 
   return (
     <Suspense fallback={<ChartingSkeleton />}>
-      <Charting companyId={companyId} />
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <Charting companyId={companyId} />
+      </ErrorBoundary>
     </Suspense>
   );
 };

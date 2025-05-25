@@ -12,9 +12,10 @@ import { fieldsMap } from "./data";
 import { IoCloseOutline } from "react-icons/io5";
 import { useAtom } from "jotai";
 import { incomeStatementMetricsAtom } from "@/app/store/financialsMetrics";
-import { FaLock } from "react-icons/fa";
 import { useSession } from "next-auth/react";
 import { tabelDataProps } from "../types";
+import { GoLock } from "react-icons/go";
+import EmptyTable from "../../../common/EmptyTable";
 
 const IncomeStatementTable = ({ tableData }: tabelDataProps) => {
   const { data: session } = useSession();
@@ -47,52 +48,56 @@ const IncomeStatementTable = ({ tableData }: tabelDataProps) => {
           ))}
       </div>
 
-      <Table className="w-full">
-        <TableHeader className="bg-[#1C1C21] border-[#AFAFB6]/40 border-t border-l">
-          <TableRow>
-            <TableHead className="border-r border-[#AFAFB6]/40">
-              Income Statement
-            </TableHead>
-
-            {tableData.map((data, index) => (
-              <TableHead
-                key={index}
-                className="border-r border-[#AFAFB6]/40 text-center"
-              >
-                {data.fiscal_year} (ETB&apos;000)
+      {tableData.length > 0 ? (
+        <Table className="w-full">
+          <TableHeader className="bg-[#1C1C21] border-[#AFAFB6]/40 border-t border-l">
+            <TableRow>
+              <TableHead className="border-r border-[#AFAFB6]/40">
+                Income Statement
               </TableHead>
-            ))}
-          </TableRow>
-        </TableHeader>
 
-        <TableBody className="[&_tr:last-child]:border-b-1 [&_tr:last-child]:border-l-1 text-sm">
-          {metrics.map((metric, index) => (
-            <TableRow
-              key={index}
-              className={`border-l border-[#AFAFB6]/40 ${index % 2 === 0 ? "bg-[#2C2C35]" : "bg-[#40404F]"} ${metric.isLast ? "border-b border-b-white" : ""}`}
-            >
-              <TableCell className="border-r border-[#AFAFB6]/40">
-                {fieldsMap[metric.name]}
-              </TableCell>
-
-              {tableData.map((data, idx) => (
-                <TableCell
-                  key={idx}
-                  className="border-r border-[#AFAFB6]/40 min-w-fit text-center"
+              {tableData.map((data, index) => (
+                <TableHead
+                  key={index}
+                  className="border-r border-[#AFAFB6]/40 text-center"
                 >
-                  {metric.isPaidFeature && !session?.user.isUpgraded ? (
-                    <FaLock size={16} className="mx-auto" />
-                  ) : typeof data[metric.name] === "number" ? (
-                    `${((data[metric.name] as number) / 1000).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })} Birr`
-                  ) : (
-                    "-"
-                  )}
-                </TableCell>
+                  {data.fiscal_year} (ETB&apos;000)
+                </TableHead>
               ))}
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+
+          <TableBody className="[&_tr:last-child]:border-b-1 [&_tr:last-child]:border-l-1 text-sm">
+            {metrics.map((metric, index) => (
+              <TableRow
+                key={index}
+                className={`border-l border-[#AFAFB6]/40 ${index % 2 === 0 ? "bg-[#2C2C35]" : "bg-[#40404F]"} ${metric.isLast ? "border-b border-b-white" : ""}`}
+              >
+                <TableCell className="border-r border-[#AFAFB6]/40">
+                  {fieldsMap[metric.name]}
+                </TableCell>
+
+                {tableData.map((data, idx) => (
+                  <TableCell
+                    key={idx}
+                    className="border-r border-[#AFAFB6]/40 min-w-fit text-center"
+                  >
+                    {metric.isPaidFeature && !session?.user.isUpgraded ? (
+                      <GoLock size={16} className="mx-auto" />
+                    ) : typeof data[metric.name] === "number" ? (
+                      `${((data[metric.name] as number) / 1000).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })} Birr`
+                    ) : (
+                      "-"
+                    )}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      ) : (
+        <EmptyTable />
+      )}
     </div>
   );
 };
