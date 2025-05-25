@@ -1,8 +1,8 @@
 import Image from "next/image";
 import type { companyIdType, companyType } from "./types";
-import { CgTranscript } from "react-icons/cg";
 import Link from "next/link";
 import { fetchCompanyById } from "@/app/lib/fetchs/get-company";
+import { BiLinkExternal } from "react-icons/bi";
 
 const CompanyDetail = async ({ companyId }: companyIdType) => {
   const company: companyType = await fetchCompanyById({ companyId });
@@ -52,7 +52,7 @@ const CompanyDetail = async ({ companyId }: companyIdType) => {
           rel="noopener noreferrer"
           target="_blank"
         >
-          <CgTranscript size={20} />
+          <BiLinkExternal size={20} />
         </Link>
       </div>
     </div>

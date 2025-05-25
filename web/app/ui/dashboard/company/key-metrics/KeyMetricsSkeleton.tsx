@@ -13,9 +13,9 @@ const KeyMetricsSkeleton = () => {
         </h3>
 
         <div className="rounded-lg bg-[#2C2C35] p-4 flex flex-col md:flex-row gap-4">
-          <AreaGraphSkeleton className="basis-1/2" />
+          <AreaGraphSkeleton className="md:basis-1/2" />
 
-          <AreaGraphSkeleton className="basis-1/2" />
+          <AreaGraphSkeleton className="md:basis-1/2" />
         </div>
 
         <div className="flex flex-col gap-2">
