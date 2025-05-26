@@ -20,6 +20,7 @@ class Company(Base):
     name = Column(String, index=True)
     stock_name = Column(String)
     stock_price = Column(Numeric(precision=15, scale=2))
+    image_url = Column(String)
     sector = Column(String, index=True)
     phone = Column(String, index=True)
     email = Column(String, unique=True, index=True)
