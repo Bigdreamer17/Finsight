@@ -19,22 +19,26 @@ def apply_sorting(query, model, sorted_by: str = None, sort_order: str = None):
 
 
 def get_personnel_data(
-    db: Session, company_id: str, sorted_by: str = None, sort_order: str = None
+    db: Session, company_id: str, sorted_by: str = None, sort_order: str = "Desc"
 ):
     query = db.query(Personnel).filter(Personnel.company_id == company_id)
-    board_of_directors = apply_sorting(query, Personnel, sorted_by, sort_order)
+    board_of_directors = (
+        apply_sorting(query, Personnel, sorted_by, sort_order) if sorted_by else query
+    )
 
     return board_of_directors.all()
 
 
 def get_executive_data(
-    db: Session, company_id: str, sorted_by: str = None, sort_order: str = None
+    db: Session, company_id: str, sorted_by: str = None, sort_order: str = "Desc"
 ):
     query = db.query(ExecutiveManagement).filter(
         ExecutiveManagement.company_id == company_id
     )
-    executive_managment = apply_sorting(
-        query, ExecutiveManagement, sorted_by, sort_order
+    executive_managment = (
+        apply_sorting(query, ExecutiveManagement, sorted_by, sort_order)
+        if sorted_by
+        else query
     )
 
     return executive_managment.all()

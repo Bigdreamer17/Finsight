@@ -6,7 +6,8 @@ from sqlalchemy import engine_from_config, pool
 
 from alembic import context
 from db.database import Base
-from model import company_model, investor_relations_model, user_model
+from model import (chat_model, company_model, investor_relations_model,
+                   user_model)
 
 # Load environment variables
 load_dotenv()

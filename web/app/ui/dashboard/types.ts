@@ -1,3 +1,5 @@
+import type { companyIdType } from "./company/common/types";
+
 export type dashboardProps = {
   company?: string;
   metric?: string;
@@ -44,4 +46,19 @@ export type companyDashboard = {
 
 export type TableProps = {
   comp: companyDashboard[];
+};
+
+export type senderType = "user" | "bot";
+
+export type chatType = {
+  id?: string;
+  user_id: string;
+  company_id: string;
+  chat: string;
+  sender: senderType;
+  created_at: Date;
+};
+
+export type chatBotProps = companyIdType & {
+  chatsData: chatType[];
 };
