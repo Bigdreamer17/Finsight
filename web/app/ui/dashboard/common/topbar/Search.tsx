@@ -11,7 +11,6 @@ import Link from "next/link";
 import { handleClickOutside } from "@/app/lib/utils/handleClickOutside";
 import { companyType } from "../../company/common/types";
 import { usePathname } from "next/navigation";
-import { p } from "framer-motion/client";
 
 const Search = ({ paginationQuery, companies }: searchProps) => {
   const pathName = usePathname();
@@ -80,13 +79,11 @@ const Search = ({ paginationQuery, companies }: searchProps) => {
                 className="flex items-center p-2 rounded-md gap-2.5 hover:bg-[#40404F]"
               >
                 <Image
-                  src={
-                    "https://media.glassdoor.com/sql/525842/dashen-bank-squarelogo-1461672481507.png"
-                  }
+                  src={company.image_url ?? null}
                   alt="company image"
                   height={26}
                   width={26}
-                  className="object-cover rounded-md"
+                  className="object-cover rounded-md min-w-[26px] min-h-[26px] max-w-[26px] max-h-[26px]"
                 />
 
                 <div className="flex flex-col self-start">

@@ -9,6 +9,7 @@ export type companyIdType = {
 };
 
 export type companyType = {
+  image_url: string;
   ceo?: string;
   description?: string;
   email?: string;

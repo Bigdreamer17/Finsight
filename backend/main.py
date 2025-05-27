@@ -5,7 +5,18 @@ from controllers import financials_controller, payment_controller
 from dotenv import load_dotenv
 from fastapi import FastAPI  # type: ignore
 from fastapi.middleware.cors import CORSMiddleware
-from views import company_view, investor_relations_view, user_view, graph_view, investment_view, performance_view, capital_view, investor_view, roi_view, chat_view, snap_view, dashboard_view
+from views import (
+    company_view,
+    investor_relations_view,
+    user_view,
+    graph_view,
+    investment_view,
+    performance_view,
+    capital_view,
+    investor_view,
+    roi_view,
+    chat_view,
+)
 
 env_path = Path(__file__).resolve().parent / ".env"
 load_dotenv(dotenv_path=env_path)
@@ -39,6 +50,7 @@ app.include_router(roi_view.router)
 app.include_router(chat_view.router)
 app.include_router(snap_view.router)
 app.include_router(dashboard_view.router)
+
 
 
 if __name__ == "__main__":

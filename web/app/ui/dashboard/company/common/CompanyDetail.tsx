@@ -12,11 +12,11 @@ const CompanyDetail = async ({ companyId }: companyIdType) => {
       <div className="p-2 rounded-lg bg-[#2C2C35] grow">
         <div className="flex items-center gap-2.5">
           <Image
-            src="https://media.glassdoor.com/sql/525842/dashen-bank-squarelogo-1461672481507.png"
+            src={company.image_url ?? null}
             alt="company image"
-            height={46}
-            width={46}
-            className="object-cover rounded-md"
+            height={50}
+            width={50}
+            className="object-cover rounded-md min-w-[50px] min-h-[50px] max-w-[50px] max-h-[50px]"
           />
 
           <div className="flex flex-col self-start">
