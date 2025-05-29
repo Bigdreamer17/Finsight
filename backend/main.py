@@ -16,6 +16,9 @@ from views import (
     investor_view,
     roi_view,
     chat_view,
+    snap_view,
+    dashboard_view,
+    forecast_view
 )
 
 env_path = Path(__file__).resolve().parent / ".env"
@@ -50,6 +53,7 @@ app.include_router(roi_view.router)
 app.include_router(chat_view.router)
 app.include_router(snap_view.router)
 app.include_router(dashboard_view.router)
+app.include_router(forecast_view.router)
 
 
 
