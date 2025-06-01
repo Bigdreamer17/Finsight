@@ -51,3 +51,34 @@ export const metricMap: { [key: string]: string } = {
   "Total number of shares": "totalNumberOfShares",
   "Dividend strength badge": "dividendStrength",
 };
+
+export const metrics = [
+  {
+    name: "Company Name",
+  },
+  {
+    name: "Sector",
+    isNotSort: true,
+  },
+  {
+    name: "EPS",
+  },
+  {
+    name: "ROE",
+  },
+  {
+    name: "Debt-to-equity Ratio",
+  },
+  {
+    name: "Profit Margin",
+  },
+];
+
+export const map: { [key: string]: string } = {
+  "Company Name": "name",
+  Sector: "sector",
+  EPS: "eps",
+  ROE: "roe",
+  "Debt-to-equity Ratio": "debt_to_equity",
+  "Profit Margin": "profit_margin",
+};

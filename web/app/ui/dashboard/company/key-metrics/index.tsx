@@ -10,6 +10,7 @@ import ROICalculator from "./ROICalculator";
 import type {
   capitalStructureType,
   investmentSummaryType,
+  investorScoresType,
   performanceIndicatorsType,
   roiCalculatorMetricsType,
 } from "./types";
@@ -17,9 +18,13 @@ import { chartsMap } from "../overview/data";
 import {
   fetchCapitalStructure,
   fetchInvestmentSummary,
+  fetchInvestorScores,
   fetchPerformanceIndicators,
   fetchROICalculatorMetrics,
 } from "@/app/lib/fetchs/get-key-metrics";
+import { FaLightbulb } from "react-icons/fa";
+import { map } from "./data";
+import InvestorScores from "./InvestorScores";
 
 const KeyMetrics = async ({ companyId }: companyIdType) => {
   const [
@@ -28,25 +33,45 @@ const KeyMetrics = async ({ companyId }: companyIdType) => {
     capitalStructure,
     investmentSummary,
     roiCalculatorMetrics,
+    investorScores,
   ]: [
     overviewChartType,
     performanceIndicatorsType,
     capitalStructureType,
     investmentSummaryType,
     roiCalculatorMetricsType,
+    investorScoresType,
   ] = await Promise.all([
     fetchCompanyOverviewCharts({ companyId }),
     fetchPerformanceIndicators({ companyId }),
     fetchCapitalStructure({ companyId }),
     fetchInvestmentSummary({ companyId }),
     fetchROICalculatorMetrics({ companyId }),
+    fetchInvestorScores({ companyId }),
   ]);
   const companyData = {
     financialHealth: "Very strong buy(A)",
-    growthComparision: "Top 20 in growth",
-    industryAvg: 60002,
-    growthRanking: "Above industry average",
     investementPotential: investmentSummary.investment_potential,
+    investmentCriteria: {
+      criteria: {
+        roe: `${(investmentSummary.criteria.roe * 100).toLocaleString(
+          undefined,
+          {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 2,
+          },
+        )}%`,
+        eps_growth_consistent: investmentSummary.criteria.eps_growth_consistent
+          ? "Consistent"
+          : "Inconsistent",
+        debt_to_equity: `${(
+          investmentSummary.criteria.debt_to_equity * 100
+        ).toLocaleString(undefined, {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2,
+        })}%`,
+      },
+    },
     performanceIndicators: {
       roa: performanceIndicators.roa * 100,
       roe: performanceIndicators.roe * 100,
@@ -94,27 +119,6 @@ const KeyMetrics = async ({ companyId }: companyIdType) => {
 
         <div className="flex flex-col gap-2">
           <p className="flex items-center flex-wrap font-medium gap-2">
-            Growth compared to others in the industry:
-            <span className="text-sm font-light">
-              {companyData?.growthComparision ?? "-"}
-            </span>
-          </p>
-
-          <p className="flex items-center flex-wrap font-medium gap-2">
-            Industry average number:
-            <span className="text-sm font-light">
-              {companyData?.industryAvg ?? "-"}
-            </span>
-          </p>
-
-          <p className="flex items-center flex-wrap font-medium gap-2">
-            Growth ranking:
-            <span className="text-sm font-light">
-              {companyData?.growthRanking ?? "-"}
-            </span>
-          </p>
-
-          <p className="flex items-center flex-wrap font-medium gap-2">
             Investment potential:
             <span className="text-sm font-light flex items-center gap-1">
               <InvestmentBadge
@@ -123,6 +127,33 @@ const KeyMetrics = async ({ companyId }: companyIdType) => {
               {companyData?.investementPotential ?? "-"}
             </span>
           </p>
+
+          <div className="bg-[#27AA43]/40 flex flex-col gap-2 rounded-xl p-4 max-w-fit min-w-full md:min-w-xl">
+            <div className="flex items-center gap-3">
+              <FaLightbulb size={20} color="#27AA43" />
+
+              <span>Why ?</span>
+            </div>
+
+            <p className="flex items-center flex-wrap gap-2 text-sm">
+              {investmentSummary.reason}
+            </p>
+
+            <ul className="list-disc list-inside">
+              {Object.keys(investmentSummary.criteria).map((key, index) => {
+                const value =
+                  companyData.investmentCriteria.criteria[
+                    key as keyof typeof investmentSummary.criteria
+                  ];
+                return (
+                  <li key={index} className="text-xs font-light list-item">
+                    <span>{map[key]}:</span>
+                    <span className="ml-2">{String(value)}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
       </div>
 
@@ -137,6 +168,8 @@ const KeyMetrics = async ({ companyId }: companyIdType) => {
           <DebtToEquityRationChart data={companyData?.debtToEquityChart} />
         </div>
       </div>
+
+      <InvestorScores {...investorScores} />
 
       <ROICalculator {...companyData.roiMetrics} />
     </div>

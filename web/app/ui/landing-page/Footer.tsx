@@ -1,13 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useRef } from "react";
 import { FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
 import { IoIosArrowUp } from "react-icons/io";
 
 const Footer = () => {
-  const pathName = usePathname();
   const newsletterRef = useRef<HTMLInputElement>(null);
 
   const footerItems = [

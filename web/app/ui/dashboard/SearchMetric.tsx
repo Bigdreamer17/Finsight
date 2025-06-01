@@ -6,12 +6,11 @@ import { searchParams } from "./search-params";
 import SearchInput from "./common/SearchInput";
 import type { metricType, searchProps } from "./types";
 import { useEffect, useRef, useState } from "react";
-import { dashboardMetrics } from "./data";
+import { metrics as dashboardMetrics } from "./data";
 import { useAtom } from "jotai";
 import { dashboardMetricAtom } from "@/app/store/dashboardMetrics";
 import { checkIsActiveMetric } from "./utils";
 import { handleClickOutside } from "@/app/lib/utils/handleClickOutside";
-import { GoLock } from "react-icons/go";
 
 const SearchMetric = ({ paginationQuery }: searchProps) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -92,8 +91,6 @@ const SearchMetric = ({ paginationQuery }: searchProps) => {
                   className="flex items-center justify-between p-2 rounded-md gap-2.5 hover:bg-[#40404F] disabled:text-[#AFAFB6] disabled:hover:bg-inherit"
                 >
                   <span className="font-medium">{m.name}</span>
-
-                  {m.isPaidFeature && <GoLock size={16} />}
                 </button>
               );
             })

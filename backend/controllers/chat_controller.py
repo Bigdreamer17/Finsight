@@ -146,9 +146,14 @@ Financials:
 
 
 def get_chat(company_id: str, user_id: UUID, db: Session):
+    last_24_hours = datetime.utcnow() - timedelta(hours=24)
     return (
         db.query(Chat)
-        .filter(Chat.company_id == company_id, Chat.user_id == user_id)
+        .filter(
+            Chat.company_id == company_id,
+            Chat.user_id == user_id,
+            Chat.created_at >= last_24_hours,
+        )
         .order_by(Chat.created_at)
         .all()
     )
