@@ -15,7 +15,7 @@ import { searchParamOption } from "@/app/lib/search-params";
 import { useQueryStates } from "nuqs";
 import { RiArrowUpDownLine } from "react-icons/ri";
 import { HiArrowNarrowDown, HiArrowNarrowUp } from "react-icons/hi";
-import { metricMap } from "./data";
+import { map as metricMap } from "./data";
 import type { TableProps } from "./types";
 import { getDashbaordTableData } from "./utils";
 import { useAtom } from "jotai";
@@ -34,7 +34,7 @@ const TableContainer = ({ comp }: TableProps) => {
 
   useEffect(() => {
     const filteredCompanies = comp.filter((c) =>
-      c.companyName.toLowerCase().includes(companyFilter.toLowerCase()),
+      c.name.toLowerCase().includes(companyFilter.toLowerCase()),
     );
 
     setCompanies(filteredCompanies);
@@ -71,7 +71,7 @@ const TableContainer = ({ comp }: TableProps) => {
       </div>
 
       {companies.length > 0 ? (
-        <TableMain>
+        <TableMain className="table-fixed">
           <TableHeader className="bg-[#1C1C21] border-[#AFAFB6]/40 border-y text-xs">
             <TableRow>
               {metrics.map((metric, index) => (
@@ -84,42 +84,45 @@ const TableContainer = ({ comp }: TableProps) => {
                   }
                 >
                   <button
-                    className="flex items-center gap-3 hover:cursor-pointer w-full focus:outline-none"
+                    className={`flex items-center gap-3 hover:cursor-pointer disabled:cursor-auto w-full focus:outline-none ${index !== 0 ? "justify-center" : ""}`}
+                    disabled={metric.isNotSort}
                     onClick={() => handleSortClick(metricMap[metric.name])}
                   >
                     <span>{metric.name}</span>
 
-                    <div className="flex justify-center items-center hover:cursor-pointer">
-                      <RiArrowUpDownLine
-                        size={17}
-                        className={
-                          sortMetric !== "" &&
-                          sortParam === metricMap[metric.name]
-                            ? "hidden"
-                            : "p-0"
-                        }
-                      />
+                    {!metric.isNotSort && (
+                      <div className="flex justify-center items-center hover:cursor-pointer">
+                        <RiArrowUpDownLine
+                          size={17}
+                          className={
+                            sortMetric !== "" &&
+                            sortParam === metricMap[metric.name]
+                              ? "hidden"
+                              : "p-0"
+                          }
+                        />
 
-                      <HiArrowNarrowUp
-                        size={17}
-                        className={
-                          sortMetric === "Desc" ||
-                          sortParam !== metricMap[metric.name]
-                            ? "hidden"
-                            : "p-0"
-                        }
-                      />
+                        <HiArrowNarrowUp
+                          size={17}
+                          className={
+                            sortMetric === "Desc" ||
+                            sortParam !== metricMap[metric.name]
+                              ? "hidden"
+                              : "p-0"
+                          }
+                        />
 
-                      <HiArrowNarrowDown
-                        size={17}
-                        className={
-                          sortMetric === "Asc" ||
-                          sortParam !== metricMap[metric.name]
-                            ? "hidden"
-                            : ""
-                        }
-                      />
-                    </div>
+                        <HiArrowNarrowDown
+                          size={17}
+                          className={
+                            sortMetric === "Asc" ||
+                            sortParam !== metricMap[metric.name]
+                              ? "hidden"
+                              : ""
+                          }
+                        />
+                      </div>
+                    )}
                   </button>
                 </TableHead>
               ))}
@@ -141,7 +144,7 @@ const TableContainer = ({ comp }: TableProps) => {
                     return (
                       <TableCell
                         key={idx}
-                        className={`text-center ${idx !== metrics.length - 1 ? "border-r border-[#AFAFB6]/40" : ""}`}
+                        className={`${idx !== 0 ? "text-center" : ""} ${idx !== metrics.length - 1 ? "border-r border-[#AFAFB6]/40" : ""}`}
                       >
                         {metric.isPaidFeature ? (
                           <GoLock size={16} className="mx-auto" />

@@ -4,48 +4,22 @@ export const getDashbaordTableData = (
   company: companyDashboard,
 ): { [key: string]: string } => {
   return {
-    companyName: company.companyName,
+    name: company.name,
     sector: company.sector ?? "-",
-    companyWorth: company.companyWorth
-      ? `${getTruncatedMoney(company.companyWorth)} Birr`
+    roe: company.roe
+      ? `${(company.roe * 100).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })}%`
       : "-",
-    dividendPerShare: company.dividendPerShare
-      ? `${getTruncatedMoney(company.dividendPerShare)} Birr`
+    eps:
+      company.eps?.toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2,
+      }) ?? "-",
+    debt_to_equity: company.debt_to_equity
+      ? `${(company.debt_to_equity * 100).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })}%`
       : "-",
-    financialHealth: company.financialHealth ?? "-",
-    investmentPotential: company.investmentPotential ?? "-",
-    investementRanking: company.investementRanking
-      ? getRanking(company.investementRanking, "investment potential")
+    profit_margin: company.profit_margin
+      ? `${(company.profit_margin * 100).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })}%`
       : "-",
-    revenueLastYear: company.revenueLastYear
-      ? `${getTruncatedMoney(company.revenueLastYear)} Birr`
-      : "-",
-    netProfitMargin: company.netProfitMargin
-      ? `${company.netProfitMargin}%`
-      : "-",
-    roa: company.roa ? `${company.roa}%` : "-",
-    roe: company.roe ? `${company.roe}%` : "-",
-    profitability: company.profitability ?? "-",
-    profitabilityRanking: company.profitabilityRanking
-      ? getRanking(company.profitabilityRanking, "profitability")
-      : "-",
-    revenueGrowthRate: company.revenueGrowthRate
-      ? `${company.revenueGrowthRate}%`
-      : "-",
-    growth: company.growth ?? "-",
-    growthRanking: company.growthRanking
-      ? getRanking(company.growthRanking, "growth")
-      : "-",
-    growthRating: company.growthRating ?? "-",
-    debtToEquity: company.debtToEquity ? `${company.debtToEquity}%` : "-",
-    riskLevel: company.riskLevel ?? "-",
-    stabilityRanking: company.stabilityRanking
-      ? getRanking(company.stabilityRanking, "growth")
-      : "-",
-    stabilityRating: company.stabilityRating ?? "-",
-    dividendYeild: company.dividendYeild ? `${company.dividendYeild}%` : "-",
-    totalNumberOfShares: String(company.totalNumberOfShares ?? "-"),
-    dividendStrength: company.dividendStrength ?? "-",
   };
 };
 

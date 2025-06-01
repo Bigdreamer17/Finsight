@@ -5,8 +5,9 @@ import Table from "./Table";
 import TableSkeleton from "./TableSkeleton";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "./DashboardErrorFallback";
+import type { sortParamMetricType } from "./types";
 
-const Dashboard = () => {
+const Dashboard = ({ sortParam, sortMetric }: sortParamMetricType) => {
   return (
     <div className="rounded-lg flex-1 bg-[#2C2C35] p-4 flex flex-col gap-2.5">
       <div className="flex flex-wrap gap-4 items-center">
@@ -17,7 +18,7 @@ const Dashboard = () => {
 
       <Suspense fallback={<TableSkeleton />}>
         <ErrorBoundary FallbackComponent={ErrorFallback}>
-          <Table />
+          <Table sortParam={sortParam} sortMetric={sortMetric} />
         </ErrorBoundary>
       </Suspense>
     </div>

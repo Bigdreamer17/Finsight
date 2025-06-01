@@ -48,3 +48,20 @@ export type ROICalculatorProps = {
   averageProfitGrowth: number;
   averageEPSGrowth: number;
 };
+
+export type investorScore = {
+  grade: string;
+  comment: string;
+  logic: string[];
+};
+
+export type investorScoresType = {
+  warren_buffett: investorScore;
+  peter_lynch: investorScore;
+  benjamin_graham: investorScore;
+};
+
+export type inverstorCardProps = investorScore & {
+  name: string;
+  imageUrl: string;
+};
