@@ -7,5 +7,5 @@ export type balanceSheetType = {
 
 export type tabelDataProps = {
   tableData: financialsType[];
-  minYear: number | null;
+  minYear?: number | null;
 };

@@ -14,7 +14,6 @@ import { handleClickOutside } from "@/app/lib/utils/handleClickOutside";
 
 const SearchMetric = ({ paginationQuery }: searchProps) => {
   const [isFocused, setIsFocused] = useState(false);
-  const [finalMetrics, setFinalMetrics] = useState(dashboardMetrics);
   const [metrics, setMetrics] = useAtom(dashboardMetricAtom);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -22,14 +21,9 @@ const SearchMetric = ({ paginationQuery }: searchProps) => {
     searchParams,
     searchParamOption,
   );
-
-  useEffect(() => {
-    const filteredMetrics = dashboardMetrics.filter((m) =>
-      m.name.toLowerCase().includes(metric.toLowerCase()),
-    );
-
-    setFinalMetrics(filteredMetrics);
-  }, [metric, setFinalMetrics]);
+  const finalMetrics = dashboardMetrics.filter((m) =>
+    m.name.toLowerCase().includes(metric.toLowerCase()),
+  );
 
   useEffect(() => {
     function handleClickEvent(event: MouseEvent) {
@@ -68,7 +62,7 @@ const SearchMetric = ({ paginationQuery }: searchProps) => {
   };
 
   return (
-    <div ref={ref} className="relative focus-within::z-30 grow flex-1">
+    <div ref={ref} className="relative focus-within:z-30 grow flex-1">
       <SearchInput
         onFocus={() => setIsFocused(true)}
         defaultValue={metric}

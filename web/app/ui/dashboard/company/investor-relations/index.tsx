@@ -1,7 +1,6 @@
 import ShareholderInfo from "./ShareholderInfo";
 import ExecutiveTable from "./ExecutiveTable";
 import BODTable from "./BODTable";
-import { format } from "date-fns";
 import type {
   bodTableData as bodTabelDataType,
   execTabelDataType,

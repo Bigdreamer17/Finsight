@@ -9,7 +9,6 @@ import type { searchProps } from "./types";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { handleClickOutside } from "@/app/lib/utils/handleClickOutside";
-import { companyType } from "../../company/common/types";
 import { usePathname } from "next/navigation";
 
 const Search = ({ paginationQuery, companies }: searchProps) => {
@@ -18,8 +17,6 @@ const Search = ({ paginationQuery, companies }: searchProps) => {
   const isChartingPage = pathName.includes("charting");
 
   const [isFocused, setIsFocused] = useState(false);
-  const [companiesFinal, setCompaniesFinal] =
-    useState<companyType[]>(companies);
   const ref = useRef<HTMLDivElement>(null);
 
   const [{ company }, setParams] = useQueryStates(
@@ -27,12 +24,9 @@ const Search = ({ paginationQuery, companies }: searchProps) => {
     searchParamOption,
   );
 
-  useEffect(() => {
-    const filteredCompanies = companies.filter((comp) =>
-      comp?.name?.toLowerCase().includes(company),
-    );
-    setCompaniesFinal(filteredCompanies);
-  }, [company, companies]);
+  const companiesFinal = companies.filter((comp) =>
+    comp?.name?.toLowerCase().includes(company),
+  );
 
   useEffect(() => {
     function handleClickEvent(event: MouseEvent) {

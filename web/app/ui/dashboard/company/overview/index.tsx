@@ -73,7 +73,7 @@ const CompanyOverview = async ({ companyId }: companyIdType) => {
   const breakDownProps = getBreakDownProps(company);
 
   return (
-    <div className="flex px-4 pb-4 flex-col gap-3 xl:flex-row items-stretch mt-2.5">
+    <div className="flex px-4 pb-4 flex-col gap-3 xl:flex-row items-stretch mt-5">
       <CompanyBreakDown {...breakDownProps} />
       <CompanyChart chartData={chartsData} />
     </div>

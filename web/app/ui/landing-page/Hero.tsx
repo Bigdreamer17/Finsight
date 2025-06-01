@@ -1,12 +1,50 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { spaceGrotesk } from "@/app/fonts";
+import { prompts } from "./data";
+import { shuffleArray } from "./utils";
 
 const Hero = () => {
-  const prompts = [
-    "Summarize Microsoft's latest earnings call.",
-    "How have Amazon's focus areas changed?",
-    "What did Uber's management team say about margins?",
-    "What's Meta's latest financial guidance?",
-  ];
+  const [shuffledPrompts, setShuffledPrompts] = useState(() =>
+    shuffleArray(prompts),
+  );
+  const [typedPrompts, setTypedPrompts] = useState<string[]>([]);
+
+  const typePrompt = (fullText: string, cb: (text: string) => void) => {
+    let i = 0;
+    const interval = setInterval(() => {
+      cb(fullText.slice(0, i + 1));
+      i++;
+      if (i === fullText.length) clearInterval(interval);
+    }, 30);
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newShuffled = shuffleArray(prompts);
+      setShuffledPrompts(newShuffled);
+      setTypedPrompts(Array(newShuffled.length).fill(""));
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (shuffledPrompts.length > 0) {
+      shuffledPrompts.forEach((prompt, i) => {
+        setTimeout(() => {
+          typePrompt(prompt, (typed) => {
+            setTypedPrompts((prev) => {
+              const updated = [...prev];
+              updated[i] = typed;
+              return updated;
+            });
+          });
+        }, i * 100);
+      });
+    }
+  }, [shuffledPrompts]);
 
   return (
     <section className="mx-auto max-w-[920px] py-16 flex flex-col gap-24">
@@ -17,16 +55,14 @@ const Hero = () => {
       </h1>
 
       <div className="w-full gap-3 px-4 grid grid-cols-1 md:grid-cols-2 mx-auto">
-        {prompts.map((prompt, index) => {
-          const params = new URLSearchParams();
-          params.set("prompt", prompt);
-
-          return (
-            <div key={index} className="w-full p-2.5 bg-white rounded-lg">
-              {prompt}
-            </div>
-          );
-        })}
+        {typedPrompts.slice(0, 4).map((prompt, index) => (
+          <div
+            key={index}
+            className="w-full p-2.5 bg-white rounded-lg min-h-[60px]"
+          >
+            <span className="whitespace-pre-wrap">{prompt}</span>
+          </div>
+        ))}
       </div>
     </section>
   );

@@ -25,3 +25,10 @@ export const features = [
       "FinSight is backed by leading venture capital and asset management firms to continue to build a world class product and customer experience.",
   },
 ];
+
+export const prompts = [
+  "Summarize Microsoft's latest earnings call.",
+  "How have Amazon's focus areas changed?",
+  "What did Uber's management team say about margins?",
+  "What's Meta's latest financial guidance?",
+];

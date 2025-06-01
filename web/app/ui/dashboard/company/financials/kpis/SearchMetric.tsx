@@ -16,9 +16,6 @@ import { GoLock } from "react-icons/go";
 
 const SearchMetric = ({ paginationQuery }: searchProps) => {
   const [isFocused, setIsFocused] = useState(false);
-  const [finalMetrics, setFinalMetrics] = useState(
-    kpisMetrics.filter((m) => !m.isLast),
-  );
   const [metrics, setMetrics] = useAtom(kpisMetricsAtom);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -27,14 +24,10 @@ const SearchMetric = ({ paginationQuery }: searchProps) => {
     searchParamOption,
   );
 
-  useEffect(() => {
-    const preFilteredMetrics = kpisMetrics.filter((m) => !m.isLast);
-    const filteredMetrics = preFilteredMetrics.filter((m) =>
-      m.name.toLowerCase().includes(metric.toLowerCase()),
-    );
-
-    setFinalMetrics(filteredMetrics);
-  }, [metric, setFinalMetrics]);
+  const filteredMetrics = kpisMetrics.filter((m) => !m.isLast);
+  const finalMetrics = filteredMetrics.filter((m) =>
+    m.name.toLowerCase().includes(metric.toLowerCase()),
+  );
 
   useEffect(() => {
     function handleClickEvent(event: MouseEvent) {
