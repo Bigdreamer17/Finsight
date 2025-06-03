@@ -19,7 +19,7 @@ const BillingCard = ({
   const { data: session } = useSession();
 
   const subEndDateString = session?.user?.subscriptionEndDate
-    ? normalizeDateString(session?.user?.subscriptionEndDate)
+    ? normalizeDateString(session?.user?.subscriptionEndDate.toISOString())
     : Date.now();
   const subEndDate = new Date(subEndDateString);
   const newDate = new Date(Date.now());

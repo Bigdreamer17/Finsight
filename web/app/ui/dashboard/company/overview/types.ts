@@ -1,4 +1,3 @@
-import type { dataType } from "../../common/types";
 import type { chartType as commonChartType } from "../../common/types";
 
 export type breakDownProps = {

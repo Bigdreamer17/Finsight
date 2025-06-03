@@ -30,6 +30,11 @@ const CompanyNavigation = ({ companyId }: companyIdType) => {
       name: "Investor Relations",
       isActive: pathName.includes("investor-relations"),
     },
+    {
+      href: "/projections",
+      name: "Forecast",
+      isActive: pathName.includes("projections"),
+    },
   ];
 
   return (

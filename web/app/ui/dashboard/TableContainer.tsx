@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 import {
   Table as TableMain,
@@ -25,20 +24,15 @@ import EmptyTable from "./common/EmptyTable";
 
 const TableContainer = ({ comp }: TableProps) => {
   const [metrics, setMetrics] = useAtom(dashboardMetricAtom);
-  const [companies, setCompanies] = useState(comp);
 
   const [{ sortMetric, sortParam, companyFilter }, setParams] = useQueryStates(
     searchParams,
     searchParamOption,
   );
 
-  useEffect(() => {
-    const filteredCompanies = comp.filter((c) =>
-      c.name.toLowerCase().includes(companyFilter.toLowerCase()),
-    );
-
-    setCompanies(filteredCompanies);
-  }, [companyFilter, comp]);
+  const companies = comp.filter((c) =>
+    c.name.toLowerCase().includes(companyFilter.toLowerCase()),
+  );
 
   const handleMetricDelete = (metric: string) => {
     setMetrics((prev) => prev.filter((m) => m.name != metric));

@@ -14,7 +14,6 @@ import type { chartMetricsType } from "./types";
 
 const SearchChart = () => {
   const [isFocused, setIsFocused] = useState(false);
-  const [finalCharts, setFinalCharts] = useState(chartsData);
   const [charts, setCharts] = useAtom(chartsAtom);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -23,13 +22,9 @@ const SearchChart = () => {
     searchParamOption,
   );
 
-  useEffect(() => {
-    const filteredMetrics = chartsData.filter((c) =>
-      c.name.toLowerCase().includes(chart.toLowerCase()),
-    );
-
-    setFinalCharts(filteredMetrics);
-  }, [chart, setFinalCharts]);
+  const finalCharts = chartsData.filter((c) =>
+    c.name.toLowerCase().includes(chart.toLowerCase()),
+  );
 
   useEffect(() => {
     function handleClickEvent(event: MouseEvent) {
