@@ -18,10 +18,12 @@ const BillingCard = ({
   const router = useRouter();
   const { data: session } = useSession();
 
-  const subEndDateString = session?.user?.subscriptionEndDate
-    ? normalizeDateString(session?.user?.subscriptionEndDate.toISOString())
-    : Date.now();
-  const subEndDate = new Date(subEndDateString);
+  const subEndDateString = normalizeDateString(
+    session?.user?.subscriptionEndDate ?? "",
+  );
+
+  const subEndDate =
+    subEndDateString !== "" ? new Date(subEndDateString) : new Date();
   const newDate = new Date(Date.now());
 
   const isSubscribed =

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Typewriter } from "react-simple-typewriter";
 import { spaceGrotesk } from "@/app/fonts";
 import { prompts } from "./data";
 import { shuffleArray } from "./utils";
@@ -9,41 +10,15 @@ const Hero = () => {
   const [shuffledPrompts, setShuffledPrompts] = useState(() =>
     shuffleArray(prompts),
   );
-  const [typedPrompts, setTypedPrompts] = useState<string[]>([]);
-
-  const typePrompt = (fullText: string, cb: (text: string) => void) => {
-    let i = 0;
-    const interval = setInterval(() => {
-      cb(fullText.slice(0, i + 1));
-      i++;
-      if (i === fullText.length) clearInterval(interval);
-    }, 30);
-  };
+  const [animationKey, setAnimationKey] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const newShuffled = shuffleArray(prompts);
-      setShuffledPrompts(newShuffled);
-      setTypedPrompts(Array(newShuffled.length).fill(""));
+      setShuffledPrompts(shuffleArray(prompts));
+      setAnimationKey((prev) => prev + 1);
     }, 5000);
 
     return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    if (shuffledPrompts.length > 0) {
-      shuffledPrompts.forEach((prompt, i) => {
-        setTimeout(() => {
-          typePrompt(prompt, (typed) => {
-            setTypedPrompts((prev) => {
-              const updated = [...prev];
-              updated[i] = typed;
-              return updated;
-            });
-          });
-        }, i * 100);
-      });
-    }
   }, [shuffledPrompts]);
 
   return (
@@ -55,12 +30,19 @@ const Hero = () => {
       </h1>
 
       <div className="w-full gap-3 px-4 grid grid-cols-1 md:grid-cols-2 mx-auto">
-        {typedPrompts.slice(0, 4).map((prompt, index) => (
+        {shuffledPrompts.slice(0, 4).map((prompt, index) => (
           <div
             key={index}
-            className="w-full p-2.5 bg-white rounded-lg min-h-[60px]"
+            className="w-full p-2.5 bg-white rounded-lg min-h-[60px] font-normal"
           >
-            <span className="whitespace-pre-wrap">{prompt}</span>
+            <Typewriter
+              key={`${animationKey}-${index}`}
+              words={[prompt]}
+              typeSpeed={30}
+              deleteSpeed={0}
+              delaySpeed={3000}
+              cursor={false}
+            />
           </div>
         ))}
       </div>

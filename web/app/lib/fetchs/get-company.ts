@@ -40,7 +40,7 @@ export const fetchCompanies = async () => {
     });
     const data = await res.json();
 
-    return data;
+    return Array.isArray(data) ? data : [];
   } catch (err) {
     console.error(err);
     throw new Error("failed to fetch data");
@@ -71,10 +71,12 @@ export const fetchCompaniesDashboard = async ({
       });
       const data = await res.json();
 
-      return data;
+      return Array.isArray(data) ? data : [];
     } catch (err) {
       console.error(err);
       throw new Error("failed to fetch data");
     }
   }
+
+  return [];
 };

@@ -1,9 +1,9 @@
 import { fetchCompaniesDashboard } from "@/app/lib/fetchs/get-company";
 import TableContainer from "./TableContainer";
-import type { sortParamMetricType } from "./types";
+import type { companyDashboard, sortParamMetricType } from "./types";
 
 const Table = async ({ sortParam, sortMetric }: sortParamMetricType) => {
-  const companies = await fetchCompaniesDashboard({
+  const companies: companyDashboard[] = await fetchCompaniesDashboard({
     sortParam,
     sortMetric: sortMetric.toLowerCase(),
   });

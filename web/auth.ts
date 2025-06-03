@@ -31,7 +31,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       session.user.email = token.email as string;
       session.user.isUpgraded = token.isUpgraded as boolean;
       session.user.accessToken = token.accessToken as string;
-      session.user.subscriptionEndDate = token.subscriptionEndDate as Date;
+      session.user.subscriptionEndDate = token.subscriptionEndDate as string;
 
       return session;
     },

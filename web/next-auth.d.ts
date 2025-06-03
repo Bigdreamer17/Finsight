@@ -12,7 +12,7 @@ declare module "next-auth" {
       lastName?: string;
       isUpgraded?: boolean;
       accessToken?: string;
-      subscriptionEndDate?: Date;
+      subscriptionEndDate?: string;
     } & DefaultSession["user"];
   }
 }
@@ -26,6 +26,6 @@ declare module "next-auth/jwt" {
     lastName?: string;
     isUpgraded?: boolean;
     accessToken?: string;
-    subscriptionEndDate?: Date;
+    subscriptionEndDate?: string;
   }
 }
