@@ -2,6 +2,7 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import type { NextAuthConfig } from "next-auth";
+import type { userRoleType } from "./types";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -29,6 +30,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       session.user.firstName = token.firstName as string;
       session.user.lastName = token.lastName as string;
       session.user.email = token.email as string;
+      session.user.role = token.role as userRoleType;
       session.user.isUpgraded = token.isUpgraded as boolean;
       session.user.accessToken = token.accessToken as string;
       session.user.subscriptionEndDate = token.subscriptionEndDate as string;
@@ -62,6 +64,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           firstName: string;
           lastName: string;
           email: string;
+          role: userRoleType;
           isUpgraded: boolean;
           accessToken: string;
           subscriptionEndDate: Date;
@@ -74,6 +77,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.firstName = backendUser.firstName;
         token.lastName = backendUser.lastName;
         token.email = backendUser.email;
+        token.role = backendUser.role;
         token.isUpgraded = backendUser.isUpgraded;
         token.accessToken = backendUser.accessToken;
         token.subscriptionEndDate = backendUser.subscriptionEndDate;
