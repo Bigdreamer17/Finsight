@@ -28,5 +28,13 @@ class User(Base):
     first_name = Column(String, index=True)
     last_name = Column(String, index=True)
     is_upgraded = Column(Boolean, default=False)
-    role = Column(Enum(UserRole), nullable=False, default=UserRole.USER)
+    role = Column(
+        Enum(
+            UserRole,
+            name="userrole",
+            values_callable=lambda enum: [e.value for e in enum],
+        ),
+        nullable=False,
+        default=UserRole.USER,
+    )
     subscription_end_date = Column(DateTime(timezone=True), default=func.now())

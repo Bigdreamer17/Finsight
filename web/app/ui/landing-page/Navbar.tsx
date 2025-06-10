@@ -12,7 +12,7 @@ import { spaceGrotesk } from "@/app/fonts";
 const Navbar = () => {
   const pathName = usePathname();
 
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -52,7 +52,7 @@ const Navbar = () => {
           isScrolled
             ? "shadow-[1px_1px_4px_rgba(0,0,0,0.1),_-0.5px_-0.5px_1px_rgba(0,0,0,0.05)]"
             : "shadow-none"
-        } items-center py-3 md:py-3.5 px-4 rounded-lg`}
+        } items-center py-2 px-4 rounded-lg`}
       >
         <Link href="/" className="focus:outline-none">
           <Image
@@ -63,7 +63,7 @@ const Navbar = () => {
             }
             alt="finsight logo"
             width={140}
-            height={140}
+            height={20}
             className="hidden md:block"
           />
 
@@ -77,24 +77,27 @@ const Navbar = () => {
         </Link>
 
         <ul
-          className={`flex items-center md:text-sm text-xs tracking-wider gap-3 sm:gap-6 xl:gap-8 ${pathName.includes("pricing") ? "text-[#F9F8F6]" : "text-[#777169]"} font-semibold`}
+          className={`flex items-center md:text-sm text-xs min-h-11 tracking-wider gap-3 sm:gap-6 xl:gap-8 ${pathName.includes("pricing") ? "text-[#F9F8F6]" : "text-[#777169]"} font-semibold`}
         >
           <li className="hover:opacity-50 uppercase">
             <Link href="/pricing">PRICING</Link>
           </li>
-
           <li>
-            {session?.user ? (
+            {status === "loading" ? (
+              <div
+                className={`h-10 ${pathName.includes("pricing") ? "w-[124px]" : "w-[131.5px]"} bg-gray-200 rounded-4xl animate-pulse`}
+              ></div>
+            ) : session?.user ? (
               <Link
                 href="/dashboard"
-                className={`rounded-4xl text-xs uppercase focus:outline-none h-9 ${pathName.includes("pricing") ? "bg-[#F9F8F6] text-black hover:opacity-80" : "bg-black text-white hover:opacity-50"} cursor-pointer px-3.5 py-2 md:px-6 md:py-3 font-bold `}
+                className={`rounded-4xl text-xs uppercase focus:outline-none ${pathName.includes("pricing") ? "bg-[#F9F8F6] text-black hover:opacity-80" : "bg-black text-white hover:opacity-50"} cursor-pointer px-3.5 py-2 md:px-6 md:py-3 font-bold`}
               >
                 DASHBOARD
               </Link>
             ) : (
               <button
                 onClick={handleSignIn}
-                className="rounded-4xl focus:outline-none cursor-pointer bg-[#E8E6E3] hover:bg-[#C9C6C0] text-black px-4 py-2 font-semibold"
+                className={`rounded-4xl focus:outline-none cursor-pointer h-9 bg-[#E8E6E3] hover:bg-[#C9C6C0] text-black px-4 py-2 font-semibold ${!pathName.includes("pricing") ? "min-w-[131.5px]" : ""}`}
               >
                 Sign up free
               </button>

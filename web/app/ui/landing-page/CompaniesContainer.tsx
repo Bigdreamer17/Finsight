@@ -32,7 +32,8 @@ const CompaniesContainer = ({ companies }: { companies: companyType[] }) => {
             <Image
               src={company.image_url}
               alt={`${company.name} logo`}
-              fill
+              width={150}
+              height={150}
               className="object-contain"
             />
           </div>

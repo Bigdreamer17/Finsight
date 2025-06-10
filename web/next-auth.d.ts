@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // types/next-auth.d.ts
 import NextAuth, { DefaultSession } from "next-auth";
+import type { userRoleType } from "./types";
 
 declare module "next-auth" {
   interface Session {
@@ -10,6 +11,7 @@ declare module "next-auth" {
       email?: string;
       firstName?: string;
       lastName?: string;
+      role?: userRoleType;
       isUpgraded?: boolean;
       accessToken?: string;
       subscriptionEndDate?: string;
@@ -24,6 +26,7 @@ declare module "next-auth/jwt" {
     email?: string;
     firstName?: string;
     lastName?: string;
+    role?: userRoleType;
     isUpgraded?: boolean;
     accessToken?: string;
     subscriptionEndDate?: string;
