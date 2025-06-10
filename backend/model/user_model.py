@@ -1,9 +1,15 @@
+import enum
 import uuid
 
-from sqlalchemy import Boolean, Column, DateTime, String, func
+from sqlalchemy import Boolean, Column, DateTime, Enum, String, func
 from sqlalchemy.dialects.postgresql import UUID
 
 from db.database import Base
+
+
+class UserRole(enum.Enum):
+    USER = "user"
+    ADMIN = "admin"
 
 
 class User(Base):
@@ -22,4 +28,5 @@ class User(Base):
     first_name = Column(String, index=True)
     last_name = Column(String, index=True)
     is_upgraded = Column(Boolean, default=False)
+    role = Column(Enum(UserRole), nullable=False, default=UserRole.USER)
     subscription_end_date = Column(DateTime(timezone=True), default=func.now())
