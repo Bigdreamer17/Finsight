@@ -11,16 +11,23 @@ import {
 import { fieldsMap } from "./data";
 import { IoCloseOutline } from "react-icons/io5";
 import { useAtom } from "jotai";
-import { cashFlowMetricsAtom } from "@/app/store/financialsMetrics";
+import {
+  cashFlowGraphAtom,
+  cashFlowMetricsAtom,
+} from "@/app/store/financialsMetrics";
 import { useSession } from "next-auth/react";
 import { tabelDataProps } from "../balance-sheet/types";
 import { GoLock } from "react-icons/go";
 import EmptyTable from "../../../common/EmptyTable";
+import { colors } from "../../../common/data";
+import { checkIsActiveMetric } from "../../../utils";
+import { Checkbox } from "@/app/ui/checkbox";
 
 const CashFlowTable = ({ tableData, minYear }: tabelDataProps) => {
   const { data: session } = useSession();
 
   const [metrics, setMetrics] = useAtom(cashFlowMetricsAtom);
+  const [cashMetrics, setCashMetrics] = useAtom(cashFlowGraphAtom);
 
   const handleMetricDelete = (metric: string) => {
     setMetrics((prev) => prev.filter((m) => m.name != metric));
@@ -63,7 +70,7 @@ const CashFlowTable = ({ tableData, minYear }: tabelDataProps) => {
         <Table className="w-full">
           <TableHeader className="bg-[#1C1C21] border-[#AFAFB6]/40 border-t border-l">
             <TableRow>
-              <TableHead className="border-r border-[#AFAFB6]/40">
+              <TableHead className="border-r border-[#AFAFB6]/40 text-nowrap">
                 Cash Flow Statement
               </TableHead>
 
@@ -85,33 +92,59 @@ const CashFlowTable = ({ tableData, minYear }: tabelDataProps) => {
           </TableHeader>
 
           <TableBody className="[&_tr:last-child]:border-b-1 [&_tr:last-child]:border-l-1 text-sm">
-            {metrics.map((metric, index) => (
-              <TableRow
-                key={index}
-                className={`border-l border-[#AFAFB6]/40 ${index % 2 === 0 ? "bg-[#2C2C35]" : "bg-[#40404F]"} ${metric.isLast ? "border-b border-b-white" : ""}`}
-              >
-                <TableCell className="border-r border-[#AFAFB6]/40">
-                  {fieldsMap[metric.name]}
-                </TableCell>
+            {metrics.map((metric, index) => {
+              const isChecked = checkIsActiveMetric(metric.name, cashMetrics);
+              const activeColor = isChecked ? colors[index] : "";
 
-                {tableData.map((data, idx) => (
-                  <TableCell
-                    key={idx}
-                    className="border-r border-[#AFAFB6]/40 min-w-fit text-center"
-                  >
-                    {typeof data[metric.name] === "number"
-                      ? `${((data[metric.name] as number) / 1000).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })} Birr`
-                      : "-"}
+              return (
+                <TableRow
+                  key={index}
+                  className={`group border-l border-[#AFAFB6]/40 hover:bg-[#5E5E74] ${index % 2 === 0 ? "bg-[#2C2C35]" : "bg-[#40404F]"} ${metric.isLast ? "border-b border-b-white" : ""}`}
+                >
+                  <TableCell className="border-r border-[#AFAFB6]/40 text-nowrap flex items-center gap-2 group-hover:underline">
+                    <Checkbox
+                      checked={isChecked}
+                      onCheckedChange={(checked) => {
+                        return checked
+                          ? setCashMetrics((prev) => [...prev, metric])
+                          : setCashMetrics((prev) =>
+                              prev.filter(
+                                (value) => value.name !== metric.name,
+                              ),
+                            );
+                      }}
+                      style={
+                        isChecked
+                          ? {
+                              backgroundColor: activeColor,
+                              borderColor: activeColor,
+                            }
+                          : undefined
+                      }
+                      className="hover:cursor-pointer"
+                    />
+                    {fieldsMap[metric.name]}
                   </TableCell>
-                ))}
 
-                {minYear !== null && !session?.user?.isUpgraded && (
-                  <TableCell className="border-r border-[#AFAFB6]/40">
-                    <GoLock size={16} className="mx-auto" />
-                  </TableCell>
-                )}
-              </TableRow>
-            ))}
+                  {tableData.map((data, idx) => (
+                    <TableCell
+                      key={idx}
+                      className="border-r border-[#AFAFB6]/40 text-nowrap min-w-fit text-center"
+                    >
+                      {typeof data[metric.name] === "number"
+                        ? `${((data[metric.name] as number) / 1000).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })} Birr`
+                        : "-"}
+                    </TableCell>
+                  ))}
+
+                  {minYear !== null && !session?.user?.isUpgraded && (
+                    <TableCell className="border-r border-[#AFAFB6]/40">
+                      <GoLock size={16} className="mx-auto" />
+                    </TableCell>
+                  )}
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       ) : (

@@ -12,6 +12,7 @@ import { askChatAiBot } from "@/app/lib/fetchs/get-chat";
 import ThreeDotsLoading from "./ThreeDotsLoading";
 import ReactMarkdown from "react-markdown";
 import { FaCheck, FaCopy } from "react-icons/fa6";
+import { ChevronDownIcon } from "lucide-react";
 
 const ChatBotContainer = ({ chatsData, companyId }: chatBotProps) => {
   const pathName = usePathname().split("/");
@@ -23,14 +24,12 @@ const ChatBotContainer = ({ chatsData, companyId }: chatBotProps) => {
   const [prompt, setPrompt] = useState("");
   const [promptValue, setPromptValue] = useState("");
   const [copied, setCopied] = useState(false);
-  const [latestResponse, setLatestResponse] = useState<{
-    chat: string;
-    sender: "bot";
-  } | null>(null);
+  const [latestResponse, setLatestResponse] = useState<chatType | null>(null);
   const [displayedResponse, setDisplayedResponse] = useState("");
   const ref = useRef<HTMLDivElement>(null);
 
   const [chatsDataFinal, setChatsDataFinal] = useState<chatType[]>(chatsData);
+  const [showScrollButton, setShowScrollButton] = useState(false);
 
   useEffect(() => {
     if (ref.current) {
@@ -40,6 +39,15 @@ const ChatBotContainer = ({ chatsData, companyId }: chatBotProps) => {
       });
     }
   }, [isChatOpen, chatsDataFinal]);
+
+  const handleScrollToBottom = () => {
+    if (ref.current) {
+      ref.current.scrollTo({
+        top: ref.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  };
 
   useEffect(() => {
     if (
@@ -53,6 +61,8 @@ const ChatBotContainer = ({ chatsData, companyId }: chatBotProps) => {
 
     const interval = setInterval(() => {
       if (index >= latestResponse.chat.length) {
+        setChatsDataFinal((prev) => [...prev, latestResponse]);
+        setDisplayedResponse("");
         clearInterval(interval);
         return;
       }
@@ -63,10 +73,35 @@ const ChatBotContainer = ({ chatsData, companyId }: chatBotProps) => {
       }
 
       index++;
-    }, 5);
+    }, 10);
 
     return () => clearInterval(interval);
-  }, [latestResponse?.chat]);
+  }, [latestResponse]);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const handleScrollOrResize = () => {
+      const isAtBottom = el.scrollHeight - el.scrollTop <= el.clientHeight + 10;
+      setShowScrollButton(!isAtBottom);
+    };
+
+    // 1. Scroll listener
+    el.addEventListener("scroll", handleScrollOrResize);
+
+    // 2. Resize observer (handles element size/content changes)
+    const resizeObserver = new ResizeObserver(handleScrollOrResize);
+    resizeObserver.observe(el);
+
+    // Run on mount
+    handleScrollOrResize();
+
+    return () => {
+      el.removeEventListener("scroll", handleScrollOrResize);
+      resizeObserver.disconnect();
+    };
+  }, [isChatOpen]);
 
   const chatsByDate = chatsDataFinal.reduce<Record<string, chatType[]>>(
     (acc, chat) => {
@@ -105,13 +140,7 @@ const ChatBotContainer = ({ chatsData, companyId }: chatBotProps) => {
         question: prompt,
       });
       setPrompt("");
-
-      const newResponse: { chat: string; sender: "bot" } = {
-        chat: response,
-        sender: "bot",
-      };
-
-      setLatestResponse(newResponse);
+      setLatestResponse({ ...response, created_at: new Date() });
     } catch (error) {
       console.error(error);
     } finally {
@@ -135,7 +164,7 @@ const ChatBotContainer = ({ chatsData, companyId }: chatBotProps) => {
     >
       <>
         {isChatOpen && (
-          <div className="w-[90%] sm:w-96 h-[80svh] rounded-2xl z-10 absolute bottom-full mb-2 -right-[2px] shadow-xl bg-[#2C2C35] border-[0.5px] border-[#AFAFB6]/40">
+          <div className="w-[90svw] sm:w-96 h-[80svh] rounded-2xl z-10 absolute bottom-full mb-2 -right-[2px] shadow-xl bg-[#2C2C35] border-[0.5px] border-[#AFAFB6]/40">
             <div className="h-12 flex justify-between bg-[#40404f] text-white w-full rounded-t-2xl p-3">
               <div className="flex gap-2">
                 <Image
@@ -154,7 +183,7 @@ const ChatBotContainer = ({ chatsData, companyId }: chatBotProps) => {
                 <IoIosCloseCircleOutline size={25} />
               </button>
             </div>
-            <div className="h-[80%] w-full bg-[#1C1C21] text-sm">
+            <div className="relative h-[80%] w-full bg-[#1C1C21] text-sm">
               <div
                 ref={ref}
                 className="flex flex-col gap-2 h-[99%] overflow-y-auto p-3 no-scrollbar"
@@ -217,7 +246,7 @@ const ChatBotContainer = ({ chatsData, companyId }: chatBotProps) => {
                     ))}
                   </div>
                 ))}
-                {latestResponse?.chat && (
+                {latestResponse?.chat && displayedResponse !== "" && (
                   <div className="flex gap-2">
                     <div className="relative max-w-11/12 overflow-clip rounded-tr-2xl">
                       <div className="text-sm bg-[#2C2C35] rounded-t-2xl rounded-r-2xl prose shadow-md">
@@ -248,6 +277,14 @@ const ChatBotContainer = ({ chatsData, companyId }: chatBotProps) => {
                       <ThreeDotsLoading />
                     </div>
                   </div>
+                )}
+                {showScrollButton && (
+                  <button
+                    onClick={handleScrollToBottom}
+                    className="absolute bottom-4 focus:outline-none hover:cursor-pointer border-white/50 border min-w-3 min-h-3 z-50 left-1/2 -translate-x-1/2 bg-[#40404F] p-2 rounded-full shadow-lg"
+                  >
+                    <ChevronDownIcon className="w-5 h-5 text-white" />
+                  </button>
                 )}
               </div>
               <form

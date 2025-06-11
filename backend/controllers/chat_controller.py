@@ -142,7 +142,12 @@ Financials:
         }
     ).execute()
 
-    return bot_reply
+    return {
+        "company_id": company_id,
+        "user_id": user_id,
+        "chat": bot_reply,
+        "sender": "bot",
+    }
 
 
 def get_chat(company_id: str, user_id: UUID, db: Session):
