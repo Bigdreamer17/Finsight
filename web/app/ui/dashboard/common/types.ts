@@ -21,6 +21,11 @@ export type chartType = {
   count: number;
 };
 
+export type barChartType = {
+  fiscal_year: string | number | null;
+  [key: string]: string | number | null;
+};
+
 export type badgeProps = {
   health: string;
   size?: number;

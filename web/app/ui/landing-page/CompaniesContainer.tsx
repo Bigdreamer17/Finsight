@@ -27,7 +27,7 @@ const CompaniesContainer = ({ companies }: { companies: companyType[] }) => {
         {repeatedCompanies.map((company, index) => (
           <div
             key={index}
-            className="flex-shrink-0 w-[150px] h-[150px] mx-4 relative"
+            className="flex-shrink-0 w-[150px] max-h-[150px] mx-4 relative"
           >
             <Image
               src={company.image_url}
