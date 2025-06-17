@@ -54,26 +54,23 @@ const Navbar = () => {
             : "shadow-none"
         } items-center py-2 px-4 rounded-lg`}
       >
-        <Link href="/" className="focus:outline-none">
+        <Link href="/" className="focus:outline-none flex gap-3 items-center">
           <Image
             src={
               pathName.includes("pricing")
-                ? "https://marketing.finchat.io/assets/finchat-logos/finchat-logo-wordmark-dark-high-contrast.png"
-                : "https://finchat.io/cdn-cgi/image/width=640/assets/finchat-logos/finchat-logo-wordmark-light.png"
+                ? "https://finchat.io/cdn-cgi/image/width=64,quality=100/assets/finchat-logos/finchat-icon-dark.png"
+                : "https://finchat.io/cdn-cgi/image/width=640/assets/finchat-logos/finchat-light-3d.png"
             }
-            alt="finsight logo"
-            width={140}
-            height={20}
-            className="hidden md:block"
-          />
-
-          <Image
-            src="https://finchat.io/cdn-cgi/image/width=640/assets/finchat-logos/finchat-light-3d.png"
             alt="finsight logo"
             width={32}
             height={32}
-            className="md:hidden"
+            className=""
           />
+          <span
+            className={`font-medium text-lg ${pathName.includes("pricing") ? "text-white" : ""} md:block hidden`}
+          >
+            FinSight
+          </span>
         </Link>
 
         <ul
