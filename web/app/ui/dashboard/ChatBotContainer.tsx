@@ -103,6 +103,27 @@ const ChatBotContainer = ({ chatsData, companyId }: chatBotProps) => {
     };
   }, [isChatOpen]);
 
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const handleScrollOrResize = () => {
+      const isAtBottom = el.scrollHeight - el.scrollTop <= el.clientHeight + 10;
+      setShowScrollButton(!isAtBottom);
+    };
+
+    // 2. Resize observer (handles element size/content changes)
+    const resizeObserver = new ResizeObserver(handleScrollOrResize);
+    resizeObserver.observe(el);
+
+    // Run on mount
+    handleScrollOrResize();
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [displayedResponse]);
+
   const chatsByDate = chatsDataFinal.reduce<Record<string, chatType[]>>(
     (acc, chat) => {
       const dateKey = format(new Date(chat.created_at), "MMMM d, yyyy");
@@ -188,7 +209,7 @@ const ChatBotContainer = ({ chatsData, companyId }: chatBotProps) => {
                 ref={ref}
                 className="flex flex-col gap-2 h-[99%] overflow-y-auto p-3 no-scrollbar"
               >
-                {chatsData.length < 1 && (
+                {chatsDataFinal.length < 1 && (
                   <div className="grid place-items-center px-10 py-5 border-dashed border rounded-xl">
                     <div className="px-5 py-3 text-center">
                       Hello{" "}
