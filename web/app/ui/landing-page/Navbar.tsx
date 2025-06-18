@@ -94,10 +94,13 @@ const Navbar = () => {
             ) : (
               <button
                 onClick={handleSignIn}
-                className={`rounded-4xl focus:outline-none cursor-pointer h-9 bg-[#E8E6E3] hover:bg-[#C9C6C0] text-black px-4 py-2 font-semibold ${!pathName.includes("pricing") ? "min-w-[131.5px]" : ""}`}
+                className={`rounded-full focus:outline-none cursor-pointer h-10 bg-[#E8E6E3] hover:bg-[#d1ceca] text-black px-5 font-medium shadow-sm transition duration-200 ${
+                  !pathName.includes("pricing") ? "min-w-[140px]" : ""
+                }`}
               >
-                Sign up free
+                Sign Up / Log In
               </button>
+
             )}
           </li>
         </ul>

@@ -19,7 +19,7 @@ const CompairPlans = () => {
   const services: servicesType[] = [
     {
       service: "Monthly AI Copilot Prompts",
-      free: 10,
+      free: 5,
       pro: 500,
     },
     {
@@ -29,26 +29,26 @@ const CompairPlans = () => {
     },
     {
       service: "Segments & KPIs Coverage",
-      free: "2,000+ companies",
-      pro: "2,000+ companies",
+      free: "5+ companies",
+      pro: "5+ companies",
     },
     {
       service: "Financials & Ratios - Annual Periods (Table)",
-      free: 5,
-      pro: 10,
+      free: 2,
+      pro: 5,
     },
     {
       service: "Financials & Ratios - Quarterly Periods (Table)",
-      free: 6,
-      pro: 12,
+      free: 2,
+      pro: 5,
     },
     {
       service: "Segments & KPIs - Annual Periods",
       free: 2,
-      pro: 12,
+      pro: 5,
     },
     {
-      service: "Investor Relations (Earnings Calls, Transcripts, Slides)",
+      service: "Investor Relations (Earnings Calls, Transcripts, Slides, CEO Messages)",
       free: 1,
       pro: "Unlimited",
     },

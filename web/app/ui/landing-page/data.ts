@@ -2,7 +2,7 @@ export const features = [
   {
     name: "Robust Security",
     description:
-      "FinSight is SOC2 Type II security accredited and takes your data seriously.",
+      "FinSight takes your data seriously.",
   },
   {
     name: "Serving every investor",
@@ -15,20 +15,20 @@ export const features = [
       "You're only as good as your worst data point. We take data quality incredibly seriously across all endpoints.You're only as good as your worst data point. We take data quality incredibly seriously across all endpoints.",
   },
   {
-    name: "Trusted globally",
+    name: "Trusted Nationally",
     description:
-      "FinSight has served over 300,000+ investors across the world who take investing seriously.",
+      "FinSight aims to provide and democratize investment research for new and exprienced investors.",
   },
   {
-    name: "Backed by the best",
+    name: "Developed by the best",
     description:
-      "FinSight is backed by leading venture capital and asset management firms to continue to build a world class product and customer experience.",
+      "FinSight is developed by the best professionals in the country to continue to build a world class product and customer experience.",
   },
 ];
 
 export const prompts = [
-  "Summarize Microsoft's latest earnings call.",
-  "How have Amazon's focus areas changed?",
-  "What did Uber's management team say about margins?",
-  "What's Meta's latest financial guidance?",
+  "Summarize Awash Bank's latest earnings call.",
+  "How have Nib's focus areas changed?",
+  "What did Abyssinia's management team say about margins?",
+  "What's Dashen Banks's latest financial guidance?",
 ];

@@ -14,10 +14,9 @@ const Billing = ({ ref }: { ref: RefObject<HTMLElement | null> }) => {
       subHeading: "Powerful tools, for free",
       separator: "Base offerings",
       services: [
-        "5 Years & 6 Quarters of Financials",
-        "2 Years & 2 Quarters of KPI Data",
-        "10 Copilot Prompts/mo",
-        "3 Events (Calls, Transcripts & Slides)",
+        "2 Years of Financials",
+        "2 Years of KPI Data",
+        "5 Copilot Prompts/mo",
       ],
     },
     {
@@ -26,12 +25,11 @@ const Billing = ({ ref }: { ref: RefObject<HTMLElement | null> }) => {
       subHeading: "Your information edge",
       separator: "Everything in Free +",
       services: [
-        "10+ Years & 12+ Quarters of Financials",
-        "12+ Years & 16+ Quarters of KPI Data",
+        "5+ Years of Financials",
+        "5+ Years of KPI Data",
         "500 Copilot Prompts/mo",
-        "30+ Events (Calls, Transcripts & Slides)",
-        "Portfolio Stats & Notifications",
-        "Equity Research",
+        "Customer support",
+        "Equity Research and Company projections",
       ],
     },
   ];

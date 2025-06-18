@@ -20,7 +20,7 @@ const Research = () => {
       <h3
         className={`text-center text-[2.5rem] md:text-[3rem] leading-11 md:leading-[72px] ${spaceGrotesk.className} font-medium`}
       >
-        National data at your fingertips
+        Investment data at your fingertips
       </h3>
 
       <p className="text-[#49495b] text-center max-w-full sm:max-w-xl mx-auto text-sm">
