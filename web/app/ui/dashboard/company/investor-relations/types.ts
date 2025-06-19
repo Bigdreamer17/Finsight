@@ -1,11 +1,11 @@
 import { companyIdType } from "../common/types";
 
 export type bodTableProps = {
-  tableData: bodTableData[] | [];
+  tableData: { [key: string]: string }[] | [];
 };
 
 export type execTableProps = {
-  tableData: execTabelDataType[] | [];
+  tableData: { [key: string]: string }[] | [];
 };
 
 export type bodTableData = {

@@ -91,9 +91,9 @@ const ExecutiveTable = ({ tableData }: execTableProps) => {
             key={index}
             className={`border-l border-[#AFAFB6]/40 ${index % 2 === 0 ? "bg-[#2C2C35]" : "bg-[#40404F]"}`}
           >
-            {Object.values(data).map((d, idx) => (
+            {columns.map((name, idx) => (
               <TableCell key={idx} className="border-r border-[#AFAFB6]/40">
-                {d}
+                {data[execColumMap[name]]}
               </TableCell>
             ))}
           </TableRow>
