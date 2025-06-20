@@ -1,10 +1,11 @@
-from http import client
-from fastapi import APIRouter, Body, HTTPException
+# from http import client
+from fastapi import APIRouter, Body, HTTPException, Request, status
 from services.payment_service import create_payment
 from pydantic import BaseModel
 from typing import Dict
 import supabase
 import os
+from datetime import datetime, timedelta, timezone
 
 router = APIRouter()
 
@@ -31,34 +32,38 @@ async def pay_upgrade(payload: PaymentRequest) -> Dict[str, str]:
         description=payload.description
     )
 
-@router.get("/payment/verify/{tx_ref}")
-async def verify_payment(tx_ref: str):
-    headers = {
-        "Autjorization": f"Bearer {os.getenv('CHAPA_SECRET_KEY')}"
-    }
+@router.post("/payment/callback", status_code=status.HTTP_204_NO_CONTENT)
+async def chapa_callback(req: Request):
+    body = await req.json()
+    tx_ref = body.get("data", {}).get("tx_ref")
+    if not tx_ref:
+        raise HTTPException(400, "tx_ref missing")
 
-    res = await client.get(f"https://api.chapa.co/v1/transaction/verify/{tx_ref}", headers=headers)
-    data = res.json()
+    # 1‑a) Double‑check with Chapa
+    if not await verify_with_chapa(tx_ref):
+        raise HTTPException(400, "Verification failed")
+    
+    expiry = datetime.now(timezone.utc) + timedelta(days=60) 
 
-    if data["status"] != "success":
-        raise HTTPException(status_code=400, detail="Payment not successful")
+    # 1‑b) upgrade user
+    user_id = tx_ref.split("-")[1]
+    supabase.table("users")\
+        .update({
+            "is_upgraded": True,
+            "subscription_end_date": expiry
+        })\
+        .eq("id", user_id)\
+        .execute()
+    return  # 204 No Content is fine for webhooks
 
-    # extract user ID from tx_ref: format is upgrade-{user_id}-{uuid}
-    try:
-        user_id = tx_ref.split("-")[1]
-    except Exception:
-        raise HTTPException(status_code=400, detail="Invalid tx_ref format")
-
-    # mark user as upgraded
-    update_resp = supabase.table("users").update({"is_upgraded": True}).eq("id", user_id).execute()
-
-    return {"message": "Payment verified and user upgraded"}
-
-
-@router.get("/payment/callback")
-async def chapa_callback(tx_ref: str):
-    # We just reuse the verification logic
-    return await verify_payment(tx_ref)
+# services/payment_service.py
+async def verify_with_chapa(tx_ref: str) -> bool:
+    url = f"{os.getenv('CHAPA_BASE_URL')}/transaction/verify/{tx_ref}"
+    headers = {"Authorization": f"Bearer {os.getenv('CHAPA_SECRET_KEY')}"}
+    async with httpx.AsyncClient() as client:
+        r = await client.get(url, headers=headers)
+    j = r.json()
+    return j.get("status") == "success"
 
 
 from fastapi.responses import HTMLResponse
